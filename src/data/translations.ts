@@ -331,7 +331,7 @@ export const translations: Record<Language, TranslationDictionary> = {
 
     // Footer
     footer_desc_html: `An independent software studio run by <strong>Della Reno Rinaldi</strong>. Building fast mobile apps, websites, and smart AI tools with senior craftsmanship and zero fluff.`,
-    footer_open: "Taking on new client projects • Jakarta & Remote Worldwide",
+    footer_open: "Taking on new client projects • Malang & Remote Worldwide",
     footer_col_studio: "Studio",
     footer_col_founder: "About Reno",
     footer_link_work: "Featured Work (Sobatoko)",
@@ -356,7 +356,7 @@ export const translations: Record<Language, TranslationDictionary> = {
     p_hero_btn_exp: "View Experience",
     p_hero_btn_studio: "Visit Studio →",
     p_hero_role_tag: "Senior Engineer • Studio Founder",
-    p_hero_loc: "Jakarta, Indonesia • Remote Worldwide",
+    p_hero_loc: "Malang, Indonesia • Remote Worldwide",
     p_stat_1_val: "8+ Years",
     p_stat_1_lbl: "In Production",
     p_stat_2_val: "React Native",
@@ -521,7 +521,7 @@ export const translations: Record<Language, TranslationDictionary> = {
 
     // Footer
     footer_desc_html: `Studio software independen oleh <strong>Della Reno Rinaldi</strong>. Membangun aplikasi mobile kencang, website rapi, dan fitur AI cerdas tanpa birokrasi.`,
-    footer_open: "Menerima proyek baru • Jakarta & Remote di mana saja",
+    footer_open: "Menerima proyek baru • Malang & Remote di mana saja",
     footer_col_studio: "Studio",
     footer_col_founder: "Tentang Reno",
     footer_link_work: "Karya Unggulan (Sobatoko)",
@@ -546,7 +546,7 @@ export const translations: Record<Language, TranslationDictionary> = {
     p_hero_btn_exp: "Lihat Pengalaman",
     p_hero_btn_studio: "Kunjungi Studio →",
     p_hero_role_tag: "Senior Engineer • Founder Studio",
-    p_hero_loc: "Jakarta, Indonesia • Remote di mana saja",
+    p_hero_loc: "Malang, Indonesia • Remote di mana saja",
     p_stat_1_val: "8+ Tahun",
     p_stat_1_lbl: "Pengalaman Nyata",
     p_stat_2_val: "React Native",
