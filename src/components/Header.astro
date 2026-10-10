@@ -1,0 +1,444 @@
+---
+interface Props {
+  pageType?: "studio" | "profile";
+}
+
+const {
+  pageType = Astro.url.pathname.startsWith("/profile") ? "profile" : "studio",
+} = Astro.props;
+
+const studioNavLinks = [
+  { name: "Work", href: "#work", i18nKey: "nav_work" },
+  { name: "What We Do", href: "#services", i18nKey: "nav_services" },
+  { name: "Contact", href: "#contact", i18nKey: "nav_contact" },
+];
+
+const profileNavLinks = [
+  { name: "About", href: "#home", i18nKey: "p_nav_about" },
+  { name: "Experience", href: "#experience", i18nKey: "p_nav_experience" },
+  { name: "Work & Teaching", href: "#work", i18nKey: "p_nav_work" },
+  { name: "Contact", href: "#contact", i18nKey: "p_nav_contact" },
+];
+
+const navLinks = pageType === "profile" ? profileNavLinks : studioNavLinks;
+---
+
+<header
+  class="fixed top-0 w-full z-50 backdrop-blur-xl border-b border-white/10"
+  style="background: rgba(8, 9, 10, 0.94);"
+>
+  <div class="max-w-[1240px] mx-auto px-5 md:px-6">
+    <div class="flex justify-between items-center h-16 md:h-20">
+      {/* Brand Logo & Studio Stamp */}
+      <div class="flex items-center gap-3">
+        <a
+          href={pageType === "profile" ? "/profile#home" : "/#home"}
+          class="flex-shrink-0 cursor-pointer flex items-center gap-2.5 nav-scroll-link group"
+          aria-label="renodotdev home"
+        >
+          <img
+            src="/logo/logo.svg"
+            alt="renodotdev"
+            width="254"
+            height="48"
+            class="h-9 sm:h-10 md:h-11 w-auto object-contain transition-transform group-hover:scale-105"
+          />
+          {pageType === "studio" ? (
+            <span class="hidden sm:inline-block px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-lime-400/10 text-lime-400 border border-lime-400/30 font-mono-tech">
+              Studio
+            </span>
+          ) : (
+            <span class="hidden sm:inline-block px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-white/10 text-white/70 border border-white/15 font-mono-tech">
+              Founder
+            </span>
+          )}
+        </a>
+      </div>
+
+      {/* Desktop Navigation */}
+      <nav class="hidden lg:flex items-center gap-6 xl:gap-7 text-xs font-mono-tech tracking-wider" id="desktop-nav">
+        {
+          navLinks.map((link) => (
+            <a
+              href={link.href}
+              data-section={link.href.startsWith("#") ? link.href.slice(1) : ""}
+              data-i18n={link.i18nKey || undefined}
+              class="nav-link transition-colors duration-200 text-[#8b949e] hover:text-white font-medium"
+            >
+              {link.name}
+            </a>
+          ))
+        }
+
+        {/* Page Switcher Pill */}
+        {pageType === "studio" ? (
+          <a
+            href="/profile"
+            class="inline-flex items-center gap-1.5 px-3 py-1 rounded text-xs font-semibold text-white/70 hover:text-lime-400 border border-white/15 hover:border-lime-400/40 bg-white/5 transition-all duration-200"
+          >
+            <span data-i18n="nav_founder_bio">About Reno</span>
+            <span class="text-[10px] text-lime-400">&rarr;</span>
+          </a>
+        ) : (
+          <a
+            href="/"
+            class="inline-flex items-center gap-1.5 px-3 py-1 rounded text-xs font-semibold text-lime-400 border border-lime-400/30 bg-lime-400/10 hover:bg-lime-400/20 transition-all duration-200"
+          >
+            <span data-i18n="p_banner_back">&larr; Studio &amp; Case Studies</span>
+          </a>
+        )}
+      </nav>
+
+      {/* Desktop Right CTAs + Language Switcher */}
+      <div class="hidden lg:flex items-center gap-3">
+        {/* Language Switcher Pill */}
+        <div class="inline-flex items-center p-0.5 rounded-lg border border-white/15 bg-white/5 font-mono-tech text-[11px] select-none">
+          <button
+            type="button"
+            class="lang-switch-btn px-2.5 py-1 rounded font-bold uppercase transition-all cursor-pointer"
+            data-lang="en"
+            title="English"
+            aria-label="Switch language to English"
+          >
+            EN
+          </button>
+          <button
+            type="button"
+            class="lang-switch-btn px-2.5 py-1 rounded font-bold uppercase transition-all cursor-pointer"
+            data-lang="id"
+            title="Bahasa Indonesia"
+            aria-label="Switch language to Indonesian"
+          >
+            ID
+          </button>
+        </div>
+
+        {pageType === "studio" ? (
+          <a
+            href="#contact"
+            data-i18n="nav_start_project"
+            class="nav-scroll-link flex items-center justify-center px-5 py-2 rounded text-xs font-bold uppercase tracking-wider transition-all duration-200 hover:bg-lime-300 active:scale-95 shadow-[0_0_20px_rgba(151,254,237,0.25)] border border-lime-400 cursor-pointer font-mono-tech"
+            style="background: #97feed; color: #08090a;"
+          >
+            Start a Project
+          </a>
+        ) : (
+          <a
+            href="#contact"
+            data-i18n="p_hero_btn_contact"
+            class="nav-scroll-link flex items-center justify-center px-5 py-2 rounded text-xs font-bold uppercase tracking-wider transition-all duration-200 hover:bg-lime-300 active:scale-95 shadow-[0_0_20px_rgba(151,254,237,0.25)] border border-lime-400 cursor-pointer font-mono-tech"
+            style="background: #97feed; color: #08090a;"
+          >
+            Say Hello &rarr;
+          </a>
+        )}
+      </div>
+
+      {/* Mobile / tablet menu toggle + Language Switcher */}
+      <div class="flex items-center gap-2 lg:hidden">
+        {/* Mobile Language Switcher */}
+        <div class="inline-flex items-center p-0.5 rounded border border-white/15 bg-white/5 font-mono-tech text-[10px] select-none">
+          <button
+            type="button"
+            class="lang-switch-btn px-2 py-0.5 rounded font-bold transition-all cursor-pointer"
+            data-lang="en"
+            aria-label="English"
+          >
+            EN
+          </button>
+          <button
+            type="button"
+            class="lang-switch-btn px-2 py-0.5 rounded font-bold transition-all cursor-pointer"
+            data-lang="id"
+            aria-label="Indonesian"
+          >
+            ID
+          </button>
+        </div>
+
+        {pageType === "studio" ? (
+          <a
+            href="/profile"
+            class="text-[11px] font-bold px-2.5 py-1 rounded border border-white/15 text-white/80 hover:text-lime-400 font-mono-tech"
+          >
+            Reno →
+          </a>
+        ) : (
+          <a
+            href="/"
+            class="text-[11px] font-bold px-2.5 py-1 rounded border border-lime-400/30 text-lime-400 bg-lime-400/10 font-mono-tech"
+          >
+            ← Studio
+          </a>
+        )}
+
+        <button
+          id="menu-toggle-btn"
+          type="button"
+          class="inline-flex items-center justify-center p-2 rounded-lg transition-all duration-200 focus:outline-none text-[#8b949e] hover:text-white"
+          aria-label="Toggle navigation menu"
+          aria-expanded="false"
+        >
+          <span class="sr-only">Open main menu</span>
+          <svg
+            id="menu-icon-open"
+            class="block h-5 w-5"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+          </svg>
+          <svg
+            id="menu-icon-close"
+            class="hidden h-5 w-5"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  {/* Mobile Navigation Dropdown */}
+  <div
+    id="mobile-menu"
+    class="hidden lg:hidden border-t border-white/15 bg-[#08090a]"
+  >
+    <div class="px-5 pt-3 pb-6 space-y-1">
+      {
+        navLinks.map((link) => (
+          <a
+            href={link.href}
+            data-section={link.href.startsWith("#") ? link.href.slice(1) : ""}
+            data-i18n={link.i18nKey || undefined}
+            class="mobile-nav-link block w-full text-left px-3 py-2.5 rounded text-xs font-semibold uppercase tracking-wider transition-colors text-[#8b949e] hover:text-white hover:bg-white/5 font-mono-tech"
+          >
+            {link.name}
+          </a>
+        ))
+      }
+
+      <div class="pt-3 border-t border-white/10 flex flex-col gap-2">
+        {pageType === "studio" ? (
+          <a
+            href="/profile"
+            class="block w-full text-center px-4 py-2.5 rounded text-xs font-semibold uppercase tracking-wider border border-white/15 text-white bg-white/5 font-mono-tech"
+          >
+            <span data-i18n="nav_founder_bio">About Reno</span> →
+          </a>
+        ) : (
+          <a
+            href="/"
+            class="block w-full text-center px-4 py-2.5 rounded text-xs font-semibold uppercase tracking-wider border border-lime-400/30 text-lime-400 bg-lime-400/10 font-mono-tech"
+          >
+            <span data-i18n="p_banner_back">← Studio &amp; Case Studies</span>
+          </a>
+        )}
+
+        <a
+          href="#contact"
+          data-i18n={pageType === "studio" ? "nav_start_project" : "p_hero_btn_contact"}
+          class="nav-scroll-link block w-full text-center px-6 py-3 rounded text-xs font-bold uppercase tracking-wider bg-lime-400 text-black shadow-[0_0_20px_rgba(151,254,237,0.3)] font-mono-tech"
+        >
+          {pageType === "studio" ? "Start a Project" : "Say Hello →"}
+        </a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<script>
+  import { translations, type Language } from "@/data/translations";
+
+  function applyLanguage(lang: Language) {
+    const dict = translations[lang] || translations.en;
+    document.documentElement.lang = lang;
+    try {
+      localStorage.setItem("renodotdev_lang", lang);
+    } catch (e) {
+      // storage unavailable
+    }
+
+    // Update all [data-i18n] text elements
+    document.querySelectorAll<HTMLElement>("[data-i18n]").forEach((el) => {
+      const key = el.getAttribute("data-i18n") as keyof typeof dict;
+      if (key && dict[key]) {
+        el.textContent = dict[key];
+      }
+    });
+
+    // Update all [data-i18n-html] elements
+    document.querySelectorAll<HTMLElement>("[data-i18n-html]").forEach((el) => {
+      const key = el.getAttribute("data-i18n-html") as keyof typeof dict;
+      if (key && dict[key]) {
+        el.innerHTML = dict[key];
+      }
+    });
+
+    // Update all [data-i18n-placeholder] inputs
+    document.querySelectorAll<HTMLInputElement | HTMLTextAreaElement>("[data-i18n-placeholder]").forEach((el) => {
+      const key = el.getAttribute("data-i18n-placeholder") as keyof typeof dict;
+      if (key && dict[key]) {
+        el.placeholder = dict[key];
+      }
+    });
+
+    // Update switcher button styles across both desktop and mobile
+    document.querySelectorAll<HTMLButtonElement>(".lang-switch-btn").forEach((btn) => {
+      const btnLang = btn.getAttribute("data-lang");
+      if (btnLang === lang) {
+        btn.style.backgroundColor = "#97feed";
+        btn.style.color = "#08090a";
+        btn.style.borderColor = "#97feed";
+      } else {
+        btn.style.backgroundColor = "transparent";
+        btn.style.color = "rgba(255, 255, 255, 0.5)";
+        btn.style.borderColor = "transparent";
+      }
+    });
+
+    // Dispatch global event for custom listeners
+    window.dispatchEvent(new CustomEvent("renodotdev:lang-change", { detail: { lang } }));
+  }
+
+  // Expose helper globally
+  (window as any).setRenodotdevLang = applyLanguage;
+
+  function setupHeader() {
+    const menuBtn = document.getElementById("menu-toggle-btn");
+    const mobileMenu = document.getElementById("mobile-menu");
+    const iconOpen = document.getElementById("menu-icon-open");
+    const iconClose = document.getElementById("menu-icon-close");
+
+    const desktopLinks = document.querySelectorAll<HTMLAnchorElement>(".nav-link");
+    const mobileLinks = document.querySelectorAll<HTMLAnchorElement>(".mobile-nav-link");
+    const allScrollLinks = document.querySelectorAll<HTMLAnchorElement>(
+      ".nav-scroll-link, .nav-link, .mobile-nav-link"
+    );
+
+    // Initial language setup
+    let savedLang: Language = "en";
+    try {
+      const stored = localStorage.getItem("renodotdev_lang") as Language | null;
+      if (stored === "id" || stored === "en") {
+        savedLang = stored;
+      }
+    } catch (e) {
+      // ignore
+    }
+    applyLanguage(savedLang);
+
+    // Bind language switch buttons
+    document.querySelectorAll<HTMLButtonElement>(".lang-switch-btn").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const lang = btn.getAttribute("data-lang") as Language;
+        if (lang === "en" || lang === "id") {
+          applyLanguage(lang);
+        }
+      });
+    });
+
+    let isMenuOpen = false;
+
+    function toggleMenu(open?: boolean) {
+      isMenuOpen = open !== undefined ? open : !isMenuOpen;
+      if (mobileMenu && iconOpen && iconClose && menuBtn) {
+        if (isMenuOpen) {
+          mobileMenu.classList.remove("hidden");
+          mobileMenu.classList.add("block");
+          iconOpen.classList.add("hidden");
+          iconOpen.classList.remove("block");
+          iconClose.classList.remove("hidden");
+          iconClose.classList.add("block");
+          menuBtn.setAttribute("aria-expanded", "true");
+        } else {
+          mobileMenu.classList.add("hidden");
+          mobileMenu.classList.remove("block");
+          iconOpen.classList.remove("hidden");
+          iconOpen.classList.add("block");
+          iconClose.classList.add("hidden");
+          iconClose.classList.remove("block");
+          menuBtn.setAttribute("aria-expanded", "false");
+        }
+      }
+    }
+
+    menuBtn?.addEventListener("click", () => toggleMenu());
+
+    allScrollLinks.forEach((link) => {
+      link.addEventListener("click", (e) => {
+        const href = link.getAttribute("href");
+        if (href && href.startsWith("#")) {
+          e.preventDefault();
+          toggleMenu(false);
+          const targetId = href.slice(1);
+          const el = document.getElementById(targetId);
+          if (el) {
+            el.scrollIntoView({ behavior: "smooth" });
+            history.pushState(null, "", href);
+          }
+        } else {
+          toggleMenu(false);
+        }
+      });
+    });
+
+    const isProfile = window.location.pathname.startsWith("/profile");
+    const sectionIds = isProfile
+      ? ["home", "experience", "work", "contact"]
+      : ["home", "work", "services", "contact"];
+
+    function setActiveSection(activeId: string) {
+      desktopLinks.forEach((link) => {
+        const sec = link.getAttribute("data-section");
+        if (sec && sec === activeId) {
+          link.classList.add("font-bold");
+          link.classList.remove("text-[#8b949e]");
+          link.style.color = "#97feed";
+        } else if (sec) {
+          link.classList.remove("font-bold");
+          link.style.color = "";
+        }
+      });
+
+      mobileLinks.forEach((link) => {
+        const sec = link.getAttribute("data-section");
+        if (sec && sec === activeId) {
+          link.style.color = "#97feed";
+          link.classList.add("font-bold");
+        } else if (sec) {
+          link.style.color = "#8b949e";
+          link.classList.remove("font-bold");
+        }
+      });
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setActiveSection(entry.target.id);
+          }
+        });
+      },
+      {
+        rootMargin: "-15% 0px -75% 0px",
+        threshold: 0,
+      }
+    );
+
+    sectionIds.forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
+    });
+
+    setActiveSection("home");
+  }
+
+  setupHeader();
+  document.addEventListener("astro:page-load", setupHeader);
+</script>

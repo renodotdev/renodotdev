@@ -1,0 +1,113 @@
+---
+interface Props {
+  pageType?: "studio" | "profile";
+}
+
+const {
+  pageType = Astro.url.pathname.startsWith("/profile") ? "profile" : "studio",
+} = Astro.props;
+
+const currentYear = new Date().getFullYear();
+
+const studioLinks = [
+  { name: "Featured Work (Sobatoko)", href: "/#work", i18nKey: "footer_link_work" },
+  { name: "What We Do", href: "/#services", i18nKey: "footer_link_services" },
+  { name: "Start a Project", href: "/#contact", i18nKey: "footer_link_start" },
+];
+
+const founderLinks = [
+  { name: "About Reno", href: "/profile", i18nKey: "footer_link_profile" },
+  { name: "Career Experience (Opaper, Astro)", href: "/profile#experience", i18nKey: "footer_link_exp" },
+  { name: "Video Courses (BuildWithAngga)", href: "/profile#tutorials", i18nKey: "footer_link_courses" },
+  { name: "GitHub Profile", href: "https://github.com/renodotdev", i18nKey: "" },
+  { name: "LinkedIn Profile", href: "https://www.linkedin.com/in/della-reno-rinaldi-1b0790a2/", i18nKey: "" },
+];
+---
+
+<footer class="border-t border-white/10 w-full bg-[#060709] font-mono-tech">
+  <div class="max-w-[1240px] mx-auto px-5 md:px-6 py-12 md:py-16">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8 lg:gap-12">
+      
+      {/* Brand & Mission — 5 cols */}
+      <div class="lg:col-span-5 flex flex-col gap-4">
+        <a href="/" class="w-fit flex items-center gap-2.5">
+          <img
+            src="/logo/logo.svg"
+            alt="renodotdev"
+            width="254"
+            height="48"
+            class="h-10 md:h-12 w-auto object-contain"
+          />
+          <span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-lime-400/10 text-lime-400 border border-lime-400/30">
+            Studio
+          </span>
+        </a>
+
+        <p class="text-xs leading-relaxed text-[#8b949e] max-w-sm font-sans" data-i18n-html="footer_desc_html">
+          An independent software studio run by <strong>Della Reno Rinaldi</strong>.
+          Building fast mobile apps, websites, and smart AI tools with senior craftsmanship and zero fluff.
+        </p>
+
+        <div class="flex items-center gap-2 pt-2 text-xs text-[#8b949e]">
+          <span class="w-2 h-2 rounded-full bg-lime-400"></span>
+          <span data-i18n="footer_open">Taking on new client projects &bull; Jakarta &amp; Remote Worldwide</span>
+        </div>
+      </div>
+
+      {/* Studio Navigation — 3 cols */}
+      <div class="lg:col-span-3 flex flex-col gap-3">
+        <h4 class="text-xs font-bold uppercase tracking-wider text-white" data-i18n="footer_col_studio">Studio</h4>
+        <div class="flex flex-col gap-2">
+          {
+            studioLinks.map((link) => (
+              <a
+                href={link.href}
+                data-i18n={link.i18nKey || undefined}
+                class="text-xs transition-colors text-[#8b949e] hover:text-white"
+              >
+                {link.name}
+              </a>
+            ))
+          }
+        </div>
+      </div>
+
+      {/* Founder & Portfolio — 4 cols */}
+      <div class="lg:col-span-4 flex flex-col gap-3">
+        <h4 class="text-xs font-bold uppercase tracking-wider text-white" data-i18n="footer_col_founder">About Reno</h4>
+        <div class="flex flex-col gap-2">
+          {
+            founderLinks.map((link) => (
+              <a
+                href={link.href}
+                target={link.href.startsWith("http") ? "_blank" : "_self"}
+                rel={link.href.startsWith("http") ? "noopener noreferrer" : ""}
+                data-i18n={link.i18nKey || undefined}
+                class="text-xs transition-colors text-[#8b949e] hover:text-white"
+              >
+                {link.name}
+              </a>
+            ))
+          }
+        </div>
+      </div>
+
+    </div>
+
+    {/* Bottom Bar */}
+    <div
+      class="mt-12 pt-6 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[#8b949e]"
+    >
+      <p>
+        &copy; {currentYear} renodotdev &bull; Founded by Della Reno Rinaldi.
+      </p>
+      <div class="flex items-center gap-4 text-xs">
+        <a href="https://wa.me/+6281212996550" target="_blank" rel="noopener noreferrer" class="text-white hover:text-lime-400">WhatsApp</a>
+        <span class="text-white/20">&bull;</span>
+        <a href="mailto:renodotdev@gmail.com" class="text-white hover:text-lime-400">renodotdev@gmail.com</a>
+        <span class="text-white/20">&bull;</span>
+        <a href="/#contact" class="text-lime-400 hover:underline font-bold" data-i18n="footer_link_start">Start a Project &rarr;</a>
+      </div>
+    </div>
+  </div>
+</footer>

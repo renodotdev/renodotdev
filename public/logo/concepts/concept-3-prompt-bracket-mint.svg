@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 64" fill="none">
+  <defs>
+    <!-- Radiant Mint Halo from Original Logo (#97feed) -->
+    <radialGradient id="glow-mint-c3" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#97feed" stop-opacity="0.85" />
+      <stop offset="45%" stop-color="#97feed" stop-opacity="0.3" />
+      <stop offset="100%" stop-color="#97feed" stop-opacity="0" />
+    </radialGradient>
+    <linearGradient id="badge-border-mint" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.25" />
+      <stop offset="100%" stop-color="#35a29f" stop-opacity="0.3" />
+    </linearGradient>
+  </defs>
+
+  <!-- ── Chamfered Tech Badge (44x44) ───────────────── -->
+  <g transform="translate(10, 10)">
+    <!-- Chamfered polygon: top-right cut corner (Neo-Brutalist classic) -->
+    <path d="M 6 0 H 32 L 44 12 V 38 C 44 41.3 41.3 44 38 44 H 6 C 2.7 44 0 41.3 0 38 V 6 C 0 2.7 2.7 0 6 0 Z" 
+          fill="#08090a" stroke="url(#badge-border-mint)" stroke-width="1.2" />
+
+    <!-- Terminal Command Prompt chevron `>` in crisp white -->
+    <path d="M 10 16 L 16 22 L 10 28" 
+          stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+
+    <!-- Technical 'R' glyph in crisp white -->
+    <path d="M 21 30 V 16 H 27 C 29.5 16 31 17.5 31 19.5 C 31 21.5 29.5 23 27 23 H 23 M 24 23 L 31 30" 
+          stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
+
+    <!-- Radiant Mint Glow Halo behind cursor -->
+    <circle cx="36" cy="29" r="7" fill="url(#glow-mint-c3)" />
+
+    <!-- Active Terminal Cursor Block `■` in Original Neon Mint (#97feed) -->
+    <rect x="34" y="26" width="4.5" height="6.5" rx="0.5" fill="#97feed" />
+  </g>
+
+  <!-- ── Wordmark ───────────────────────────────────── -->
+  <!-- "reno" -->
+  <text x="68" y="37" font-family="'JetBrains Mono', monospace" font-size="21" font-weight="800" letter-spacing="-0.03em" fill="#ffffff">
+    reno<tspan fill="#97feed">.</tspan>dev
+  </text>
+
+  <!-- System Monospace Badge with heritage teal & mint -->
+  <g transform="translate(182, 23)">
+    <rect width="78" height="16" rx="3" fill="#35a29f" fill-opacity="0.12" stroke="#97feed" stroke-opacity="0.4" stroke-width="1" />
+    <text x="39" y="11.5" font-family="'JetBrains Mono', monospace" font-size="8" font-weight="700" letter-spacing="0.1em" fill="#97feed" text-anchor="middle">
+      AI // MOBILE
+    </text>
+  </g>
+</svg>

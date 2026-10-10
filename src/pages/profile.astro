@@ -1,0 +1,480 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { experienceData } from "@/data/experience";
+import { tutorialsData } from "@/data/tutorials";
+import { projectsData } from "@/data/projects";
+import ExperienceSection from "@/components/ExperienceSection.astro";
+import ContactForm from "@/components/ContactForm.astro";
+
+const bwaCourse = tutorialsData[0];
+const sobatoko = projectsData.find((p) => p.id === 0)!;
+
+const profileStats = [
+  {
+    valKey: "p_stat_1_val",
+    valDefault: "8+ Years",
+    lblKey: "p_stat_1_lbl",
+    lblDefault: "In Production",
+  },
+  {
+    valKey: "p_stat_2_val",
+    valDefault: "React Native",
+    lblKey: "p_stat_2_lbl",
+    lblDefault: "Core Focus",
+  },
+  {
+    valKey: "p_stat_3_val",
+    valDefault: "Opaper & Astro",
+    lblKey: "p_stat_3_lbl",
+    lblDefault: "Prior Senior Roles",
+  },
+  {
+    valKey: "p_stat_4_val",
+    valDefault: "Instructor",
+    lblKey: "p_stat_4_lbl",
+    lblDefault: "BuildWithAngga",
+  },
+];
+
+const techStackGroups = [
+  {
+    category: "Mobile",
+    items: ["React Native", "Expo", "Reanimated", "iOS & Android", "Offline Sync"],
+  },
+  {
+    category: "Web & Full-Stack",
+    items: ["Next.js", "React", "Astro", "TypeScript", "Tailwind CSS"],
+  },
+  {
+    category: "Backend & Data",
+    items: ["PostgreSQL", "Node.js", "Firebase", "TanStack Query", "Jotai"],
+  },
+  {
+    category: "Hardware & POS",
+    items: ["Bluetooth Printers", "LAN Printers", "ESC/POS", "Cash Drawers"],
+  },
+];
+---
+
+<Layout
+  title="Della Reno Rinaldi — Senior Mobile & Frontend Engineer"
+  description="Personal profile, engineering background, and production track record of Della Reno Rinaldi (ex-Opaper, ex-Astro, founder of renodotdev)."
+  pageType="profile"
+>
+  <div class="min-h-screen overflow-x-hidden bg-[#08090a] text-white font-sans selection:bg-lime-400 selection:text-black">
+
+    {/* ── Studio Navigation Bridge ──────────────────────────── */}
+    <div class="border-b border-white/10 bg-[#060709] py-2.5 px-5 md:px-6 text-xs font-mono-tech text-white/60">
+      <div class="max-w-[1240px] mx-auto flex flex-wrap items-center justify-between gap-2">
+        <div class="flex items-center gap-2">
+          <span class="w-2 h-2 rounded-full bg-lime-400"></span>
+          <span class="text-white font-bold" data-i18n="p_banner_tag">Della Reno Rinaldi &bull; Founder of renodotdev</span>
+        </div>
+        <div>
+          <a
+            href="/"
+            class="text-lime-400 hover:underline font-bold inline-flex items-center gap-1 transition-colors"
+          >
+            <span data-i18n="p_banner_back">&larr; Studio &amp; Case Studies</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    {/* ══════════════════════════════════════════════════════════════════
+        SECTION 1: ABOUT RENO & HERO
+    ══════════════════════════════════════════════════════════════════ */}
+    <section
+      id="home"
+      class="relative flex items-center py-16 md:py-24 px-5 md:px-6 overflow-hidden tech-grid-bg"
+    >
+      <div class="w-full max-w-[1240px] mx-auto">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-12 items-center mb-12">
+          {/* Left: Bio & CTAs */}
+          <div class="lg:col-span-7 flex flex-col items-center lg:items-start text-center lg:text-left gap-4 z-10">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/15 text-xs font-mono-tech text-white/70 select-none">
+              <span class="w-2 h-2 rounded-full bg-lime-400 animate-pulse"></span>
+              <span class="text-lime-400 font-semibold" data-i18n="p_hero_badge">Available for advisory &amp; select projects</span>
+            </div>
+
+            <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold uppercase leading-[1.05] tracking-[-0.03em] text-white font-sans">
+              Della <span class="text-lime-400">Reno</span> Rinaldi
+            </h1>
+
+            <h2 class="text-sm sm:text-base font-bold uppercase tracking-wider text-white/80 font-mono-tech" data-i18n="p_hero_subtitle">
+              Senior Frontend &amp; Mobile Engineer &bull; Studio Founder
+            </h2>
+
+            <p class="text-sm sm:text-base leading-relaxed max-w-xl text-[#8b949e] font-sans" data-i18n-html="p_hero_bio_html">
+              Hey! I'm <strong class="text-white">Reno</strong>. I’ve spent the last 8+ years building mobile apps and web platforms used by thousands of daily users. I specialize in React Native, Next.js, and practical AI tools — with a strong focus on smooth 60 FPS performance and honest, direct collaboration.
+            </p>
+
+            <div class="flex flex-wrap gap-3 mt-2 justify-center lg:justify-start w-full sm:w-auto text-xs font-mono-tech">
+              <a
+                href="#contact"
+                class="w-full sm:w-auto px-6 py-3.5 rounded font-bold uppercase tracking-wider bg-lime-400 text-black hover:bg-lime-300 transition-all border border-lime-400 cursor-pointer shadow-[0_0_20px_rgba(151,254,237,0.25)] flex items-center justify-center gap-1.5"
+              >
+                <span data-i18n="p_hero_btn_contact">Say Hello &rarr;</span>
+              </a>
+
+              <a
+                href="#experience"
+                data-i18n="p_hero_btn_exp"
+                class="w-full sm:w-auto px-6 py-3.5 rounded border border-white/20 text-white font-bold uppercase tracking-wider hover:border-lime-400 hover:text-lime-400 bg-white/5 transition-all text-center"
+              >
+                View Experience
+              </a>
+
+              <a
+                href="/"
+                class="w-full sm:w-auto px-5 py-3.5 rounded text-white/70 hover:text-lime-400 font-bold uppercase tracking-wider inline-flex items-center justify-center gap-1.5 transition-colors border border-white/10"
+              >
+                <span data-i18n="p_hero_btn_studio">Visit Studio &rarr;</span>
+              </a>
+            </div>
+          </div>
+
+          {/* Right: Portrait photo card */}
+          <div class="lg:col-span-5 relative z-10 flex justify-center lg:justify-end w-full">
+            <div
+              class="relative w-full max-w-[280px] sm:max-w-[320px] aspect-[0.78] rounded-2xl overflow-hidden border border-white/20 shadow-2xl group bg-[#0c0e12]"
+            >
+              <img
+                src="/photos/profile-1.jpeg"
+                alt="Della Reno Rinaldi"
+                class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                loading="eager"
+              />
+              <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent"></div>
+              <div class="absolute bottom-4 left-4 right-4 text-left font-mono-tech">
+                <span class="inline-block px-2.5 py-1 rounded text-[10px] font-bold uppercase tracking-wider bg-lime-400 text-black" data-i18n="p_hero_role_tag">
+                  Senior Engineer &bull; Studio Founder
+                </span>
+                <p class="text-white text-xs font-medium mt-1.5" data-i18n="p_hero_loc">
+                  Jakarta, Indonesia &bull; Remote Worldwide
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* 4-Item Credibility Stat Strip */}
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-0 w-full border border-white/15 rounded-xl overflow-hidden bg-[#0c0e12] font-mono-tech shadow-xl">
+          {profileStats.map((stat, idx) => (
+            <div class={`p-5 sm:p-6 border-b lg:border-b-0 ${idx < 3 ? 'lg:border-r' : ''} border-white/15 hover:bg-white/[0.02] transition-colors`}>
+              <span class="text-xl sm:text-2xl font-extrabold text-white block mb-1" data-i18n={stat.valKey}>
+                {stat.valDefault}
+              </span>
+              <p class="text-xs text-lime-400 font-bold uppercase tracking-wider" data-i18n={stat.lblKey}>
+                {stat.lblDefault}
+              </p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    {/* ══════════════════════════════════════════════════════════════════
+        SECTION 2: CAREER EXPERIENCE & TECH STACK
+    ══════════════════════════════════════════════════════════════════ */}
+    <section
+      id="experience"
+      class="py-20 md:py-24 px-5 md:px-6 max-w-[1240px] mx-auto border-t border-white/10"
+    >
+      <div class="flex flex-col items-center text-center mb-12">
+        <span class="text-xs font-mono-tech font-bold uppercase tracking-widest text-lime-400 mb-2" data-i18n="p_exp_kicker">
+          Career Track Record
+        </span>
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight font-sans mb-3" data-i18n="p_exp_title">
+          Where I've worked &amp; what I built
+        </h2>
+        <p class="text-sm text-[#8b949e] max-w-xl font-sans" data-i18n="p_exp_desc">
+          Real production software shipped for high-growth tech companies, cashier POS systems, and fast e-commerce.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        {/* Left: Interactive Career Timeline (7 cols) */}
+        <div class="lg:col-span-7">
+          <ExperienceSection />
+        </div>
+
+        {/* Right: Profile snapshot & Daily Tech Stack (5 cols) */}
+        <div class="lg:col-span-5 flex flex-col gap-6">
+          {/* Quick Profile Snapshot Card */}
+          <div class="rounded-2xl p-6 sm:p-7 bg-[#0e1116] border border-white/15 font-mono-tech shadow-xl">
+            <div class="flex items-center gap-4 mb-4">
+              <div class="w-16 h-16 rounded-full overflow-hidden border-2 border-lime-400 shrink-0 shadow-lg">
+                <img
+                  src="/photos/profile-1.jpeg"
+                  alt="Della Reno Rinaldi"
+                  width="64"
+                  height="64"
+                  class="w-full h-full object-cover"
+                />
+              </div>
+              <div>
+                <h3 class="text-lg font-bold text-white font-sans">
+                  Della Reno Rinaldi
+                </h3>
+                <p class="text-xs text-lime-400 font-bold">
+                  Senior Frontend &amp; Mobile Engineer
+                </p>
+                <p class="text-[11px] text-[#8b949e]">
+                  8+ Years Production Experience
+                </p>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-3 pt-4 border-t border-white/10 text-center">
+              <div class="p-3 rounded-lg bg-[#090b0e] border border-white/10">
+                <span class="text-2xl font-extrabold text-white block">
+                  {experienceData.length}
+                </span>
+                <span class="text-[10px] text-white/50 uppercase tracking-wider">
+                  Companies
+                </span>
+              </div>
+              <div class="p-3 rounded-lg bg-[#090b0e] border border-white/10">
+                <span class="text-2xl font-extrabold text-white block">
+                  {projectsData.length}+
+                </span>
+                <span class="text-[10px] text-white/50 uppercase tracking-wider">
+                  Shipped Projects
+                </span>
+              </div>
+            </div>
+          </div>
+
+          {/* Daily Tech Stack Card */}
+          <div class="rounded-2xl p-6 sm:p-7 bg-[#0e1116] border border-white/15 font-mono-tech shadow-xl">
+            <h3 class="text-xs font-bold uppercase tracking-wider text-white mb-4 flex items-center justify-between pb-3 border-b border-white/10">
+              <span data-i18n="p_stack_title">Tech Stack &amp; Daily Tools</span>
+              <span class="text-[10px] text-lime-400">Production Tested</span>
+            </h3>
+
+            <div class="space-y-4">
+              {techStackGroups.map((group) => (
+                <div>
+                  <span class="text-[11px] text-lime-400 font-bold block mb-1.5 uppercase tracking-wider">
+                    {group.category}
+                  </span>
+                  <div class="flex flex-wrap gap-1.5">
+                    {group.items.map((tech) => (
+                      <span class="px-2.5 py-1 rounded text-xs bg-black/60 text-white/80 border border-white/10 font-sans">
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {/* ══════════════════════════════════════════════════════════════════
+        SECTION 3: TEACHING, COURSES & FEATURED WORK
+    ══════════════════════════════════════════════════════════════════ */}
+    <section
+      id="work"
+      class="py-20 md:py-24 px-5 md:px-6 max-w-[1240px] mx-auto border-t border-white/10"
+    >
+      <div class="flex flex-col items-center text-center mb-12">
+        <span class="text-xs font-mono-tech font-bold uppercase tracking-widest text-lime-400 mb-2" data-i18n="p_work_kicker">
+          Teaching &amp; Featured Work
+        </span>
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight font-sans mb-3" data-i18n="p_work_title">
+          Courses, open-source &amp; side builds
+        </h2>
+        <p class="text-sm text-[#8b949e] max-w-xl font-sans" data-i18n="p_work_desc">
+          Sharing practical engineering knowledge and building real tools that solve problems.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {/* Course Card: BuildWithAngga */}
+        <div class="rounded-2xl overflow-hidden border border-white/15 bg-[#0e1116] flex flex-col group hover:border-lime-400/40 transition-all duration-300 shadow-xl">
+          <div class="relative aspect-video overflow-hidden bg-black">
+            <img
+              src={bwaCourse.thumbnail}
+              alt={bwaCourse.title}
+              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+            />
+            <div class="absolute top-3 left-3 px-2.5 py-1 rounded text-[10px] font-bold uppercase tracking-wider bg-black/90 text-lime-400 border border-white/15 font-mono-tech">
+              <span data-i18n="p_course_badge">Video Course</span> &bull; {bwaCourse.platform}
+            </div>
+            <div class="absolute bottom-3 right-3 px-2 py-0.5 rounded text-[10px] font-bold bg-black/80 text-white font-mono-tech">
+              {bwaCourse.duration}
+            </div>
+          </div>
+
+          <div class="p-6 sm:p-7 flex flex-col flex-1 justify-between font-mono-tech">
+            <div>
+              <h3 class="text-lg font-bold text-white mb-2 font-sans group-hover:text-lime-400 transition-colors">
+                {bwaCourse.title}
+              </h3>
+              <p class="text-xs leading-relaxed mb-4 text-[#8b949e] font-sans">
+                A comprehensive 3.5-hour video course on BuildWithAngga teaching developers how to architect and build a complete mobile app from scratch with React Native.
+              </p>
+              <div class="flex flex-wrap gap-1.5 mb-5">
+                {bwaCourse.tags.map((tag) => (
+                  <span class="px-2 py-0.5 rounded text-[10px] bg-black/60 border border-white/10 text-white/70">
+                    {tag}
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            <a
+              href={bwaCourse.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-flex items-center justify-center gap-2 px-5 py-3 rounded text-xs font-bold uppercase tracking-wider text-black bg-lime-400 hover:bg-lime-300 transition-colors border border-lime-400"
+            >
+              <span data-i18n="p_course_watch">Watch on BuildWithAngga &rarr;</span>
+            </a>
+          </div>
+        </div>
+
+        {/* Project Card: Sobatoko */}
+        <div class="rounded-2xl overflow-hidden border border-white/15 bg-[#0e1116] flex flex-col group hover:border-lime-400/40 transition-all duration-300 shadow-xl">
+          <div class="p-8 flex items-center justify-center bg-white min-h-[220px] relative">
+            <img
+              src={sobatoko.image}
+              alt="Sobatoko logo"
+              class="max-w-[70%] max-h-[110px] object-contain group-hover:scale-105 transition-transform duration-500"
+            />
+            <div class="absolute top-3 left-3 px-2.5 py-1 rounded text-[10px] font-bold uppercase tracking-wider bg-black/90 text-lime-400 border border-white/15 font-mono-tech">
+              <span data-i18n="p_sobatoko_badge">Live Flagship Project</span>
+            </div>
+          </div>
+
+          <div class="p-6 sm:p-7 flex flex-col flex-1 justify-between font-mono-tech">
+            <div>
+              <h3 class="text-lg font-bold text-white mb-2 font-sans group-hover:text-lime-400 transition-colors">
+                {sobatoko.name} &bull; Retail POS &amp; Storefront
+              </h3>
+              <p class="text-xs leading-relaxed mb-4 text-[#8b949e] font-sans" data-i18n="p_sobatoko_desc">
+                A full retail POS and store platform with hardware thermal printer integration, built from scratch.
+              </p>
+              <div class="flex flex-wrap gap-1.5 mb-5">
+                {sobatoko.techStack.map((tech) => (
+                  <span class="px-2 py-0.5 rounded text-[10px] bg-black/60 border border-white/10 text-white/70">
+                    {tech}
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            <a
+              href={sobatoko.siteUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-flex items-center justify-center gap-2 px-5 py-3 rounded text-xs font-bold uppercase tracking-wider text-black bg-lime-400 hover:bg-lime-300 transition-colors border border-lime-400"
+            >
+              <span data-i18n="work_btn_visit">Visit Sobatoko.com &rarr;</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {/* ══════════════════════════════════════════════════════════════════
+        SECTION 4: CONTACT & GET IN TOUCH
+    ══════════════════════════════════════════════════════════════════ */}
+    <section
+      id="contact"
+      class="py-20 md:py-24 px-5 md:px-6 max-w-[1240px] mx-auto border-t border-white/10"
+    >
+      <div class="flex flex-col items-center text-center mb-12">
+        <span class="text-xs font-mono-tech font-bold uppercase tracking-widest text-lime-400 mb-2" data-i18n="p_contact_kicker">
+          Say Hello
+        </span>
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight font-sans mb-3" data-i18n="p_contact_title">
+          Let's connect
+        </h2>
+        <p class="text-sm text-[#8b949e] max-w-xl font-sans" data-i18n="p_contact_desc">
+          Whether you have an interesting mobile app idea, need React Native advice, or want to discuss a project, I’m always happy to chat.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        {/* Left: Direct Channels & Socials (5 cols) */}
+        <div class="lg:col-span-5 flex flex-col gap-4 font-mono-tech">
+          {/* WhatsApp Direct */}
+          <a
+            href="https://wa.me/+6281212996550?text=Hi%20Reno,%20I'd%20like%20to%20connect%20with%20you"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="p-5 rounded-xl bg-[#0e1116] border border-white/15 hover:border-lime-400/50 group transition-all flex items-center justify-between"
+          >
+            <div class="flex items-center gap-3.5">
+              <div class="w-9 h-9 rounded bg-lime-400/10 text-lime-400 border border-lime-400/30 flex items-center justify-center font-bold text-xs">
+                WA
+              </div>
+              <div>
+                <h4 class="text-xs font-bold text-white uppercase" data-i18n="contact_wa_title">WhatsApp Reno</h4>
+                <p class="text-xs text-lime-400">+62 812 1299 6550</p>
+                <p class="text-[11px] text-white/40 font-sans mt-0.5" data-i18n="contact_wa_sub">Fastest way to get in touch</p>
+              </div>
+            </div>
+            <span class="text-lime-400 text-sm font-bold">&rarr;</span>
+          </a>
+
+          {/* Direct Email */}
+          <div class="p-5 rounded-xl bg-[#0e1116] border border-white/15 flex items-center gap-3.5">
+            <div class="w-9 h-9 rounded bg-white/5 text-white/60 border border-white/10 flex items-center justify-center font-bold text-xs">
+              @
+            </div>
+            <div class="min-w-0 flex-1">
+              <span class="text-[10px] text-white/40 uppercase block" data-i18n="contact_email_title">Direct Email</span>
+              <a
+                href="mailto:renodotdev@gmail.com"
+                class="text-xs font-bold text-white hover:text-lime-400 block truncate transition-colors"
+              >
+                renodotdev@gmail.com
+              </a>
+            </div>
+          </div>
+
+          {/* Social Profiles */}
+          <div class="p-5 rounded-xl bg-[#0e1116] border border-white/15">
+            <span class="text-[10px] text-white/40 uppercase block mb-3">Online Profiles</span>
+            <div class="flex flex-wrap gap-2 text-xs">
+              <a
+                href="https://github.com/renodotdev"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="px-3 py-1.5 rounded border border-white/15 text-white/80 hover:text-lime-400 hover:border-lime-400 transition-colors"
+              >
+                GitHub &nearr;
+              </a>
+              <a
+                href="https://www.linkedin.com/in/della-reno-rinaldi-1b0790a2/"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="px-3 py-1.5 rounded border border-white/15 text-white/80 hover:text-lime-400 hover:border-lime-400 transition-colors"
+              >
+                LinkedIn &nearr;
+              </a>
+              <a
+                href="/"
+                class="px-3 py-1.5 rounded border border-lime-400/30 text-lime-400 hover:bg-lime-400/10 transition-colors"
+              >
+                Studio Site &rarr;
+              </a>
+            </div>
+          </div>
+        </div>
+
+        {/* Right: Contact Form (7 cols) */}
+        <div class="lg:col-span-7">
+          <ContactForm />
+        </div>
+      </div>
+    </section>
+
+  </div>
+</Layout>

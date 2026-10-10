@@ -1,0 +1,150 @@
+---
+import { experienceData } from "@/data/experience";
+
+const featuredExp = experienceData.slice(0, 2); // Opaper & Astro
+const earlierExp = experienceData.slice(2); // The Edge Singapore & Nextg Travel
+---
+
+<div class="rounded-2xl p-6 sm:p-7 bg-[#0e1116] border border-white/15 font-mono-tech shadow-xl">
+  <div class="flex items-center justify-between mb-6 pb-3 border-b border-white/10">
+    <h3 class="text-xs font-bold uppercase tracking-wider text-white flex items-center gap-2">
+      <span data-i18n="p_exp_title">Where I've worked &amp; what I built</span>
+    </h3>
+    <span class="text-xs text-lime-400 font-semibold" data-i18n="p_stat_1_val">8+ Years Production</span>
+  </div>
+
+  {/* Featured Roles (Opaper & Astro) */}
+  <div class="space-y-4">
+    {
+      featuredExp.map((exp, idx) => (
+        <div class="rounded-xl p-5 bg-[#090b0e] border border-white/10 hover:border-lime-400/30 transition-colors">
+          <div class="flex flex-wrap items-center justify-between gap-2 mb-1.5">
+            <h4 class="text-base font-bold text-white font-sans">
+              {exp.jobTitle}
+            </h4>
+            <span class="text-[10px] px-2 py-0.5 rounded font-semibold bg-lime-400/10 text-lime-400 border border-lime-400/30">
+              {idx === 0 ? "Latest Role" : "Senior Role"}
+            </span>
+          </div>
+
+          <p class="text-xs font-bold text-lime-400 mb-1">
+            {exp.company}
+          </p>
+          <p class="text-[11px] text-white/50 mb-3 font-mono">
+            {exp.dateRange} &bull; {exp.location}
+          </p>
+          <p class="text-xs leading-relaxed text-[#8b949e] mb-4 font-sans">
+            {exp.description}
+          </p>
+
+          {exp.achievements && exp.achievements.length > 0 && (
+            <ul class="space-y-1.5 text-xs font-sans text-white/70">
+              {exp.achievements.map((a) => (
+                <li class="flex gap-2">
+                  <span class="text-lime-400 font-bold shrink-0">&bull;</span>
+                  <span>{a}</span>
+                </li>
+              ))}
+            </ul>
+          )}
+
+          <div class="flex flex-wrap gap-1.5 mt-4 pt-3 border-t border-white/5 text-[10px]">
+            {exp.technologies.slice(0, 6).map((tech) => (
+              <span class="px-2 py-0.5 rounded bg-black/50 text-white/70 border border-white/10">
+                {tech}
+              </span>
+            ))}
+          </div>
+        </div>
+      ))
+    }
+  </div>
+
+  {/* Expandable earlier roles */}
+  <div
+    id="extra-experiences"
+    class="flex flex-col gap-4 overflow-hidden transition-all duration-500 max-h-0 opacity-0 mt-4"
+  >
+    {
+      earlierExp.map((exp) => (
+        <div class="rounded-xl p-5 bg-[#090b0e] border border-white/10">
+          <div class="flex flex-wrap items-center justify-between gap-2 mb-1.5">
+            <h4 class="text-base font-bold text-white font-sans">
+              {exp.jobTitle}
+            </h4>
+          </div>
+
+          <p class="text-xs font-bold text-lime-400 mb-1">
+            {exp.company}
+          </p>
+          <p class="text-[11px] text-white/50 mb-3 font-mono">
+            {exp.dateRange} &bull; {exp.location}
+          </p>
+          <p class="text-xs leading-relaxed text-[#8b949e] mb-3 font-sans">
+            {exp.description}
+          </p>
+
+          {exp.achievements && exp.achievements.length > 0 && (
+            <ul class="space-y-1.5 text-xs font-sans text-white/70">
+              {exp.achievements.map((a) => (
+                <li class="flex gap-2">
+                  <span class="text-lime-400 font-bold shrink-0">&bull;</span>
+                  <span>{a}</span>
+                </li>
+              ))}
+            </ul>
+          )}
+
+          <div class="flex flex-wrap gap-1.5 mt-4 pt-3 border-t border-white/5 text-[10px]">
+            {exp.technologies.slice(0, 5).map((tech) => (
+              <span class="px-2 py-0.5 rounded bg-black/50 text-white/70 border border-white/10">
+                {tech}
+              </span>
+            ))}
+          </div>
+        </div>
+      ))
+    }
+  </div>
+
+  {/* Toggle button */}
+  <button
+    id="toggle-exp-btn"
+    type="button"
+    class="mt-5 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-lime-400 hover:text-white transition-colors cursor-pointer"
+  >
+    <span id="toggle-exp-text">View Earlier Roles (The Edge Singapore &amp; Nextg Travel)</span>
+    <span id="toggle-exp-icon" class="text-xs transition-transform duration-300">&darr;</span>
+  </button>
+</div>
+
+<script>
+  function setupExperienceToggle() {
+    const btn = document.getElementById("toggle-exp-btn");
+    const container = document.getElementById("extra-experiences");
+    const textSpan = document.getElementById("toggle-exp-text");
+    const icon = document.getElementById("toggle-exp-icon");
+
+    let expanded = false;
+
+    btn?.addEventListener("click", () => {
+      expanded = !expanded;
+      if (container && textSpan && icon) {
+        if (expanded) {
+          container.classList.remove("max-h-0", "opacity-0");
+          container.classList.add("max-h-[3000px]", "opacity-100");
+          textSpan.textContent = "Show Less";
+          icon.style.transform = "rotate(180deg)";
+        } else {
+          container.classList.remove("max-h-[3000px]", "opacity-100");
+          container.classList.add("max-h-0", "opacity-0");
+          textSpan.textContent = "View Earlier Roles (The Edge Singapore & Nextg Travel)";
+          icon.style.transform = "rotate(0deg)";
+        }
+      }
+    });
+  }
+
+  setupExperienceToggle();
+  document.addEventListener("astro:page-load", setupExperienceToggle);
+</script>

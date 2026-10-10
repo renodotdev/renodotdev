@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" fill="none">
+  <defs>
+    <radialGradient id="glow-lime-i4" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#a3e635" stop-opacity="0.8" />
+      <stop offset="50%" stop-color="#a3e635" stop-opacity="0.2" />
+      <stop offset="100%" stop-color="#a3e635" stop-opacity="0" />
+    </radialGradient>
+  </defs>
+  <!-- Frame -->
+  <rect x="2" y="2" width="44" height="44" rx="8" fill="#08090a" stroke="#ffffff" stroke-opacity="0.22" stroke-width="1.2" />
+
+  <!-- Inner grid traces -->
+  <line x1="6" y1="24" x2="42" y2="24" stroke="#ffffff" stroke-opacity="0.08" stroke-dasharray="2 2" />
+  <line x1="24" y1="6" x2="24" y2="42" stroke="#ffffff" stroke-opacity="0.08" stroke-dasharray="2 2" />
+
+  <!-- Left Bracket `[` -->
+  <path d="M 12 15 H 9 V 33 H 12" stroke="#8b949e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+
+  <!-- Monogram R -->
+  <path d="M 17 33 V 15 H 24.5 C 27.5 15 29.5 16.8 29.5 19.5 C 29.5 22.2 27.5 24 24.5 24 H 19 M 21 24 L 28.5 33" 
+        stroke="#ffffff" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" />
+
+  <!-- Smooth Halo -->
+  <circle cx="33.5" cy="30.5" r="7" fill="url(#glow-lime-i4)" />
+
+  <!-- Lime Square Coordinate Node -->
+  <rect x="31" y="28" width="5" height="5" rx="1" fill="#a3e635" />
+
+  <!-- Right Bracket `]` -->
+  <path d="M 37 15 H 40 V 33 H 37" stroke="#8b949e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+</svg>

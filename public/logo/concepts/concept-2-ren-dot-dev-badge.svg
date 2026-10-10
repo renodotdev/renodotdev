@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 290 64" fill="none">
+  <defs>
+    <radialGradient id="glow-lime-c2-full" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#a3e635" stop-opacity="0.8" />
+      <stop offset="45%" stop-color="#a3e635" stop-opacity="0.25" />
+      <stop offset="100%" stop-color="#a3e635" stop-opacity="0" />
+    </radialGradient>
+  </defs>
+
+  <!-- ── Precision Circular Emblem (48x48) ──────────── -->
+  <g transform="translate(8, 8)">
+    <!-- Outer Technical Ring with Ticks -->
+    <circle cx="24" cy="24" r="22" fill="#08090a" stroke="#ffffff" stroke-opacity="0.25" stroke-width="1.2" />
+    
+    <!-- 4 Cardinal Axis Ticks -->
+    <line x1="24" y1="2" x2="24" y2="5" stroke="#a3e635" stroke-width="1.5" stroke-linecap="round" />
+    <line x1="24" y1="43" x2="24" y2="46" stroke="#ffffff" stroke-opacity="0.3" stroke-width="1.2" stroke-linecap="round" />
+    <line x1="2" y1="24" x2="5" y2="24" stroke="#ffffff" stroke-opacity="0.3" stroke-width="1.2" stroke-linecap="round" />
+    <line x1="43" y1="24" x2="46" y2="24" stroke="#ffffff" stroke-opacity="0.3" stroke-width="1.2" stroke-linecap="round" />
+
+    <!-- "REN" on upper tier -->
+    <text x="10" y="21" font-family="'JetBrains Mono', monospace" font-size="12" font-weight="900" letter-spacing="-0.03em" fill="#ffffff">
+      REN
+    </text>
+
+    <!-- Smooth Radial Halo -->
+    <circle cx="34" cy="17" r="7" fill="url(#glow-lime-c2-full)" />
+
+    <!-- The Signature Glowing Lime Dot (Next to REN) -->
+    <circle cx="34" cy="17" r="3.2" fill="#a3e635" />
+
+    <!-- Technical Hairline Divider -->
+    <line x1="10" y1="26" x2="38" y2="26" stroke="#ffffff" stroke-opacity="0.18" stroke-width="0.8" />
+
+    <!-- "DEV" on lower tier -->
+    <text x="11" y="37" font-family="'JetBrains Mono', monospace" font-size="10.5" font-weight="700" letter-spacing="0.18em" fill="#8b949e">
+      DEV
+    </text>
+  </g>
+
+  <!-- ── Wordmark ───────────────────────────────────── -->
+  <!-- "renodotdev" -->
+  <text x="68" y="34" font-family="'Plus Jakarta Sans', system-ui, sans-serif" font-size="21" font-weight="800" letter-spacing="-0.03em" fill="#ffffff">
+    reno<tspan fill="#a3e635">dot</tspan>dev
+  </text>
+
+  <!-- Technical Monospace Subline -->
+  <text x="68" y="47" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="600" letter-spacing="0.14em" fill="#8b949e">
+    ENGINEERING STUDIO // SYS
+  </text>
+</svg>

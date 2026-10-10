@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" fill="none">
+  <defs>
+    <radialGradient id="glow-lime-i1" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#a3e635" stop-opacity="0.8" />
+      <stop offset="40%" stop-color="#a3e635" stop-opacity="0.3" />
+      <stop offset="100%" stop-color="#a3e635" stop-opacity="0" />
+    </radialGradient>
+  </defs>
+  <!-- Base Chassis -->
+  <rect x="2" y="2" width="44" height="44" rx="10" fill="#08090a" stroke="#ffffff" stroke-opacity="0.22" stroke-width="1.2" />
+
+  <!-- Alignment Crosshairs -->
+  <path d="M 6 10 L 10 10 M 8 8 L 8 12" stroke="#a3e635" stroke-width="1" stroke-linecap="round" opacity="0.8" />
+  <path d="M 38 38 L 42 38 M 40 36 L 40 40" stroke="#ffffff" stroke-width="1" stroke-linecap="round" opacity="0.25" />
+
+  <!-- Architectural R Glyph -->
+  <path d="M 16 35 V 13 H 26 C 29.8 13 32.5 15.5 32.5 19 C 32.5 22.5 29.8 25 26 25 H 21 M 21 25 L 31.5 35" 
+        stroke="#ffffff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" />
+
+  <!-- Smooth Vector Radial Halo -->
+  <circle cx="36" cy="14" r="7" fill="url(#glow-lime-i1)" />
+
+  <!-- Phosphor Lime Radar Dot -->
+  <circle cx="36" cy="14" r="3.4" fill="#a3e635" />
+</svg>

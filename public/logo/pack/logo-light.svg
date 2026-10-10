@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 64" fill="none">
+  <defs>
+    <radialGradient id="glow-mint-pack-light" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#00bda8" stop-opacity="0.5" />
+      <stop offset="50%" stop-color="#00bda8" stop-opacity="0.15" />
+      <stop offset="100%" stop-color="#00bda8" stop-opacity="0" />
+    </radialGradient>
+  </defs>
+  <g transform="translate(10, 10)">
+    <path d="M 6 0 H 32 L 44 12 V 38 C 44 41.3 41.3 44 38 44 H 6 C 2.7 44 0 41.3 0 38 V 6 C 0 2.7 2.7 0 6 0 Z" fill="#f4f5f7" stroke="rgba(0,0,0,0.14)" stroke-width="1.2" />
+    <path d="M 10 16 L 16 22 L 10 28" stroke="#08090a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M 21 30 V 16 H 27 C 29.5 16 31 17.5 31 19.5 C 31 21.5 29.5 23 27 23 H 23 M 24 23 L 31 30" stroke="#08090a" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
+    <circle cx="36" cy="29" r="7" fill="url(#glow-mint-pack-light)" />
+    <rect x="34" y="26" width="4.5" height="6.5" rx="0.5" fill="#00bda8" />
+  </g>
+  <text x="68" y="37" font-family="'JetBrains Mono', monospace" font-size="21" font-weight="800" letter-spacing="-0.03em" fill="#08090a">reno<tspan fill="#00bda8">.</tspan>dev</text>
+  <g transform="translate(182, 23)">
+    <rect width="78" height="16" rx="3" fill="#00bda8" fill-opacity="0.1" stroke="#00bda8" stroke-opacity="0.4" stroke-width="1" />
+    <text x="39" y="11.5" font-family="'JetBrains Mono', monospace" font-size="8" font-weight="700" letter-spacing="0.1em" fill="#008f7f" text-anchor="middle">AI // MOBILE</text>
+  </g>
+</svg>

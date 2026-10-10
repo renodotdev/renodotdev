@@ -1,0 +1,173 @@
+---
+---
+
+<div
+  class="rounded-2xl p-6 sm:p-8 bg-[#090b0e] border border-white/15 shadow-2xl relative overflow-hidden"
+>
+  <div class="flex items-center justify-between pb-4 mb-6 border-b border-white/10 text-xs font-mono-tech text-white/50">
+    <div class="flex items-center gap-2">
+      <span class="w-2 h-2 rounded-full bg-lime-400"></span>
+      <span class="text-white font-bold" data-i18n="cf_header">Send a quick note</span>
+    </div>
+    <span class="text-white/40" data-i18n="cf_reply_badge">Replies within 24 hours</span>
+  </div>
+
+  <form id="contact-form" class="flex flex-col gap-5 font-mono-tech">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+      <div class="flex flex-col gap-1.5">
+        <label
+          for="cf-name"
+          class="text-xs font-bold uppercase tracking-wider text-white/80"
+          data-i18n="cf_name_label"
+        >
+          Your Name or Company
+        </label>
+        <input
+          id="cf-name"
+          type="text"
+          name="name"
+          required
+          placeholder="What should we call you?"
+          data-i18n-placeholder="cf_name_placeholder"
+          class="w-full rounded-lg px-4 py-3 text-xs outline-none transition-colors placeholder:text-white/20 font-mono bg-[#0f1217] border border-white/15 focus:border-lime-400 text-white"
+        />
+      </div>
+      <div class="flex flex-col gap-1.5">
+        <label
+          for="cf-email"
+          class="text-xs font-bold uppercase tracking-wider text-white/80"
+          data-i18n="cf_email_label"
+        >
+          Your Email
+        </label>
+        <input
+          id="cf-email"
+          type="email"
+          name="email"
+          required
+          placeholder="Where can we reply?"
+          data-i18n-placeholder="cf_email_placeholder"
+          class="w-full rounded-lg px-4 py-3 text-xs outline-none transition-colors placeholder:text-white/20 font-mono bg-[#0f1217] border border-white/15 focus:border-lime-400 text-white"
+        />
+      </div>
+    </div>
+
+    <div class="flex flex-col gap-1.5">
+      <label
+        for="cf-message"
+        class="text-xs font-bold uppercase tracking-wider text-white/80"
+        data-i18n="cf_msg_label"
+      >
+        What would you like to build?
+      </label>
+      <textarea
+        id="cf-message"
+        name="message"
+        required
+        rows="5"
+        placeholder="Tell us a bit about your idea, target platforms (iOS, Android, Web), or any timeline you have in mind..."
+        data-i18n-placeholder="cf_msg_placeholder"
+        class="w-full rounded-lg px-4 py-3 text-xs outline-none transition-colors resize-none placeholder:text-white/20 font-mono bg-[#0f1217] border border-white/15 focus:border-lime-400 text-white"
+      ></textarea>
+    </div>
+
+    <div
+      id="contact-status-success"
+      class="hidden rounded-lg p-4 text-xs font-mono bg-lime-400/10 border border-lime-400 text-lime-400"
+      data-i18n="cf_success_msg"
+    >
+      Thanks for reaching out! Your note is received, and Reno will get back to you shortly.
+    </div>
+
+    <div
+      id="contact-status-error"
+      class="hidden rounded-lg p-4 text-xs font-mono bg-red-500/10 border border-red-500 text-red-400"
+      data-i18n="cf_error_msg"
+    >
+      Oops, something went wrong sending the form. Please message Reno directly on WhatsApp or email renodotdev@gmail.com.
+    </div>
+
+    <button
+      id="contact-submit-btn"
+      type="submit"
+      class="w-full py-3.5 rounded text-xs font-bold uppercase tracking-wider transition-all duration-200 hover:bg-lime-300 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed shadow-[0_0_20px_rgba(151,254,237,0.3)] flex items-center justify-center gap-2 cursor-pointer border border-lime-400"
+      style="background: #97feed; color: #08090a;"
+    >
+      <span id="contact-btn-text" data-i18n="cf_submit_btn">Send Message &rarr;</span>
+      <svg
+        id="contact-btn-spinner"
+        class="hidden animate-spin w-4 h-4"
+        fill="none"
+        viewBox="0 0 24 24"
+      >
+        <circle
+          class="opacity-25"
+          cx="12"
+          cy="12"
+          r="10"
+          stroke="currentColor"
+          stroke-width="4"
+        ></circle>
+        <path
+          class="opacity-75"
+          fill="currentColor"
+          d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
+        ></path>
+      </svg>
+    </button>
+  </form>
+</div>
+
+<script>
+  function setupContactForm() {
+    const form = document.getElementById("contact-form") as HTMLFormElement | null;
+    const submitBtn = document.getElementById("contact-submit-btn") as HTMLButtonElement | null;
+    const btnText = document.getElementById("contact-btn-text");
+    const btnSpinner = document.getElementById("contact-btn-spinner");
+    const successMsg = document.getElementById("contact-status-success");
+    const errorMsg = document.getElementById("contact-status-error");
+
+    if (!form || !submitBtn) return;
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const formData = new FormData(form);
+      const data = {
+        name: formData.get("name"),
+        email: formData.get("email"),
+        message: formData.get("message"),
+      };
+
+      submitBtn.disabled = true;
+      btnText?.classList.add("hidden");
+      btnSpinner?.classList.remove("hidden");
+      successMsg?.classList.add("hidden");
+      errorMsg?.classList.add("hidden");
+
+      try {
+        const response = await fetch("/api/contact", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data),
+        });
+
+        if (response.ok) {
+          form.reset();
+          successMsg?.classList.remove("hidden");
+        } else {
+          errorMsg?.classList.remove("hidden");
+        }
+      } catch (err) {
+        errorMsg?.classList.remove("hidden");
+      } finally {
+        submitBtn.disabled = false;
+        btnText?.classList.remove("hidden");
+        btnSpinner?.classList.add("hidden");
+      }
+    });
+  }
+
+  setupContactForm();
+  document.addEventListener("astro:page-load", setupContactForm);
+</script>

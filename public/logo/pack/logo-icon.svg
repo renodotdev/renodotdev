@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" fill="none">
+  <defs>
+    <radialGradient id="glow-mint-pack-icon" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#97feed" stop-opacity="0.85" />
+      <stop offset="50%" stop-color="#97feed" stop-opacity="0.25" />
+      <stop offset="100%" stop-color="#97feed" stop-opacity="0" />
+    </radialGradient>
+  </defs>
+  <path d="M 8 2 H 34 L 46 14 V 40 C 46 43.3 43.3 46 40 46 H 8 C 4.7 46 2 43.3 2 40 V 8 C 2 4.7 4.7 2 8 2 Z" 
+        fill="#08090a" stroke="rgba(255,255,255,0.22)" stroke-width="1.2" />
+  <path d="M 11 18 L 17 24 L 11 30" 
+        stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+  <path d="M 22 32 V 18 H 28 C 30.5 18 32 19.5 32 21.5 C 32 23.5 30.5 25 28 25 H 24 M 25 25 L 32 32" 
+        stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
+  <circle cx="36" cy="29" r="6.5" fill="url(#glow-mint-pack-icon)" />
+  <rect x="34" y="26" width="4.5" height="6.5" rx="0.5" fill="#97feed" />
+</svg>

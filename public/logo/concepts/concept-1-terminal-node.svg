@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 64" fill="none">
+  <defs>
+    <radialGradient id="glow-lime-c1" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#a3e635" stop-opacity="0.8" />
+      <stop offset="40%" stop-color="#a3e635" stop-opacity="0.3" />
+      <stop offset="100%" stop-color="#a3e635" stop-opacity="0" />
+    </radialGradient>
+    <linearGradient id="grid-border-c1" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.3" />
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0.08" />
+    </linearGradient>
+  </defs>
+
+  <!-- ── Icon Emblem (44x44) ────────────────────────── -->
+  <g transform="translate(10, 10)">
+    <!-- Base Card -->
+    <rect width="44" height="44" rx="10" fill="#08090a" stroke="url(#grid-border-c1)" stroke-width="1.2" />
+
+    <!-- Corner Alignment Crosshairs -->
+    <path d="M 4 8 L 8 8 M 6 6 L 6 10" stroke="#a3e635" stroke-width="1" stroke-linecap="round" opacity="0.8" />
+    <path d="M 36 36 L 40 36 M 38 34 L 38 38" stroke="#ffffff" stroke-width="1" stroke-linecap="round" opacity="0.25" />
+
+    <!-- Monogram R - Precision Architectural Geometry -->
+    <path d="M 14 33 V 13 H 23.5 C 27 13 29.5 15.2 29.5 18.5 C 29.5 21.8 27 24 23.5 24 H 19 M 19 24 L 28.5 33" 
+          stroke="#ffffff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+
+    <!-- Smooth Radial Halo -->
+    <circle cx="33" cy="14" r="7" fill="url(#glow-lime-c1)" />
+
+    <!-- Phosphor Lime Coordinate Dot -->
+    <circle cx="33" cy="14" r="3.2" fill="#a3e635" />
+  </g>
+
+  <!-- ── Wordmark ───────────────────────────────────── -->
+  <!-- "reno" -->
+  <text x="68" y="37" font-family="'Plus Jakarta Sans', system-ui, sans-serif" font-size="22" font-weight="800" letter-spacing="-0.04em" fill="#ffffff">
+    reno
+  </text>
+
+  <!-- Wordmark dot halo & dot -->
+  <circle cx="123" cy="34" r="6" fill="url(#glow-lime-c1)" />
+  <circle cx="123" cy="34" r="3" fill="#a3e635" />
+
+  <!-- "dev" -->
+  <text x="133" y="37" font-family="'JetBrains Mono', monospace" font-size="21" font-weight="700" letter-spacing="-0.02em" fill="#ffffff">
+    dev
+  </text>
+
+  <!-- Studio Subtext Badge -->
+  <g transform="translate(186, 23)">
+    <rect width="66" height="16" rx="3" fill="#a3e635" fill-opacity="0.1" stroke="#a3e635" stroke-opacity="0.3" stroke-width="1" />
+    <text x="33" y="11.5" font-family="'JetBrains Mono', monospace" font-size="8.5" font-weight="800" letter-spacing="0.12em" fill="#a3e635" text-anchor="middle">
+      STUDIO
+    </text>
+  </g>
+</svg>

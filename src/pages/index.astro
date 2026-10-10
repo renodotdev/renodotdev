@@ -1,0 +1,627 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { projectsData } from "@/data/projects";
+import ContactForm from "@/components/ContactForm.astro";
+
+const sobatoko = projectsData.find((p) => p.id === 0)!;
+
+const stats = [
+  {
+    valKey: "stat_1_val",
+    valDefault: "8+ Years",
+    labelKey: "stat_1_label",
+    labelDefault: "In Production",
+    subKey: "stat_1_sub",
+    subDefault: "Shipping apps used by thousands of daily users",
+  },
+  {
+    valKey: "stat_2_val",
+    valDefault: "1-on-1",
+    labelKey: "stat_2_label",
+    labelDefault: "Direct With Reno",
+    subKey: "stat_2_sub",
+    subDefault: "You work directly with me — no account managers",
+  },
+  {
+    valKey: "stat_3_val",
+    valDefault: "Cross-Platform",
+    labelKey: "stat_3_label",
+    labelDefault: "iOS, Android & Web",
+    subKey: "stat_3_sub",
+    subDefault: "React Native, Next.js, and modern cloud tech",
+  },
+  {
+    valKey: "stat_4_val",
+    valDefault: "Weekly",
+    labelKey: "stat_4_label",
+    labelDefault: "Working Demos",
+    subKey: "stat_4_sub",
+    subDefault: "Try real test builds on your own phone every week",
+  },
+];
+---
+
+<Layout
+  title="renodotdev — Software Studio | Mobile, Web & AI Engineering"
+  description="Independent software studio run by Della Reno Rinaldi. Building fast mobile apps, websites, and smart AI tools with senior craftsmanship and zero fluff."
+  pageType="studio"
+>
+  <div class="min-h-screen overflow-x-hidden bg-[#08090a] text-white font-sans selection:bg-lime-400 selection:text-black">
+
+    {/* ══════════════════════════════════════════════════════════════════
+        SECTION 1: HERO & VALUE PROPOSITION
+    ══════════════════════════════════════════════════════════════════ */}
+    <section
+      id="home"
+      class="relative min-h-[85vh] flex items-center justify-center pt-24 pb-16 md:pt-32 md:pb-20 px-5 md:px-6 overflow-hidden tech-grid-bg"
+    >
+      <div class="w-full max-w-[1240px] mx-auto z-10 flex flex-col items-center">
+        {/* Availability Pill */}
+        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/5 border border-white/15 mb-8 font-mono-tech text-xs tracking-wider shadow-lg select-none">
+          <span class="w-2 h-2 rounded-full bg-lime-400 animate-pulse"></span>
+          <span class="text-white font-semibold" data-i18n="hero_badge_studio">renodotdev studio</span>
+          <span class="text-white/30">&bull;</span>
+          <span class="text-lime-400 font-semibold" data-i18n="hero_badge_avail">Open for new projects</span>
+        </div>
+
+        {/* Clear, Punchy Headline */}
+        <div class="flex flex-col items-center text-center max-w-4xl mb-12">
+          <h1
+            class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold uppercase leading-[1.08] tracking-[-0.03em] text-white mb-6"
+            data-i18n-html="hero_headline_html"
+          >
+            We build mobile apps, web systems &amp; <span class="text-gradient">smart AI tools</span>.
+          </h1>
+
+          <p
+            class="text-base sm:text-lg md:text-xl leading-relaxed max-w-2xl text-[#8b949e] mb-8 font-normal"
+            data-i18n-html="hero_subheadline_html"
+          >
+            An independent software studio run by <strong class="text-white">Della Reno Rinaldi</strong>.
+            With 8+ years building production apps at Opaper and Astro, I work directly with founders and teams to ship fast, reliable software. Honest collaboration, zero junior handoffs.
+          </p>
+
+          {/* Action CTAs */}
+          <div class="flex flex-col sm:flex-row items-center justify-center gap-3 w-full sm:w-auto font-mono-tech text-xs">
+            <a
+              href="#contact"
+              class="w-full sm:w-auto px-7 py-3.5 rounded font-bold uppercase tracking-wider transition-all duration-200 hover:bg-lime-300 active:scale-95 shadow-[0_0_25px_rgba(151,254,237,0.3)] flex items-center justify-center gap-2 border border-lime-400 cursor-pointer"
+              style="background: #97feed; color: #08090a;"
+            >
+              <span data-i18n="hero_cta_start">Start a Project</span>
+              <span>&rarr;</span>
+            </a>
+
+            <a
+              href="#work"
+              data-i18n="hero_cta_work"
+              class="w-full sm:w-auto px-6 py-3.5 rounded border border-white/20 text-white hover:border-lime-400 hover:text-lime-400 font-bold uppercase tracking-wider bg-white/5 transition-all text-center"
+            >
+              See Our Work
+            </a>
+
+            <a
+              href="https://wa.me/+6281212996550?text=Hi%20Reno,%20I'd%20like%20to%20discuss%20a%20project%20with%20renodotdev"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="w-full sm:w-auto px-5 py-3.5 rounded text-white/70 hover:text-lime-400 font-semibold uppercase tracking-wider flex items-center justify-center gap-1 transition-colors"
+            >
+              <span data-i18n="hero_cta_wa">Chat on WhatsApp</span>
+              <span class="text-lime-400">&nearr;</span>
+            </a>
+          </div>
+        </div>
+
+        {/* Grounded Stats Bar */}
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-0 w-full border border-white/15 rounded-xl overflow-hidden bg-[#0c0e12] font-mono-tech shadow-xl">
+          {stats.map((stat, idx) => (
+            <div class={`p-5 sm:p-6 border-b lg:border-b-0 ${idx < 3 ? 'lg:border-r' : ''} border-white/15 hover:bg-white/[0.02] transition-colors`}>
+              <span class="text-2xl sm:text-3xl font-extrabold text-white block mb-1" data-i18n={stat.valKey}>
+                {stat.valDefault}
+              </span>
+              <h4 class="text-xs font-bold text-lime-400 uppercase tracking-wider mb-1" data-i18n={stat.labelKey}>
+                {stat.labelDefault}
+              </h4>
+              <p class="text-xs text-white/50 leading-relaxed font-sans" data-i18n={stat.subKey}>
+                {stat.subDefault}
+              </p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    {/* ══════════════════════════════════════════════════════════════════
+        SECTION 2: FEATURED WORK (SOBATOKO & NEXT PROJECT INVITATION)
+    ══════════════════════════════════════════════════════════════════ */}
+    <section
+      id="work"
+      class="py-20 md:py-24 px-5 md:px-6 max-w-[1240px] mx-auto border-t border-white/10"
+    >
+      <div class="flex flex-col items-center text-center mb-12">
+        <span class="text-xs font-mono-tech font-bold uppercase tracking-widest text-lime-400 mb-2" data-i18n="work_kicker">
+          Featured Work
+        </span>
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight font-sans mb-3" data-i18n="work_title">
+          Sobatoko &bull; POS &amp; Store Platform
+        </h2>
+        <p class="text-sm text-[#8b949e] max-w-xl font-sans" data-i18n="work_desc">
+          A complete retail and cashier system built from the ground up: fast sales, real-time inventory, hardware receipt printing, and digital storefronts.
+        </p>
+      </div>
+
+      {/* Case Study Card */}
+      <div class="rounded-2xl overflow-hidden border border-white/15 flex flex-col md:flex-row bg-[#0b0d11] hover:border-lime-400/40 transition-all duration-300 mb-10 shadow-2xl">
+        {/* Brand visual panel */}
+        <div class="md:w-1/2 p-8 sm:p-12 flex flex-col items-center justify-center bg-white min-h-[260px] relative overflow-hidden">
+          <img
+            src={sobatoko.image}
+            alt="Sobatoko logo"
+            class="max-w-[75%] max-h-[130px] object-contain transition-transform duration-500 hover:scale-105"
+          />
+          <div class="absolute bottom-3 left-4 right-4 flex items-center justify-between text-xs font-mono-tech text-black/60 font-bold uppercase tracking-wider">
+            <span data-i18n="work_production_tag">Production Web &amp; Mobile POS</span>
+            <span class="text-emerald-700" data-i18n="work_status_ok">Live Status: OK</span>
+          </div>
+        </div>
+
+        {/* Technical Breakdown */}
+        <div class="p-7 sm:p-9 md:w-1/2 flex flex-col justify-center bg-[#0e1116] border-t md:border-t-0 md:border-l border-white/15 font-mono-tech">
+          <div class="flex items-center gap-2 mb-3">
+            <span class="px-2.5 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-lime-400/15 text-lime-400 border border-lime-400/30" data-i18n="work_badge_deploy">
+              Live in Production
+            </span>
+          </div>
+
+          <h3 class="text-2xl font-bold text-white mb-2 font-sans">
+            {sobatoko.name}
+          </h3>
+
+          <p class="text-xs sm:text-sm leading-relaxed text-[#8b949e] mb-6 font-sans" data-i18n="work_sobatoko_sub">
+            An end-to-end POS, inventory, and online store platform built for retail &amp; F&amp;B owners. Designed, engineered, and deployed live by renodotdev.
+          </p>
+
+          <div class="mb-6 space-y-2 text-xs font-sans text-white/70">
+            <div class="flex items-start gap-2">
+              <span class="text-lime-400 font-mono font-bold mt-0.5">&bull;</span>
+              <span data-i18n="work_sobatoko_feat1">Full-stack architecture built on Next.js and PostgreSQL for instant response times</span>
+            </div>
+            <div class="flex items-start gap-2">
+              <span class="text-lime-400 font-mono font-bold mt-0.5">&bull;</span>
+              <span data-i18n="work_sobatoko_feat2">Real-time stock sync across multiple cashier counters and branch locations</span>
+            </div>
+            <div class="flex items-start gap-2">
+              <span class="text-lime-400 font-mono font-bold mt-0.5">&bull;</span>
+              <span data-i18n="work_sobatoko_feat3">Plug-and-play Bluetooth &amp; LAN thermal receipt printer support</span>
+            </div>
+          </div>
+
+          <div class="flex flex-wrap gap-1.5 mb-6">
+            {sobatoko.techStack.map((tech) => (
+              <span class="px-2.5 py-1 rounded text-xs font-semibold bg-black/60 text-white/80 border border-white/10">
+                {tech}
+              </span>
+            ))}
+          </div>
+
+          {sobatoko.siteUrl && (
+            <div>
+              <a
+                href={sobatoko.siteUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="inline-flex items-center gap-2 px-6 py-2.5 rounded text-xs font-bold uppercase tracking-wider bg-lime-400 text-black hover:bg-lime-300 transition-colors shadow-[0_0_20px_rgba(151,254,237,0.3)] border border-lime-400"
+              >
+                <span data-i18n="work_btn_visit">Visit Sobatoko.com</span>
+                <span>&nearr;</span>
+              </a>
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* Next Project Invitation Card */}
+      <div class="p-8 sm:p-10 rounded-2xl border border-white/15 bg-[#0a0c10] text-center flex flex-col items-center relative overflow-hidden font-mono-tech shadow-xl">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-lime-400/10 text-lime-400 border border-lime-400/30 text-xs font-semibold uppercase tracking-wider mb-5">
+          <span class="w-2 h-2 rounded-full bg-lime-400 animate-pulse"></span>
+          <span data-i18n="work_next_badge">Got a product in mind?</span>
+        </div>
+
+        <h3 class="text-2xl sm:text-3xl font-extrabold text-white uppercase tracking-tight font-sans mb-3 max-w-2xl" data-i18n="work_next_heading">
+          Let's build your next project together.
+        </h3>
+
+        <p class="text-sm leading-relaxed text-[#8b949e] max-w-xl mb-8 font-sans" data-i18n="work_next_desc">
+          I keep client capacity intentionally small (1–2 projects at a time) so you get full focus, quick replies, and fast delivery. Tell me what you're thinking, and let's see how we can make it happen.
+        </p>
+
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-3 w-full sm:w-auto text-xs">
+          <a
+            href="#contact"
+            class="w-full sm:w-auto px-8 py-3.5 rounded font-bold uppercase tracking-wider bg-lime-400 text-black hover:bg-lime-300 transition-all shadow-[0_0_25px_rgba(151,254,237,0.3)] active:scale-95 flex items-center justify-center gap-2 border border-lime-400"
+          >
+            <span data-i18n="work_next_cta_start">Start a Project</span>
+            <span>&rarr;</span>
+          </a>
+
+          <a
+            href="https://wa.me/+6281212996550?text=Hi%20Reno,%20I'd%20like%20to%20discuss%20building%20my%20next%20project%20with%20renodotdev"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="w-full sm:w-auto px-7 py-3.5 rounded border border-white/20 text-white hover:border-lime-400 hover:text-lime-400 bg-white/5 font-bold uppercase tracking-wider transition-all inline-flex items-center justify-center gap-2"
+          >
+            <span data-i18n="work_next_cta_wa">Chat on WhatsApp</span>
+            <span>&nearr;</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    {/* ══════════════════════════════════════════════════════════════════
+        SECTION 3: WHAT WE DO & HOW WE WORK TOGETHER
+    ══════════════════════════════════════════════════════════════════ */}
+    <section
+      id="services"
+      class="py-20 md:py-24 px-5 md:px-6 max-w-[1240px] mx-auto border-t border-white/10"
+    >
+      {/* Services Header */}
+      <div class="flex flex-col items-center text-center mb-12">
+        <span class="text-xs font-mono-tech font-bold uppercase tracking-widest text-lime-400 mb-2" data-i18n="services_kicker">
+          What We Do
+        </span>
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight font-sans mb-3" data-i18n="services_title">
+          How we can help you build
+        </h2>
+        <p class="text-sm text-[#8b949e] max-w-xl font-sans" data-i18n="services_desc">
+          Whether you're starting from a napkin sketch or upgrading an existing product, here’s where we do our best work.
+        </p>
+      </div>
+
+      {/* 3 Core Capability Cards */}
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
+        {/* Service 1: Mobile */}
+        <div class="tech-card p-6 sm:p-7 rounded-2xl flex flex-col justify-between border border-white/15 hover:border-lime-400/50 hover:shadow-[0_0_30px_rgba(151,254,237,0.15)] transition-all duration-300 bg-[#0c0e12]">
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <span class="px-2 py-0.5 rounded text-[10px] font-mono-tech font-bold uppercase tracking-wider bg-lime-400/10 text-lime-400 border border-lime-400/30" data-i18n="srv_1_badge">
+                Mobile Apps
+              </span>
+            </div>
+
+            <h3 class="text-xl font-bold text-white mb-2 font-sans" data-i18n="srv_1_title">
+              Mobile App Engineering
+            </h3>
+            <p class="text-xs text-lime-400 font-mono-tech mb-3" data-i18n="srv_1_tagline">
+              Smooth, native feel with 60 FPS performance
+            </p>
+            <p class="text-xs leading-relaxed text-[#8b949e] mb-5 font-sans" data-i18n="srv_1_desc">
+              Cross-platform apps built with React Native and Expo. Offline-friendly, hooked into hardware like receipt printers and scanners, and published straight to the App Store and Google Play.
+            </p>
+
+            <div class="mb-5 space-y-1.5 text-xs font-sans">
+              <div class="flex items-start gap-2 text-white/70">
+                <span class="text-lime-400 font-mono font-bold mt-0.5">&bull;</span>
+                <span data-i18n="srv_1_item1">One clean codebase for both iPhone and Android</span>
+              </div>
+              <div class="flex items-start gap-2 text-white/70">
+                <span class="text-lime-400 font-mono font-bold mt-0.5">&bull;</span>
+                <span data-i18n="srv_1_item2">Works smoothly offline and syncs back when online</span>
+              </div>
+              <div class="flex items-start gap-2 text-white/70">
+                <span class="text-lime-400 font-mono font-bold mt-0.5">&bull;</span>
+                <span data-i18n="srv_1_item3">Hardware integrations (Bluetooth/LAN printers, scanners)</span>
+              </div>
+              <div class="flex items-start gap-2 text-white/70">
+                <span class="text-lime-400 font-mono font-bold mt-0.5">&bull;</span>
+                <span data-i18n="srv_1_item4">App Store &amp; Google Play setup and launch assistance</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="pt-4 border-t border-white/10 flex flex-col gap-3 font-mono-tech">
+            <div class="flex flex-wrap gap-1.5">
+              {["React Native", "Expo", "TypeScript", "iOS & Android"].map((tech) => (
+                <span class="px-2 py-0.5 rounded text-[10px] font-semibold bg-black/60 text-white/70 border border-white/10">
+                  {tech}
+                </span>
+              ))}
+            </div>
+
+            <a
+              href="#contact"
+              class="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-lime-400 hover:text-white transition-colors"
+            >
+              <span data-i18n="srv_inquire_cta">Talk about this</span>
+              <span>&rarr;</span>
+            </a>
+          </div>
+        </div>
+
+        {/* Service 2: Web & SaaS */}
+        <div class="tech-card p-6 sm:p-7 rounded-2xl flex flex-col justify-between border border-white/15 hover:border-lime-400/50 hover:shadow-[0_0_30px_rgba(151,254,237,0.15)] transition-all duration-300 bg-[#0c0e12]">
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <span class="px-2 py-0.5 rounded text-[10px] font-mono-tech font-bold uppercase tracking-wider bg-lime-400/10 text-lime-400 border border-lime-400/30" data-i18n="srv_2_badge">
+                Web &amp; SaaS
+              </span>
+            </div>
+
+            <h3 class="text-xl font-bold text-white mb-2 font-sans" data-i18n="srv_2_title">
+              Web Platforms &amp; SaaS
+            </h3>
+            <p class="text-xs text-lime-400 font-mono-tech mb-3" data-i18n="srv_2_tagline">
+              Clean dashboards, fast websites, and solid backends
+            </p>
+            <p class="text-xs leading-relaxed text-[#8b949e] mb-5 font-sans" data-i18n="srv_2_desc">
+              From custom backoffice portals to customer-facing web apps. Built with Next.js, Astro, TypeScript, and PostgreSQL for speed, good SEO, and zero headache maintenance.
+            </p>
+
+            <div class="mb-5 space-y-1.5 text-xs font-sans">
+              <div class="flex items-start gap-2 text-white/70">
+                <span class="text-lime-400 font-mono font-bold mt-0.5">&bull;</span>
+                <span data-i18n="srv_2_item1">Custom portals, admin panels, and client dashboards</span>
+              </div>
+              <div class="flex items-start gap-2 text-white/70">
+                <span class="text-lime-400 font-mono font-bold mt-0.5">&bull;</span>
+                <span data-i18n="srv_2_item2">Fast, secure APIs and clean database schemas</span>
+              </div>
+              <div class="flex items-start gap-2 text-white/70">
+                <span class="text-lime-400 font-mono font-bold mt-0.5">&bull;</span>
+                <span data-i18n="srv_2_item3">Payments and notifications (Midtrans, Stripe, WhatsApp alerts)</span>
+              </div>
+              <div class="flex items-start gap-2 text-white/70">
+                <span class="text-lime-400 font-mono font-bold mt-0.5">&bull;</span>
+                <span data-i18n="srv_2_item4">Speed-optimized and search engine friendly</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="pt-4 border-t border-white/10 flex flex-col gap-3 font-mono-tech">
+            <div class="flex flex-wrap gap-1.5">
+              {["Next.js", "React", "Astro", "PostgreSQL", "Node.js"].map((tech) => (
+                <span class="px-2 py-0.5 rounded text-[10px] font-semibold bg-black/60 text-white/70 border border-white/10">
+                  {tech}
+                </span>
+              ))}
+            </div>
+
+            <a
+              href="#contact"
+              class="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-lime-400 hover:text-white transition-colors"
+            >
+              <span data-i18n="srv_inquire_cta">Talk about this</span>
+              <span>&rarr;</span>
+            </a>
+          </div>
+        </div>
+
+        {/* Service 3: AI-Powered Engineering */}
+        <div class="tech-card p-6 sm:p-7 rounded-2xl flex flex-col justify-between border border-white/15 hover:border-lime-400/50 hover:shadow-[0_0_30px_rgba(151,254,237,0.15)] transition-all duration-300 bg-[#0c0e12]">
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <span class="px-2 py-0.5 rounded text-[10px] font-mono-tech font-bold uppercase tracking-wider bg-lime-400/10 text-lime-400 border border-lime-400/30" data-i18n="srv_3_badge">
+                AI-Powered
+              </span>
+            </div>
+
+            <h3 class="text-xl font-bold text-white mb-2 font-sans" data-i18n="srv_3_title">
+              AI-Powered Features
+            </h3>
+            <p class="text-xs text-lime-400 font-mono-tech mb-3" data-i18n="srv_3_tagline">
+              Practical AI that solves real problems, not just hype
+            </p>
+            <p class="text-xs leading-relaxed text-[#8b949e] mb-5 font-sans" data-i18n="srv_3_desc">
+              We add useful AI capabilities directly into your software — smart search, document parsing, automated workflows, and LLM integrations. Backed by solid code and automated tests, not fragile vibe coding.
+            </p>
+
+            <div class="mb-5 space-y-1.5 text-xs font-sans">
+              <div class="flex items-start gap-2 text-white/70">
+                <span class="text-lime-400 font-mono font-bold mt-0.5">&bull;</span>
+                <span data-i18n="srv_3_item1">Direct integrations with OpenAI, Anthropic, or Gemini</span>
+              </div>
+              <div class="flex items-start gap-2 text-white/70">
+                <span class="text-lime-400 font-mono font-bold mt-0.5">&bull;</span>
+                <span data-i18n="srv_3_item2">Structured data extraction (turning messy docs into clean tables)</span>
+              </div>
+              <div class="flex items-start gap-2 text-white/70">
+                <span class="text-lime-400 font-mono font-bold mt-0.5">&bull;</span>
+                <span data-i18n="srv_3_item3">Smart search and retrieval across your own data</span>
+              </div>
+              <div class="flex items-start gap-2 text-white/70">
+                <span class="text-lime-400 font-mono font-bold mt-0.5">&bull;</span>
+                <span data-i18n="srv_3_item4">Rigorous testing so outputs stay reliable and predictable</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="pt-4 border-t border-white/10 flex flex-col gap-3 font-mono-tech">
+            <div class="flex flex-wrap gap-1.5">
+              {["AI SDK", "LLM APIs", "Vector Search", "TypeScript"].map((tech) => (
+                <span class="px-2 py-0.5 rounded text-[10px] font-semibold bg-black/60 text-white/70 border border-white/10">
+                  {tech}
+                </span>
+              ))}
+            </div>
+
+            <a
+              href="#contact"
+              class="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-lime-400 hover:text-white transition-colors"
+            >
+              <span data-i18n="srv_inquire_cta">Talk about this</span>
+              <span>&rarr;</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      {/* Part B: How We Work Together */}
+      <div class="pt-10 border-t border-white/10 font-mono-tech">
+        <div class="flex flex-col items-center text-center mb-10">
+          <span class="text-xs font-bold uppercase tracking-widest text-lime-400 mb-2" data-i18n="process_kicker">
+            How We Work
+          </span>
+          <h3 class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight font-sans mb-2" data-i18n="process_title">
+            Simple, transparent, and no surprises
+          </h3>
+          <p class="text-sm text-[#8b949e] max-w-xl font-sans" data-i18n="process_desc">
+            You get clear milestones, direct access to Reno on WhatsApp, and working progress to test on your own phone every week.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-0 border border-white/15 rounded-xl overflow-hidden bg-[#0c0e12]">
+          {/* Step 1 */}
+          <div class="p-6 sm:p-7 border-b md:border-b-0 md:border-r border-white/15 flex flex-col justify-between hover:bg-white/[0.02] transition-colors">
+            <div>
+              <div class="flex items-center justify-between mb-4">
+                <span class="text-2xl font-extrabold text-lime-400" data-i18n="prc_1_step">01</span>
+                <span class="text-[10px] font-bold px-2 py-0.5 rounded bg-white/5 text-white/60 border border-white/10" data-i18n="prc_1_dur">
+                  Week 1
+                </span>
+              </div>
+              <h4 class="text-base font-bold text-white uppercase tracking-wider mb-2 font-sans" data-i18n="prc_1_title">
+                Scope &amp; Plan
+              </h4>
+              <p class="text-xs leading-relaxed text-[#8b949e] mb-4 font-sans" data-i18n="prc_1_desc">
+                We sit down (virtually), outline exactly what needs to be built, and map out the technical plan so there are no surprises on scope or budget.
+              </p>
+            </div>
+            <div class="pt-3 border-t border-white/10 text-xs">
+              <span class="text-[10px] uppercase text-white/40 block mb-1" data-i18n="prc_1_deliv_lbl">What you get:</span>
+              <span class="text-white/80 font-sans font-medium" data-i18n="prc_1_deliv">Clear blueprint &amp; delivery timeline</span>
+            </div>
+          </div>
+
+          {/* Step 2 */}
+          <div class="p-6 sm:p-7 border-b md:border-b-0 md:border-r border-white/15 flex flex-col justify-between hover:bg-white/[0.02] transition-colors">
+            <div>
+              <div class="flex items-center justify-between mb-4">
+                <span class="text-2xl font-extrabold text-lime-400" data-i18n="prc_2_step">02</span>
+                <span class="text-[10px] font-bold px-2 py-0.5 rounded bg-white/5 text-white/60 border border-white/10" data-i18n="prc_2_dur">
+                  Weeks 2 – 5
+                </span>
+              </div>
+              <h4 class="text-base font-bold text-white uppercase tracking-wider mb-2 font-sans" data-i18n="prc_2_title">
+                Weekly Build Sprints
+              </h4>
+              <p class="text-xs leading-relaxed text-[#8b949e] mb-4 font-sans" data-i18n="prc_2_desc">
+                We build in fast, focused cycles. Every week, you receive a test build on TestFlight or staging web so you can see and feel real progress.
+              </p>
+            </div>
+            <div class="pt-3 border-t border-white/10 text-xs">
+              <span class="text-[10px] uppercase text-white/40 block mb-1" data-i18n="prc_2_deliv_lbl">What you get:</span>
+              <span class="text-white/80 font-sans font-medium" data-i18n="prc_2_deliv">Weekly working builds to test on your phone</span>
+            </div>
+          </div>
+
+          {/* Step 3 */}
+          <div class="p-6 sm:p-7 border-white/15 flex flex-col justify-between hover:bg-white/[0.02] transition-colors">
+            <div>
+              <div class="flex items-center justify-between mb-4">
+                <span class="text-2xl font-extrabold text-lime-400" data-i18n="prc_3_step">03</span>
+                <span class="text-[10px] font-bold px-2 py-0.5 rounded bg-white/5 text-white/60 border border-white/10" data-i18n="prc_3_dur">
+                  Week 6+
+                </span>
+              </div>
+              <h4 class="text-base font-bold text-white uppercase tracking-wider mb-2 font-sans" data-i18n="prc_3_title">
+                Launch &amp; Handover
+              </h4>
+              <p class="text-xs leading-relaxed text-[#8b949e] mb-4 font-sans" data-i18n="prc_3_desc">
+                We push to production, help get your app approved on the stores, and hand over the complete code. You own 100% of everything we create.
+              </p>
+            </div>
+            <div class="pt-3 border-t border-white/10 text-xs">
+              <span class="text-[10px] uppercase text-white/40 block mb-1" data-i18n="prc_3_deliv_lbl">What you get:</span>
+              <span class="text-white/80 font-sans font-medium" data-i18n="prc_3_deliv">Live product &amp; 100% code ownership</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {/* ══════════════════════════════════════════════════════════════════
+        SECTION 4: CONTACT & CLIENT INQUIRY
+    ══════════════════════════════════════════════════════════════════ */}
+    <section
+      id="contact"
+      class="py-20 md:py-24 px-5 md:px-6 max-w-[1240px] mx-auto border-t border-white/10"
+    >
+      <div class="flex flex-col items-center text-center mb-12">
+        <span class="text-xs font-mono-tech font-bold uppercase tracking-widest text-lime-400 mb-2" data-i18n="contact_kicker">
+          Get in Touch
+        </span>
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight font-sans mb-3" data-i18n="contact_title">
+          Let's talk about your idea
+        </h2>
+        <p class="text-sm text-[#8b949e] max-w-xl font-sans" data-i18n="contact_desc">
+          Have a project in mind or just want to bounce some technical thoughts? Reno is here to help. I'll get back to you within 24 hours.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        {/* Left: Quick Inquiries & Direct Channels */}
+        <div class="lg:col-span-5 flex flex-col gap-4 font-mono-tech">
+          {/* WhatsApp Direct */}
+          <a
+            href="https://wa.me/+6281212996550?text=Hi%20Reno,%20I'm%20interested%20in%20discussing%20a%20project%20with%20renodotdev%20studio"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="p-5 rounded-xl bg-[#0e1116] border border-white/15 hover:border-lime-400/50 group transition-all flex items-center justify-between"
+          >
+            <div class="flex items-center gap-3.5">
+              <div class="w-9 h-9 rounded bg-lime-400/10 text-lime-400 border border-lime-400/30 flex items-center justify-center font-bold text-xs">
+                WA
+              </div>
+              <div>
+                <h4 class="text-xs font-bold text-white uppercase" data-i18n="contact_wa_title">WhatsApp Reno</h4>
+                <p class="text-xs text-lime-400">+62 812 1299 6550</p>
+                <p class="text-[11px] text-white/40 font-sans mt-0.5" data-i18n="contact_wa_sub">Fastest way to get in touch</p>
+              </div>
+            </div>
+            <span class="text-lime-400 text-sm font-bold">&rarr;</span>
+          </a>
+
+          {/* Direct Email */}
+          <div class="p-5 rounded-xl bg-[#0e1116] border border-white/15 flex items-center gap-3.5">
+            <div class="w-9 h-9 rounded bg-white/5 text-white/60 border border-white/10 flex items-center justify-center font-bold text-xs">
+              @
+            </div>
+            <div class="min-w-0 flex-1">
+              <span class="text-[10px] text-white/40 uppercase block" data-i18n="contact_email_title">Direct Email</span>
+              <a
+                href="mailto:renodotdev@gmail.com"
+                class="text-xs font-bold text-white hover:text-lime-400 block truncate transition-colors"
+              >
+                renodotdev@gmail.com
+              </a>
+            </div>
+          </div>
+
+          {/* Engagement Guarantees */}
+          <div class="p-5 rounded-xl bg-[#0e1116] border border-white/15 space-y-2.5 text-xs font-sans">
+            <h4 class="text-xs font-bold text-white uppercase tracking-wider font-mono-tech mb-2" data-i18n="contact_guar_title">
+              What working together looks like:
+            </h4>
+            <div class="flex items-center gap-2 text-white/70">
+              <span class="text-lime-400 font-mono font-bold">&bull;</span>
+              <span data-i18n="contact_guar_1">Free 30-min friendly chat to scope out your needs</span>
+            </div>
+            <div class="flex items-center gap-2 text-white/70">
+              <span class="text-lime-400 font-mono font-bold">&bull;</span>
+              <span data-i18n="contact_guar_2">Clear milestones, fair pricing, and no surprise add-ons</span>
+            </div>
+            <div class="flex items-center gap-2 text-white/70">
+              <span class="text-lime-400 font-mono font-bold">&bull;</span>
+              <span data-i18n="contact_guar_3">You own 100% of the code, designs, and data from day one</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Right: Studio Contact Form */}
+        <div class="lg:col-span-7">
+          <ContactForm />
+        </div>
+      </div>
+    </section>
+
+  </div>
+</Layout>

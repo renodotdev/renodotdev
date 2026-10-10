@@ -1,0 +1,51 @@
+---
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import "../styles/globals.css";
+
+interface Props {
+  title?: string;
+  description?: string;
+  pageType?: "studio" | "profile";
+}
+
+const {
+  title = "renodotdev - Software Studio & Product Engineering",
+  description = "renodotdev is a boutique software studio engineering high-performance mobile applications, modern web platforms, and digital products.",
+  pageType = "studio",
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/logo/logo-icon.svg" />
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="/photos/profile-1.jpeg" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content="/photos/profile-1.jpeg" />
+  </head>
+  <body class="antialiased min-h-screen flex flex-col">
+    <Header pageType={pageType} />
+    <main class="flex-1 pt-16 overflow-x-hidden">
+      <slot />
+    </main>
+    <Footer pageType={pageType} />
+  </body>
+</html>
