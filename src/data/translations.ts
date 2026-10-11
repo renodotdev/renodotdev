@@ -572,8 +572,8 @@ export const translations: Record<Language, TranslationDictionary> = {
     footer_link_services: "Layanan Kami",
     footer_link_start: "Mulai Proyek",
     footer_link_profile: "Tentang Reno",
-    footer_link_exp: "Pengalaman Karir (Opaper, Astro)",
-    footer_link_courses: "Video Tutorial (BuildWithAngga)",
+    footer_link_exp: "Pengalaman Karir",
+    footer_link_courses: "Video Tutorial",
 
     // Landing Page Showcase & Founder Spotlight
     hero_logo_tag: "Studio Software Independen",
