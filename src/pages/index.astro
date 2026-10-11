@@ -2,8 +2,14 @@
 import Layout from "../layouts/Layout.astro";
 import { projectsData } from "@/data/projects";
 import ContactForm from "@/components/ContactForm.astro";
+import { getCollection } from "astro:content";
 
 const sobatoko = projectsData.find((p) => p.id === 0)!;
+
+const articles = await getCollection("articles");
+const recentArticles = articles
+  .sort((a, b) => b.data.publishDate.getTime() - a.data.publishDate.getTime())
+  .slice(0, 3);
 
 const stats = [
   {
@@ -98,7 +104,7 @@ const stats = [
             data-i18n-html="hero_subheadline_html"
           >
             An independent software studio run by <strong class="text-white">Della Reno Rinaldi</strong>.
-            With 8+ years building production apps at Opaper and Astro, I work directly with founders and teams to ship fast, reliable software. Honest collaboration, zero junior handoffs.
+            With 8+ years engineering production software, I work directly with founders and teams to ship fast, reliable digital products. Honest collaboration, zero junior handoffs.
           </p>
 
           {/* Action CTAs */}
@@ -221,7 +227,7 @@ const stats = [
                   </div>
                   <div>
                     <p class="text-xs font-bold text-white font-sans leading-tight">Della Reno Rinaldi</p>
-                    <p class="text-[11px] text-lime-400 font-mono-tech">Studio Founder &bull; Ex-Opaper, Ex-Astro</p>
+                    <p class="text-[11px] text-lime-400 font-mono-tech">Studio Founder &bull; Lead Systems Engineer</p>
                   </div>
                 </div>
 
@@ -356,6 +362,116 @@ const stats = [
               </a>
             </div>
           )}
+        </div>
+      </div>
+
+      {/* Studio Labs & Developed Tooling Grid */}
+      <div class="mb-10">
+        <div class="flex items-center justify-between mb-4 font-mono-tech text-xs">
+          <div class="flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-lime-400"></span>
+            <span class="text-white/60 font-bold uppercase tracking-wider">Studio Tooling &amp; Incubated Products &bull; renodotdev Labs</span>
+          </div>
+          <a
+            href="/profile"
+            class="text-lime-400 hover:text-white font-bold transition-colors hidden sm:inline-flex items-center gap-1"
+          >
+            <span>Individual Career History &rarr;</span>
+          </a>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {/* Card 1: Sobatoko Mobile POS Companion */}
+          <div class="p-6 sm:p-7 rounded-2xl border border-white/15 bg-[#0b0d12] hover:border-lime-400/40 transition-all duration-300 flex flex-col justify-between group">
+            <div>
+              <div class="flex items-center justify-between mb-3 font-mono-tech text-xs">
+                <span class="px-2.5 py-0.5 rounded bg-lime-400/10 text-lime-400 border border-lime-400/25 font-bold uppercase">
+                  Studio Product &bull; Native POS
+                </span>
+                <span class="text-lime-400 font-bold">iOS &amp; Android</span>
+              </div>
+
+              <h4 class="text-xl font-bold text-white mb-2 font-sans group-hover:text-lime-300 transition-colors">
+                Sobatoko Mobile Cashier Terminal
+              </h4>
+
+              <p class="text-xs sm:text-sm text-[#8b949e] leading-relaxed mb-5 font-sans">
+                Native retail cashier companion designed for touch-first handheld and tablet operations with local SQLite storage for uninterrupted offline checkout.
+              </p>
+
+              <div class="space-y-1.5 text-xs font-sans text-white/70 mb-5">
+                <div class="flex items-center gap-2">
+                  <span class="text-lime-400 font-mono font-bold">&bull;</span>
+                  <span>Instant transaction processing with zero reliance on cloud roundtrips</span>
+                </div>
+                <div class="flex items-center gap-2">
+                  <span class="text-lime-400 font-mono font-bold">&bull;</span>
+                  <span>Direct Bluetooth Low Energy (BLE) connection to mobile thermal printers</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="pt-4 border-t border-white/10 flex items-center justify-between font-mono-tech text-xs">
+              <div class="flex flex-wrap gap-1.5">
+                {["React Native", "Expo", "SQLite", "ESC/POS"].map((t) => (
+                  <span class="px-2 py-0.5 rounded text-[10px] bg-black/60 text-white/70 border border-white/10">
+                    {t}
+                  </span>
+                ))}
+              </div>
+
+              <span class="text-white/40 text-[11px] font-mono-tech">Internal Product</span>
+            </div>
+          </div>
+
+          {/* Card 2: PrintBridge ESC/POS Hardware Engine */}
+          <div class="p-6 sm:p-7 rounded-2xl border border-white/15 bg-[#0b0d12] hover:border-lime-400/40 transition-all duration-300 flex flex-col justify-between group">
+            <div>
+              <div class="flex items-center justify-between mb-3 font-mono-tech text-xs">
+                <span class="px-2.5 py-0.5 rounded bg-cyan-400/10 text-cyan-300 border border-cyan-400/25 font-bold uppercase">
+                  Studio Utility &bull; Hardware Driver
+                </span>
+                <span class="text-cyan-300 font-bold">Zero Overhead</span>
+              </div>
+
+              <h4 class="text-xl font-bold text-white mb-2 font-sans group-hover:text-cyan-300 transition-colors">
+                PrintBridge ESC/POS Engine
+              </h4>
+
+              <p class="text-xs sm:text-sm text-[#8b949e] leading-relaxed mb-5 font-sans">
+                Lightweight hardware communication protocol developed to stream raw byte receipt buffers across Bluetooth, USB, and LAN thermal receipt printers.
+              </p>
+
+              <div class="space-y-1.5 text-xs font-sans text-white/70 mb-5">
+                <div class="flex items-center gap-2">
+                  <span class="text-lime-400 font-mono font-bold">&bull;</span>
+                  <span>Sub-150ms print job dispatch with automatic buffer slicing and paper cut</span>
+                </div>
+                <div class="flex items-center gap-2">
+                  <span class="text-lime-400 font-mono font-bold">&bull;</span>
+                  <span>Eliminates dependency on fragile third-party native printing libraries</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="pt-4 border-t border-white/10 flex items-center justify-between font-mono-tech text-xs">
+              <div class="flex flex-wrap gap-1.5">
+                {["TypeScript", "Raw Sockets", "BLE", "Thermal Print"].map((t) => (
+                  <span class="px-2 py-0.5 rounded text-[10px] bg-black/60 text-white/70 border border-white/10">
+                    {t}
+                  </span>
+                ))}
+              </div>
+
+              <a
+                href="/articles/offline-first-react-native-pos"
+                class="text-lime-400 hover:text-white font-bold inline-flex items-center gap-1 shrink-0"
+              >
+                <span>Read Blueprint</span>
+                <span>&rarr;</span>
+              </a>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -653,6 +769,33 @@ const stats = [
         </div>
       </div>
 
+      {/* Agency & Design Studio White-Label Partner Card */}
+      <div class="mb-14 p-6 sm:p-8 rounded-2xl border border-white/15 bg-gradient-to-r from-[#0d1015] via-[#090b0e] to-[#0d1015] flex flex-col md:flex-row items-center justify-between gap-6 font-mono-tech shadow-xl">
+        <div class="max-w-2xl">
+          <div class="inline-flex items-center gap-2 px-2.5 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-lime-400/10 text-lime-400 border border-lime-400/30 mb-2.5">
+            <span>Agency &amp; Design Studio Partnership</span>
+          </div>
+          <h4 class="text-xl sm:text-2xl font-bold text-white font-sans mb-1.5">
+            Need a Silent Senior Technical Partner?
+          </h4>
+          <p class="text-xs sm:text-sm text-[#8b949e] font-sans leading-relaxed">
+            You handle client relationships, brand identity, and UI design. renodotdev writes clean, documented, accessible code that integrates directly into your client's Git repositories. Fast turnaround, zero junior handoffs.
+          </p>
+        </div>
+
+        <div class="shrink-0 w-full md:w-auto">
+          <a
+            href="https://wa.me/+6281212996550?text=Hi%20Reno,%20I'm%20running%20an%20agency/studio%20and%20looking%20for%20a%20technical%20partner"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="w-full md:w-auto px-6 py-3 rounded-xl border border-lime-400 text-lime-400 hover:bg-lime-400 hover:text-black font-bold uppercase tracking-wider text-xs transition-all inline-flex items-center justify-center gap-2"
+          >
+            <span>Partner With Reno</span>
+            <span>&nearr;</span>
+          </a>
+        </div>
+      </div>
+
       {/* Part B: How We Work Together */}
       <div class="pt-10 border-t border-white/10 font-mono-tech">
         <div class="flex flex-col items-center text-center mb-10">
@@ -738,6 +881,89 @@ const stats = [
     </section>
 
     {/* ══════════════════════════════════════════════════════════════════
+        SECTION 3.4: ARTICLES & ENGINEERING PUBLICATIONS (INBOUND MAGNET)
+    ══════════════════════════════════════════════════════════════════ */}
+    <section
+      id="articles"
+      class="py-20 md:py-24 px-5 md:px-6 max-w-[1240px] mx-auto border-t border-white/10"
+    >
+      <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
+        <div>
+          <span class="text-xs font-mono-tech font-bold uppercase tracking-widest text-lime-400 mb-2 block" data-i18n="articles_kicker">
+            Engineering Publications
+          </span>
+          <h2 class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight font-sans mb-3" data-i18n="articles_title">
+            Articles &amp; Production Insights
+          </h2>
+          <p class="text-sm text-[#8b949e] max-w-xl font-sans" data-i18n="articles_desc">
+            Tactical architectural blueprints, performance deep dives, and real-world lessons from shipping high-scale software.
+          </p>
+        </div>
+
+        <a
+          href="/articles"
+          class="inline-flex items-center gap-2 text-xs font-mono-tech font-bold uppercase tracking-wider text-lime-400 hover:text-lime-300 transition-colors shrink-0 group"
+        >
+          <span data-i18n="articles_view_all">View All Publications</span>
+          <span class="group-hover:translate-x-1 transition-transform">&rarr;</span>
+        </a>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+        {recentArticles.map((article) => {
+          const formattedDate = article.data.publishDate.toLocaleDateString("en-US", {
+            year: "numeric",
+            month: "short",
+            day: "numeric",
+          });
+
+          return (
+            <article class="p-6 sm:p-7 rounded-2xl border border-white/15 bg-[#0b0d12] hover:border-lime-400/50 hover:shadow-[0_0_25px_rgba(151,254,237,0.12)] transition-all duration-300 flex flex-col justify-between group">
+              <div>
+                <div class="flex items-center justify-between font-mono-tech text-[11px] text-white/50 mb-3">
+                  <span class="text-lime-400 font-bold">{formattedDate}</span>
+                  <span>{article.data.readTime}</span>
+                </div>
+
+                <h3 class="text-lg sm:text-xl font-bold text-white group-hover:text-lime-300 transition-colors mb-3 font-sans line-clamp-2">
+                  <a href={`/articles/${article.id}`}>
+                    {article.data.title}
+                  </a>
+                </h3>
+
+                <p class="text-xs sm:text-sm text-[#8b949e] leading-relaxed mb-6 font-sans line-clamp-3">
+                  {article.data.description}
+                </p>
+              </div>
+
+              <div class="pt-4 border-t border-white/10 flex items-center justify-between font-mono-tech text-xs">
+                <div class="flex flex-wrap gap-1.5">
+                  {article.data.tags.slice(0, 2).map((t) => (
+                    <a
+                      href={`/articles?tag=${encodeURIComponent(t.toLowerCase())}`}
+                      class="text-[11px] text-white/60 bg-white/5 hover:bg-lime-400/10 hover:border-lime-400/30 hover:text-lime-300 px-2 py-0.5 rounded border border-white/10 transition-colors"
+                      title={`View publications tagged #${t}`}
+                    >
+                      #{t}
+                    </a>
+                  ))}
+                </div>
+
+                <a
+                  href={`/articles/${article.id}`}
+                  class="text-lime-400 hover:text-white font-bold inline-flex items-center gap-1 group-hover:translate-x-0.5 transition-transform shrink-0"
+                >
+                  <span>Read</span>
+                  <span>&rarr;</span>
+                </a>
+              </div>
+            </article>
+          );
+        })}
+      </div>
+    </section>
+
+    {/* ══════════════════════════════════════════════════════════════════
         SECTION 3.5: ABOUT THE FOUNDER (COMPACT SPOTLIGHT)
     ══════════════════════════════════════════════════════════════════ */}
     <section
@@ -770,7 +996,7 @@ const stats = [
                 Della Reno Rinaldi
               </h3>
               <p class="text-xs sm:text-sm text-[#8b949e] font-sans leading-relaxed mt-1" data-i18n="founder_sec_desc">
-                8+ years shipping production mobile &amp; web apps at Opaper and Astro. You work 1-on-1 directly with me — no account managers, zero junior handoffs.
+                8+ years engineering production mobile &amp; web applications. You work 1-on-1 directly with Reno — no account managers, zero junior handoffs.
               </p>
             </div>
           </div>

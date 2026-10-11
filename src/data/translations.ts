@@ -4,11 +4,18 @@ export interface TranslationDictionary {
   // Navigation & Common
   nav_work: string;
   nav_services: string;
+  nav_articles: string;
   nav_contact: string;
   nav_founder_bio: string;
   nav_start_project: string;
   nav_contact_reno: string;
   nav_return_studio: string;
+
+  // Articles Section
+  articles_kicker: string;
+  articles_title: string;
+  articles_desc: string;
+  articles_view_all: string;
 
   // Hero Section (Studio)
   hero_badge_studio: string;
@@ -215,19 +222,26 @@ export interface TranslationDictionary {
 export const translations: Record<Language, TranslationDictionary> = {
   en: {
     // Navigation
-    nav_work: "Work",
+    nav_work: "Products & Work",
     nav_services: "What We Do",
+    nav_articles: "Articles",
     nav_contact: "Contact",
     nav_founder_bio: "About Reno",
     nav_start_project: "Start a Project",
     nav_contact_reno: "Say Hello",
     nav_return_studio: "← Studio",
 
+    // Articles Section
+    articles_kicker: "Engineering Publications",
+    articles_title: "Articles & Production Insights",
+    articles_desc: "Real-world engineering guides, architectural breakdowns, and tactical lessons learned from shipping at scale.",
+    articles_view_all: "View All Publications →",
+
     // Hero Section
     hero_badge_studio: "renodotdev studio",
     hero_badge_avail: "Open for new projects",
     hero_headline_html: `We build mobile apps, web systems & <span class="text-gradient">smart AI tools</span>.`,
-    hero_subheadline_html: `An independent software studio run by <strong class="text-white">Della Reno Rinaldi</strong>. With 8+ years building production apps at Opaper and Astro, I work directly with founders and teams to ship fast, reliable software. Honest collaboration, zero junior handoffs.`,
+    hero_subheadline_html: `An independent software studio run by <strong class="text-white">Della Reno Rinaldi</strong>. With 8+ years engineering production software, I work directly with founders and teams to ship fast, reliable digital products. Honest collaboration, zero junior handoffs.`,
     hero_cta_start: "Start a Project",
     hero_cta_work: "See Our Work",
     hero_cta_wa: "Chat on WhatsApp",
@@ -246,10 +260,10 @@ export const translations: Record<Language, TranslationDictionary> = {
     stat_4_label: "Working Demos",
     stat_4_sub: "Try real test builds on your own phone every week",
 
-    // Featured Work
-    work_kicker: "Featured Work",
-    work_title: "Sobatoko — POS & Store Platform",
-    work_desc: "A complete retail and cashier system built from the ground up: fast sales, real-time inventory, hardware receipt printing, and digital storefronts.",
+    // Featured Products & Scale Work
+    work_kicker: "Current & Developed Products",
+    work_title: "Systems Built & Scaled in Production",
+    work_desc: "From our studio's flagship retail venture to mission-critical production apps serving thousands of daily users.",
     work_badge_deploy: "Live in Production",
     work_sobatoko_sub: "An end-to-end POS, inventory, and online store platform built for retail & F&B owners. Designed, engineered, and deployed live by renodotdev.",
     work_sobatoko_feat1: "Full-stack architecture built on Next.js and PostgreSQL for instant response times",
@@ -377,7 +391,7 @@ export const translations: Record<Language, TranslationDictionary> = {
 
     founder_sec_kicker: "Meet the Founder",
     founder_sec_title: "Direct Senior Craftsmanship, Zero Middlemen",
-    founder_sec_desc: "8+ years shipping production mobile & web apps at Opaper and Astro. You work 1-on-1 directly with me — no account managers, zero junior handoffs.",
+    founder_sec_desc: "8+ years engineering production mobile & web applications. You work 1-on-1 directly with Reno — no account managers, zero junior handoffs.",
     founder_sec_badge: "Studio Founder & Lead Engineer",
     founder_sec_quote: "With 8+ years building high-demand apps at Opaper and Astro, I ensure every system is engineered solid, responsive, and ready for thousands of real customers.",
     founder_sec_exp_opaper: "Ex-Opaper — High-Volume Restaurant Point-of-Sale & Hardware Integration",
@@ -391,7 +405,7 @@ export const translations: Record<Language, TranslationDictionary> = {
     p_nav_work: "Work & Teaching",
     p_nav_contact: "Contact",
     p_banner_tag: "Della Reno Rinaldi • Founder of renodotdev",
-    p_banner_back: "← Studio & Case Studies",
+    p_banner_back: "←Studio",
     p_hero_badge: "Available for advisory & select projects",
     p_hero_title: "Della Reno Rinaldi",
     p_hero_subtitle: "Senior Frontend & Mobile Engineer • Studio Founder",
@@ -427,19 +441,26 @@ export const translations: Record<Language, TranslationDictionary> = {
 
   id: {
     // Navigation
-    nav_work: "Karya",
+    nav_work: "Produk & Karya",
     nav_services: "Layanan",
+    nav_articles: "Artikel",
     nav_contact: "Kontak",
     nav_founder_bio: "Tentang Reno",
     nav_start_project: "Mulai Proyek",
     nav_contact_reno: "Hubungi Reno",
     nav_return_studio: "← Studio",
 
+    // Articles Section
+    articles_kicker: "Publikasi Rekayasa",
+    articles_title: "Artikel & Wawasan Produksi",
+    articles_desc: "Panduan teknis praktis, arsitektur sistem, dan pelajaran nyata dari pengalaman merilis software berskala tinggi.",
+    articles_view_all: "Lihat Semua Artikel →",
+
     // Hero Section
     hero_badge_studio: "renodotdev studio",
     hero_badge_avail: "Siap bantu proyek baru",
     hero_headline_html: `Bikin aplikasi mobile, website & <span class="text-gradient">fitur AI yang beneran jalan</span>.`,
-    hero_subheadline_html: `Studio software independen bersama <strong class="text-white">Della Reno Rinaldi</strong>. Berpengalaman 8+ tahun bangun aplikasi di Opaper dan Astro, saya bantu founder & tim bikin software yang cepat dan reliable. Komunikasi langsung, santai tapi rapi, tanpa perantara.`,
+    hero_subheadline_html: `Studio software independen bersama <strong class="text-white">Della Reno Rinaldi</strong>. Berpengalaman 8+ tahun merilis software produksi, saya bantu founder & tim bikin software yang cepat dan reliable. Komunikasi langsung, santai tapi rapi, tanpa perantara.`,
     hero_cta_start: "Mulai Proyek",
     hero_cta_work: "Lihat Karya Kami",
     hero_cta_wa: "Ngobrol di WhatsApp",
@@ -458,10 +479,10 @@ export const translations: Record<Language, TranslationDictionary> = {
     stat_4_label: "Bisa Dicoba",
     stat_4_sub: "Test langsung build aplikasi di HP kamu tiap minggu",
 
-    // Featured Work
-    work_kicker: "Karya Terbaru",
-    work_title: "Sobatoko — Aplikasi Kasir & Toko Online",
-    work_desc: "Sistem kasir dan toko ritel lengkap yang dibangun dari nol: POS cepat, stok real-time, print struk thermal, dan toko online.",
+    // Featured Products & Scale Work
+    work_kicker: "Produk & Karya Nyata",
+    work_title: "Sistem yang Dibangun & Berskala di Produksi",
+    work_desc: "Mulai dari produk ritel mandiri milik studio hingga aplikasi skala tinggi dengan ribuan pengguna harian.",
     work_badge_deploy: "Aktif Beroperasi",
     work_sobatoko_sub: "Sistem POS, manajemen stok, dan katalog online untuk pemilik bisnis ritel & F&B. Dirancang, di-code, dan dirilis penuh oleh renodotdev.",
     work_sobatoko_feat1: "Arsitektur full-stack pakai Next.js & PostgreSQL biar loading super enteng",
@@ -589,7 +610,7 @@ export const translations: Record<Language, TranslationDictionary> = {
 
     founder_sec_kicker: "Tentang Founder",
     founder_sec_title: "Dikerjakan Langsung Bersama Senior Engineer",
-    founder_sec_desc: "8+ tahun merilis aplikasi mobile & web produksi di Opaper dan Astro. Kamu bekerja 1-on-1 langsung bersama Reno tanpa perantara.",
+    founder_sec_desc: "8+ tahun merilis aplikasi mobile & web tingkat produksi. Kamu bekerja 1-on-1 langsung bersama Reno tanpa perantara.",
     founder_sec_badge: "Founder & Lead Engineer",
     founder_sec_quote: "Dengan pengalaman 8+ tahun di industri tech fast-paced seperti Opaper dan Astro, saya memastikan setiap sistem dirancang solid, cepat, dan siap dipakai ribuan pengguna.",
     founder_sec_exp_opaper: "Eks Lead Mobile & Frontend — Sistem POS & Kasir Restoran Skala Besar",
@@ -603,7 +624,7 @@ export const translations: Record<Language, TranslationDictionary> = {
     p_nav_work: "Karya & Kelas",
     p_nav_contact: "Kontak",
     p_banner_tag: "Della Reno Rinaldi • Founder renodotdev",
-    p_banner_back: "← Studio & Portofolio",
+    p_banner_back: "←Studio",
     p_hero_badge: "Terbuka untuk konsultasi & proyek terpilih",
     p_hero_title: "Della Reno Rinaldi",
     p_hero_subtitle: "Senior Mobile & Frontend Engineer • Founder Studio",

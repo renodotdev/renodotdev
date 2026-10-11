@@ -1,26 +1,43 @@
 ---
 interface Props {
-  pageType?: "studio" | "profile";
+  pageType?: "studio" | "profile" | "articles";
 }
 
+const pathname = Astro.url.pathname.replace(/\/$/, "") || "/";
+const isProfile = pathname.startsWith("/profile");
+const isArticles = pathname.startsWith("/articles");
+const isHome = pathname === "/";
+
 const {
-  pageType = Astro.url.pathname.startsWith("/profile") ? "profile" : "studio",
+  pageType = isProfile ? "profile" : isArticles ? "articles" : "studio",
 } = Astro.props;
 
-const studioNavLinks = [
-  { name: "Work", href: "#work", i18nKey: "nav_work" },
-  { name: "What We Do", href: "#services", i18nKey: "nav_services" },
-  { name: "Contact", href: "#contact", i18nKey: "nav_contact" },
+// 1. Contextual Navigation (clean in-page anchors & page flows)
+const homeSections = [
+  { name: "Services", href: "#services", section: "services", i18nKey: "nav_services" },
+  { name: "Products", href: "#work", section: "work", i18nKey: "nav_work" },
+  { name: "Founder", href: "/profile", section: "founder", i18nKey: "nav_founder_bio" },
+  { name: "Contact", href: "#contact", section: "contact", i18nKey: "nav_contact" },
 ];
 
-const profileNavLinks = [
-  { name: "About", href: "#home", i18nKey: "p_nav_about" },
-  { name: "Experience", href: "#experience", i18nKey: "p_nav_experience" },
-  { name: "Work & Teaching", href: "#work", i18nKey: "p_nav_work" },
-  { name: "Contact", href: "#contact", i18nKey: "p_nav_contact" },
+const profileSections = [
+  { name: "← Studio", href: "/", section: "studio", i18nKey: "nav_return_studio" },
+  { name: "Experience", href: "#experience", section: "experience", i18nKey: "p_nav_experience" },
+  { name: "Work", href: "#work", section: "work", i18nKey: "p_nav_work" },
+  { name: "Contact", href: "#contact", section: "contact", i18nKey: "p_nav_contact" },
 ];
 
-const navLinks = pageType === "profile" ? profileNavLinks : studioNavLinks;
+const articleSections = [
+  { name: "← Studio", href: "/", section: "studio", i18nKey: "nav_return_studio" },
+  { name: "Founder", href: "/profile", section: "founder", i18nKey: "nav_founder_bio" },
+  { name: "Contact", href: "/#contact", section: "contact", i18nKey: "nav_contact" },
+];
+
+const activeSections = isProfile
+  ? profileSections
+  : isArticles
+  ? articleSections
+  : homeSections;
 ---
 
 <header
@@ -29,11 +46,12 @@ const navLinks = pageType === "profile" ? profileNavLinks : studioNavLinks;
 >
   <div class="max-w-[1240px] mx-auto px-4 sm:px-6">
     <div class="flex justify-between items-center h-16 md:h-20">
-      {/* Brand Logo & Studio Stamp */}
-      <div class="flex items-center gap-2.5 sm:gap-3">
+      
+      {/* ── LEFT: Studio Logo & Context Stamp ────────────────── */}
+      <div class="flex items-center gap-2.5 sm:gap-3 shrink-0">
         <a
-          href={pageType === "profile" ? "/profile#home" : "/#home"}
-          class="flex-shrink-0 cursor-pointer flex items-center gap-2 sm:gap-2.5 nav-scroll-link group"
+          href={isProfile ? "/profile#home" : "/#home"}
+          class="cursor-pointer flex items-center gap-2 sm:gap-2.5 nav-scroll-link group"
           aria-label="renodotdev home"
         >
           <img
@@ -43,54 +61,58 @@ const navLinks = pageType === "profile" ? profileNavLinks : studioNavLinks;
             height="48"
             class="h-8 sm:h-9 md:h-11 w-auto max-w-[145px] sm:max-w-none object-contain transition-transform group-hover:scale-105"
           />
-          {pageType === "studio" ? (
-            <span class="hidden sm:inline-block px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-lime-400/10 text-lime-400 border border-lime-400/30 font-mono-tech">
-              Studio
-            </span>
-          ) : (
+          {isProfile ? (
             <span class="hidden sm:inline-block px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-white/10 text-white/70 border border-white/15 font-mono-tech">
               Founder
+            </span>
+          ) : isArticles ? (
+            <span class="hidden sm:inline-block px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-lime-400/10 text-lime-400 border border-lime-400/30 font-mono-tech">
+              Journal
+            </span>
+          ) : (
+            <span class="hidden sm:inline-block px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-lime-400/10 text-lime-400 border border-lime-400/30 font-mono-tech">
+              Studio
             </span>
           )}
         </a>
       </div>
 
-      {/* Desktop Navigation */}
-      <nav class="hidden lg:flex items-center gap-6 xl:gap-7 text-xs font-mono-tech tracking-wider" id="desktop-nav">
-        {
-          navLinks.map((link) => (
+      {/* ── CENTER: Clean Unified Section Navigation Island ──────── */}
+      <nav class="hidden lg:flex items-center font-mono-tech text-xs tracking-wider" id="desktop-nav">
+        <div class="flex items-center gap-1 p-1 rounded-full bg-white/[0.04] border border-white/10 shadow-inner backdrop-blur-md">
+          {activeSections.map((link) => (
             <a
               href={link.href}
-              data-section={link.href.startsWith("#") ? link.href.slice(1) : ""}
+              data-section={link.section}
               data-i18n={link.i18nKey || undefined}
-              class="nav-link transition-colors duration-200 text-[#8b949e] hover:text-white font-medium"
+              class="nav-link px-3.5 py-1.5 rounded-full transition-all duration-200 text-[#8b949e] hover:text-white hover:bg-white/10 font-medium cursor-pointer"
             >
               {link.name}
             </a>
-          ))
-        }
-
-        {/* Page Switcher Pill */}
-        {pageType === "studio" ? (
-          <a
-            href="/profile"
-            class="inline-flex items-center gap-1.5 px-3 py-1 rounded text-xs font-semibold text-white/70 hover:text-lime-400 border border-white/15 hover:border-lime-400/40 bg-white/5 transition-all duration-200"
-          >
-            <span data-i18n="nav_founder_bio">About Reno</span>
-            <span class="text-[10px] text-lime-400">&rarr;</span>
-          </a>
-        ) : (
-          <a
-            href="/"
-            class="inline-flex items-center gap-1.5 px-3 py-1 rounded text-xs font-semibold text-lime-400 border border-lime-400/30 bg-lime-400/10 hover:bg-lime-400/20 transition-all duration-200"
-          >
-            <span data-i18n="p_banner_back">&larr; Studio &amp; Case Studies</span>
-          </a>
-        )}
+          ))}
+        </div>
       </nav>
 
-      {/* Desktop Right CTAs + Language Switcher */}
-      <div class="hidden lg:flex items-center gap-3">
+      {/* ── RIGHT: Dedicated Articles Destination, Lang, Action CTA ─ */}
+      <div class="hidden lg:flex items-center gap-3 shrink-0">
+        
+        {/* Dedicated Top-Level Destination: Articles Hub (Cleanly Separated!) */}
+        <a
+          href="/articles"
+          class={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border text-xs font-mono-tech transition-all duration-200 cursor-pointer shadow-sm ${
+            isArticles
+              ? "bg-lime-400 text-black border-lime-400 font-bold shadow-[0_0_20px_rgba(151,254,237,0.35)]"
+              : "bg-[#0d1015] border-white/15 text-white/80 hover:text-white hover:border-lime-400/50 hover:bg-white/5 font-medium"
+          }`}
+          title="Read engineering publications & blueprints"
+        >
+          <span class={`w-1.5 h-1.5 rounded-full ${isArticles ? "bg-black animate-pulse" : "bg-lime-400"}`}></span>
+          <span data-i18n="nav_articles">Articles</span>
+        </a>
+
+        {/* Vertical Divider */}
+        <div class="h-4 w-px bg-white/15"></div>
+
         {/* Language Switcher Pill */}
         <div class="inline-flex items-center p-0.5 rounded-lg border border-white/15 bg-white/5 font-mono-tech text-[11px] select-none">
           <button
@@ -113,44 +135,38 @@ const navLinks = pageType === "profile" ? profileNavLinks : studioNavLinks;
           </button>
         </div>
 
-        {pageType === "studio" ? (
-          <a
-            href="#contact"
-            data-i18n="nav_start_project"
-            class="nav-scroll-link flex items-center justify-center px-5 py-2 rounded text-xs font-bold uppercase tracking-wider transition-all duration-200 hover:bg-lime-300 active:scale-95 shadow-[0_0_20px_rgba(151,254,237,0.25)] border border-lime-400 cursor-pointer font-mono-tech"
-            style="background: #97feed; color: #08090a;"
-          >
-            Start a Project
-          </a>
-        ) : (
+        {/* Primary Action Button */}
+        {isProfile ? (
           <a
             href="#contact"
             data-i18n="p_hero_btn_contact"
-            class="nav-scroll-link flex items-center justify-center px-5 py-2 rounded text-xs font-bold uppercase tracking-wider transition-all duration-200 hover:bg-lime-300 active:scale-95 shadow-[0_0_20px_rgba(151,254,237,0.25)] border border-lime-400 cursor-pointer font-mono-tech"
+            class="nav-scroll-link flex items-center justify-center px-5 py-2 rounded-lg text-xs font-bold uppercase tracking-wider transition-all duration-200 hover:bg-lime-300 active:scale-95 shadow-[0_0_20px_rgba(151,254,237,0.25)] border border-lime-400 cursor-pointer font-mono-tech"
             style="background: #97feed; color: #08090a;"
           >
             Say Hello &rarr;
           </a>
+        ) : (
+          <a
+            href={isHome ? "#contact" : "/#contact"}
+            data-i18n="nav_start_project"
+            class="nav-scroll-link flex items-center justify-center px-5 py-2 rounded-lg text-xs font-bold uppercase tracking-wider transition-all duration-200 hover:bg-lime-300 active:scale-95 shadow-[0_0_20px_rgba(151,254,237,0.25)] border border-lime-400 cursor-pointer font-mono-tech"
+            style="background: #97feed; color: #08090a;"
+          >
+            Start a Project
+          </a>
         )}
       </div>
 
-      {/* Mobile / tablet controls (< lg) */}
+      {/* ── MOBILE / TABLET CONTROLS (< lg) ─────────────────────── */}
       <div class="flex items-center gap-2 sm:gap-2.5 lg:hidden">
-        {/* Tablet Quick Switcher (visible on sm..lg, cleanly hidden on small mobile) */}
-        {pageType === "studio" ? (
+        {/* Quick Hub Jump (Articles Pill on tablet) */}
+        {!isArticles && (
           <a
-            href="/profile"
-            class="hidden sm:inline-flex items-center gap-1 text-[11px] font-bold px-2.5 py-1 rounded border border-white/15 text-white/80 hover:text-lime-400 font-mono-tech bg-white/5"
+            href="/articles"
+            class="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg border border-lime-400/30 bg-lime-400/10 text-lime-400 text-[11px] font-mono-tech font-bold"
           >
-            <span data-i18n="nav_founder_bio">About Reno</span>
-            <span class="text-lime-400">&rarr;</span>
-          </a>
-        ) : (
-          <a
-            href="/"
-            class="hidden sm:inline-flex items-center gap-1 text-[11px] font-bold px-2.5 py-1 rounded border border-lime-400/30 text-lime-400 bg-lime-400/10 font-mono-tech"
-          >
-            <span>&larr; Studio</span>
+            <span class="w-1.5 h-1.5 rounded-full bg-lime-400"></span>
+            <span>Articles</span>
           </a>
         )}
 
@@ -174,7 +190,7 @@ const navLinks = pageType === "profile" ? profileNavLinks : studioNavLinks;
           </button>
         </div>
 
-        {/* Mobile Hamburger Toggle Button with Tech Border */}
+        {/* Mobile Hamburger Toggle Button */}
         <button
           id="menu-toggle-btn"
           type="button"
@@ -203,17 +219,35 @@ const navLinks = pageType === "profile" ? profileNavLinks : studioNavLinks;
           </svg>
         </button>
       </div>
+
     </div>
   </div>
 
-  {/* Mobile Navigation Drawer Overlay */}
+  {/* ── MOBILE NAVIGATION DRAWER OVERLAY ───────────────────────── */}
   <div
     id="mobile-menu"
     class="hidden lg:hidden border-t border-white/15 bg-[#08090a]/98 backdrop-blur-2xl shadow-2xl max-h-[calc(100vh-4rem)] overflow-y-auto"
   >
-    <div class="px-4 sm:px-6 pt-3.5 pb-8 space-y-3">
-      {/* Top Mobile Context Card (Studio <-> Profile Switcher) */}
-      {pageType === "studio" ? (
+    <div class="px-4 sm:px-6 pt-4 pb-8 space-y-4">
+      
+      {/* 1. Context Switcher Card (Studio <-> Profile) */}
+      {isProfile ? (
+        <a
+          href="/"
+          class="flex items-center justify-between p-3.5 rounded-xl bg-lime-400/10 border border-lime-400/30 hover:bg-lime-400/15 transition-all group shadow-md"
+        >
+          <div class="flex items-center gap-3">
+            <div class="w-9 h-9 rounded-lg bg-lime-400/20 text-lime-400 border border-lime-400/30 flex items-center justify-center font-bold font-mono-tech text-xs shrink-0">
+              &gt;R
+            </div>
+            <div>
+              <p class="text-xs font-bold text-white group-hover:text-lime-400 transition-colors">renodotdev Studio</p>
+              <p class="text-[10px] text-lime-400 font-mono-tech" data-i18n="p_banner_back">&larr; Return to Studio &amp; Services</p>
+            </div>
+          </div>
+          <span class="text-lime-400 font-mono-tech text-xs font-bold px-2 py-1 rounded bg-lime-400/20">&larr;</span>
+        </a>
+      ) : (
         <a
           href="/profile"
           class="flex items-center justify-between p-3.5 rounded-xl bg-gradient-to-r from-white/[0.08] to-white/[0.02] border border-white/15 hover:border-lime-400/50 transition-all group shadow-md"
@@ -230,37 +264,24 @@ const navLinks = pageType === "profile" ? profileNavLinks : studioNavLinks;
             </div>
             <div>
               <p class="text-xs font-bold text-white group-hover:text-lime-400 transition-colors">Della Reno Rinaldi</p>
-              <p class="text-[10px] text-white/50 font-mono-tech" data-i18n="nav_founder_bio">About Reno &bull; Career Experience</p>
+              <p class="text-[10px] text-white/50 font-mono-tech" data-i18n="nav_founder_bio">About Reno &bull; Individual Career Track</p>
             </div>
           </div>
           <span class="text-lime-400 font-mono-tech text-xs font-bold px-2 py-1 rounded bg-white/5">&rarr;</span>
         </a>
-      ) : (
-        <a
-          href="/"
-          class="flex items-center justify-between p-3.5 rounded-xl bg-lime-400/10 border border-lime-400/30 hover:bg-lime-400/15 transition-all group shadow-md"
-        >
-          <div class="flex items-center gap-3">
-            <div class="w-9 h-9 rounded-lg bg-lime-400/20 text-lime-400 border border-lime-400/30 flex items-center justify-center font-bold font-mono-tech text-xs shrink-0">
-              &gt;R
-            </div>
-            <div>
-              <p class="text-xs font-bold text-white group-hover:text-lime-400 transition-colors">renodotdev studio</p>
-              <p class="text-[10px] text-lime-400 font-mono-tech" data-i18n="p_banner_back">&larr; Studio &amp; Case Studies</p>
-            </div>
-          </div>
-          <span class="text-lime-400 font-mono-tech text-xs font-bold px-2 py-1 rounded bg-lime-400/20">&larr;</span>
-        </a>
       )}
 
-      {/* Navigation Section Links with tactile touch targets */}
-      <div class="space-y-1 py-1">
-        {navLinks.map((link) => (
+      {/* 2. In-Page Sections Cluster */}
+      <div class="space-y-1">
+        <span class="text-[10px] uppercase font-mono-tech text-white/40 tracking-wider block px-1 mb-1">
+          {isProfile ? "Profile Sections" : isArticles ? "Articles Overview" : "Page Sections"}
+        </span>
+        {activeSections.map((link) => (
           <a
             href={link.href}
-            data-section={link.href.startsWith("#") ? link.href.slice(1) : ""}
+            data-section={link.section}
             data-i18n={link.i18nKey || undefined}
-            class="mobile-nav-link flex items-center justify-between px-4 py-3 rounded-xl text-xs font-bold uppercase tracking-wider transition-all text-[#8b949e] hover:text-white hover:bg-white/5 font-mono-tech active:scale-[0.99] border border-transparent hover:border-white/10"
+            class="mobile-nav-link flex items-center justify-between px-4 py-3 rounded-xl text-xs font-bold uppercase tracking-wider transition-all font-mono-tech text-[#8b949e] hover:text-white hover:bg-white/5 border border-transparent hover:border-white/10 active:scale-[0.99]"
           >
             <span>{link.name}</span>
             <span class="text-white/20 text-sm font-bold">&rsaquo;</span>
@@ -268,15 +289,51 @@ const navLinks = pageType === "profile" ? profileNavLinks : studioNavLinks;
         ))}
       </div>
 
-      {/* Action CTAs in Mobile Menu */}
-      <div class="pt-3 border-t border-white/10 flex flex-col gap-2.5">
+      {/* 3. Distinct Featured Articles Card (Completely separate from sections!) */}
+      <div class="pt-2">
+        <span class="text-[10px] uppercase font-mono-tech text-white/40 tracking-wider block px-1 mb-1.5">
+          Engineering Journal
+        </span>
         <a
-          href="#contact"
-          data-i18n={pageType === "studio" ? "nav_start_project" : "p_hero_btn_contact"}
-          class="nav-scroll-link block w-full text-center py-3.5 px-6 rounded-xl text-xs font-bold uppercase tracking-wider bg-lime-400 text-black shadow-[0_0_25px_rgba(151,254,237,0.3)] font-mono-tech hover:bg-lime-300 active:scale-95 transition-all border border-lime-400"
+          href="/articles"
+          class={`flex items-center justify-between p-3.5 rounded-xl border transition-all ${
+            isArticles
+              ? "bg-lime-400/15 border-lime-400/50 text-white"
+              : "bg-[#0c0e12] border-white/15 hover:border-lime-400/40"
+          }`}
         >
-          {pageType === "studio" ? "Start a Project" : "Say Hello →"}
+          <div class="flex items-center gap-3">
+            <div class="w-8 h-8 rounded-lg bg-lime-400/10 text-lime-400 border border-lime-400/25 flex items-center justify-center font-bold text-xs shrink-0">
+              ✦
+            </div>
+            <div>
+              <p class="text-xs font-bold text-white">Articles &amp; Architecture</p>
+              <p class="text-[10px] text-[#8b949e]">Production engineering blueprints &amp; teardowns</p>
+            </div>
+          </div>
+          <span class="text-lime-400 font-mono-tech font-bold text-xs">&rarr;</span>
         </a>
+      </div>
+
+      {/* 4. Action CTAs */}
+      <div class="pt-2 border-t border-white/10 flex flex-col gap-2.5">
+        {isProfile ? (
+          <a
+            href="#contact"
+            data-i18n="p_hero_btn_contact"
+            class="nav-scroll-link block w-full text-center py-3.5 px-6 rounded-xl text-xs font-bold uppercase tracking-wider bg-lime-400 text-black shadow-[0_0_25px_rgba(151,254,237,0.3)] font-mono-tech hover:bg-lime-300 active:scale-95 transition-all border border-lime-400"
+          >
+            Say Hello &rarr;
+          </a>
+        ) : (
+          <a
+            href={isHome ? "#contact" : "/#contact"}
+            data-i18n="nav_start_project"
+            class="nav-scroll-link block w-full text-center py-3.5 px-6 rounded-xl text-xs font-bold uppercase tracking-wider bg-lime-400 text-black shadow-[0_0_25px_rgba(151,254,237,0.3)] font-mono-tech hover:bg-lime-300 active:scale-95 transition-all border border-lime-400"
+          >
+            Start a Project
+          </a>
+        )}
 
         <a
           href="https://wa.me/+6281212996550?text=Hi%20Reno,%20I'd%20like%20to%20discuss%20a%20project%20with%20renodotdev"
@@ -289,14 +346,6 @@ const navLinks = pageType === "profile" ? profileNavLinks : studioNavLinks;
         </a>
       </div>
 
-      {/* Drawer Status Strip */}
-      <div class="pt-3 border-t border-white/10 flex items-center justify-between text-[11px] font-mono-tech text-white/40">
-        <span class="flex items-center gap-1.5">
-          <span class="w-1.5 h-1.5 rounded-full bg-lime-400 animate-pulse"></span>
-          <span class="text-lime-400/90 font-medium">Studio Operational</span>
-        </span>
-        <span>Malang &bull; Remote Global</span>
-      </div>
     </div>
   </div>
 </header>
@@ -351,11 +400,9 @@ const navLinks = pageType === "profile" ? profileNavLinks : studioNavLinks;
       }
     });
 
-    // Dispatch global event for custom listeners
     window.dispatchEvent(new CustomEvent("renodotdev:lang-change", { detail: { lang } }));
   }
 
-  // Expose helper globally
   (window as any).setRenodotdevLang = applyLanguage;
 
   function setupHeader() {
@@ -364,10 +411,10 @@ const navLinks = pageType === "profile" ? profileNavLinks : studioNavLinks;
     const iconOpen = document.getElementById("menu-icon-open");
     const iconClose = document.getElementById("menu-icon-close");
 
-    const desktopLinks = document.querySelectorAll<HTMLAnchorElement>(".nav-link");
+    const desktopLinks = document.querySelectorAll<HTMLAnchorElement>("#desktop-nav .nav-link");
     const mobileLinks = document.querySelectorAll<HTMLAnchorElement>(".mobile-nav-link");
     const allScrollLinks = document.querySelectorAll<HTMLAnchorElement>(
-      ".nav-scroll-link, .nav-link, .mobile-nav-link"
+      ".nav-scroll-link, #desktop-nav .nav-link, .mobile-nav-link"
     );
 
     // Initial language setup
@@ -436,17 +483,39 @@ const navLinks = pageType === "profile" ? profileNavLinks : studioNavLinks;
       }
     });
 
+    // Intelligent cross-page & hash link handling
     allScrollLinks.forEach((link) => {
       link.addEventListener("click", (e) => {
         const href = link.getAttribute("href");
-        if (href && href.startsWith("#")) {
-          e.preventDefault();
-          toggleMenu(false);
+        if (!href) return;
+
+        const currentPath = window.location.pathname.replace(/\/$/, "") || "/";
+
+        if (href.startsWith("#")) {
           const targetId = href.slice(1);
           const el = document.getElementById(targetId);
           if (el) {
+            e.preventDefault();
+            toggleMenu(false);
             el.scrollIntoView({ behavior: "smooth" });
             history.pushState(null, "", href);
+          } else {
+            // Target is on homepage
+            window.location.href = "/" + href;
+          }
+        } else if (href.includes("#")) {
+          const [targetPath, hash] = href.split("#");
+          const normalizedTarget = targetPath.replace(/\/$/, "") || "/";
+          if (normalizedTarget === currentPath && hash) {
+            const el = document.getElementById(hash);
+            if (el) {
+              e.preventDefault();
+              toggleMenu(false);
+              el.scrollIntoView({ behavior: "smooth" });
+              history.pushState(null, "", "#" + hash);
+            }
+          } else {
+            toggleMenu(false);
           }
         } else {
           toggleMenu(false);
@@ -454,20 +523,20 @@ const navLinks = pageType === "profile" ? profileNavLinks : studioNavLinks;
       });
     });
 
-    const isProfile = window.location.pathname.startsWith("/profile");
-    const sectionIds = isProfile
-      ? ["home", "experience", "work", "contact"]
-      : ["home", "work", "services", "contact"];
+    const currentPathname = window.location.pathname.replace(/\/$/, "") || "/";
+    const isProfilePage = currentPathname.startsWith("/profile");
+    const isArticlesPage = currentPathname.startsWith("/articles");
 
     function setActiveSection(activeId: string) {
       desktopLinks.forEach((link) => {
         const sec = link.getAttribute("data-section");
         if (sec && sec === activeId) {
-          link.classList.add("font-bold");
+          link.classList.add("font-bold", "bg-white/10", "text-white");
           link.classList.remove("text-[#8b949e]");
           link.style.color = "#97feed";
         } else if (sec) {
-          link.classList.remove("font-bold");
+          link.classList.remove("font-bold", "bg-white/10");
+          link.classList.add("text-[#8b949e]");
           link.style.color = "";
         }
       });
@@ -486,26 +555,30 @@ const navLinks = pageType === "profile" ? profileNavLinks : studioNavLinks;
       });
     }
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setActiveSection(entry.target.id);
-          }
-        });
-      },
-      {
-        rootMargin: "-15% 0px -75% 0px",
-        threshold: 0,
-      }
-    );
+    if (!isArticlesPage) {
+      const sectionIds = isProfilePage
+        ? ["home", "experience", "work", "contact"]
+        : ["services", "work", "contact"];
 
-    sectionIds.forEach((id) => {
-      const el = document.getElementById(id);
-      if (el) observer.observe(el);
-    });
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              setActiveSection(entry.target.id);
+            }
+          });
+        },
+        {
+          rootMargin: "-15% 0px -75% 0px",
+          threshold: 0,
+        }
+      );
 
-    setActiveSection("home");
+      sectionIds.forEach((id) => {
+        const el = document.getElementById(id);
+        if (el) observer.observe(el);
+      });
+    }
   }
 
   setupHeader();

@@ -6,7 +6,7 @@ import "../styles/globals.css";
 interface Props {
   title?: string;
   description?: string;
-  pageType?: "studio" | "profile";
+  pageType?: "studio" | "profile" | "articles";
 }
 
 const {
@@ -30,6 +30,8 @@ const {
       rel="stylesheet"
     />
     <meta name="generator" content={Astro.generator} />
+    <link rel="alternate" type="text/plain" href="/llms.txt" title="LLM Context & Summary" />
+    <link rel="alternate" type="application/json" href="/llms.json" title="LLM Structured Knowledge Graph" />
     <title>{title}</title>
     <meta name="description" content={description} />
     <meta property="og:title" content={title} />

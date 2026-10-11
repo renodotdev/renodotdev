@@ -1,0 +1,590 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { getCollection } from "astro:content";
+
+const articles = await getCollection("articles");
+const sortedArticles = articles.sort(
+  (a, b) => b.data.publishDate.getTime() - a.data.publishDate.getTime()
+);
+
+// Map articles to their core domain/category
+function getArticleCategory(tags: string[]): { id: string; label: string } {
+  const lower = tags.map((t) => t.toLowerCase());
+  if (lower.some((t) => t.includes("ai") || t.includes("llm") || t.includes("prompt") || t.includes("rag") || t.includes("agent") || t.includes("slm") || t.includes("mcp"))) {
+    return { id: "ai-llm", label: "AI & Prompts" };
+  }
+  if (lower.some((t) => t.includes("react native") || t.includes("pos") || t.includes("offline") || t.includes("hardware") || t.includes("mobile"))) {
+    return { id: "mobile-pos", label: "Mobile & POS" };
+  }
+  if (lower.some((t) => t.includes("next.js") || t.includes("saas") || t.includes("postgres") || t.includes("multi-tenant") || t.includes("web") || t.includes("api") || t.includes("typescript") || t.includes("frontend"))) {
+    return { id: "web-saas", label: "Web & SaaS" };
+  }
+  return { id: "general", label: "Architecture & Systems" };
+}
+
+// Category counts
+const categories = [
+  { id: "all", label: "All Publications", count: sortedArticles.length },
+  { id: "ai-llm", label: "AI & Prompts", count: sortedArticles.filter((a) => getArticleCategory(a.data.tags).id === "ai-llm").length },
+  { id: "web-saas", label: "Web & SaaS", count: sortedArticles.filter((a) => getArticleCategory(a.data.tags).id === "web-saas").length },
+  { id: "mobile-pos", label: "Mobile & POS", count: sortedArticles.filter((a) => getArticleCategory(a.data.tags).id === "mobile-pos").length },
+  { id: "general", label: "Architecture & Systems", count: sortedArticles.filter((a) => getArticleCategory(a.data.tags).id === "general").length },
+];
+
+// All distinct tags sorted alphabetically
+const allTags = Array.from(
+  new Set(articles.flatMap((article) => article.data.tags))
+).sort((a, b) => a.localeCompare(b));
+
+// Tag counts
+const tagCounts = allTags.reduce((acc, tag) => {
+  acc[tag.toLowerCase()] = articles.filter((a) =>
+    a.data.tags.some((t) => t.toLowerCase() === tag.toLowerCase())
+  ).length;
+  return acc;
+}, {} as Record<string, number>);
+---
+
+<Layout
+  title="Engineering Publications & Articles — renodotdev Studio"
+  description="Technical deep dives, architectural breakdowns, and real-world lessons from shipping production mobile apps, SaaS, and AI systems."
+  pageType="articles"
+>
+  <div class="min-h-screen bg-[#08090a] text-white font-sans selection:bg-lime-400 selection:text-black py-16 md:py-24 px-4 sm:px-6">
+    <div class="max-w-[1100px] mx-auto">
+      
+      {/* ── Breadcrumb & Kicker ─────────────────────────────────── */}
+      <div class="flex items-center gap-2 text-xs font-mono-tech text-white/50 mb-6">
+        <a href="/" class="hover:text-lime-400 transition-colors">&larr; renodotdev Studio</a>
+        <span>/</span>
+        <span class="text-lime-400 font-semibold">Engineering Articles</span>
+      </div>
+
+      {/* ── Header ────────────────────────────────────────────── */}
+      <div class="mb-10 md:mb-12">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-lime-400/10 text-lime-400 border border-lime-400/30 text-xs font-mono-tech font-bold uppercase tracking-wider mb-4">
+          <span class="w-2 h-2 rounded-full bg-lime-400 animate-pulse"></span>
+          <span>Technical Publications</span>
+        </div>
+        <h1 class="text-3xl sm:text-5xl md:text-6xl font-extrabold text-white tracking-tight uppercase mb-4">
+          Engineering <span class="text-gradient">from Production</span>
+        </h1>
+        <p class="text-base sm:text-lg text-[#8b949e] max-w-2xl leading-relaxed">
+          Tactical architectural guides, performance deep-dives, and real-world engineering blueprints from shipping production mobile apps, SaaS, and AI systems.
+        </p>
+      </div>
+
+      {/* ── Interactive Filter & Search Controls ───────────────── */}
+      <div class="mb-10 p-5 sm:p-6 rounded-2xl border border-white/15 bg-[#0b0d12] shadow-xl font-mono-tech">
+        
+        {/* Search Bar + Live Status Counter */}
+        <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4 mb-5 pb-5 border-b border-white/10">
+          <div class="relative flex-1 max-w-md">
+            <span class="absolute left-3.5 top-1/2 -translate-y-1/2 text-white/40 text-xs">🔍</span>
+            <input
+              type="text"
+              id="article-search-input"
+              placeholder="Search by title, keyword, or tech stack..."
+              class="w-full bg-black/60 border border-white/15 rounded-xl pl-9 pr-8 py-2 text-xs text-white placeholder-white/40 focus:outline-none focus:border-lime-400 focus:ring-1 focus:ring-lime-400 transition-all"
+            />
+            <button
+              id="search-clear-btn"
+              type="button"
+              class="hidden absolute right-3 top-1/2 -translate-y-1/2 text-white/40 hover:text-white text-xs cursor-pointer"
+              title="Clear search"
+            >
+              &times;
+            </button>
+          </div>
+
+          <div class="flex items-center justify-between sm:justify-end gap-3 text-xs">
+            <span id="filter-status-text" class="text-lime-400/90 font-medium">
+              Showing all {sortedArticles.length} publications
+            </span>
+            <button
+              id="clear-all-filters-btn"
+              type="button"
+              class="hidden px-2.5 py-1 rounded-lg bg-white/10 text-white/80 hover:text-lime-300 hover:bg-white/15 text-[11px] transition-colors cursor-pointer"
+            >
+              Reset Filters &times;
+            </button>
+          </div>
+        </div>
+
+        {/* Category Domain Tabs */}
+        <div class="mb-4">
+          <span class="text-[10px] uppercase font-bold tracking-widest text-white/40 block mb-2">
+            Categories:
+          </span>
+          <div class="flex flex-wrap gap-2" id="category-pills">
+            {categories.map((cat) => (
+              <button
+                type="button"
+                data-category-btn={cat.id}
+                class={`category-pill px-3.5 py-1.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-all cursor-pointer border flex items-center gap-1.5 ${
+                  cat.id === "all"
+                    ? "active-pill bg-lime-400 text-black border-lime-400 shadow-[0_0_15px_rgba(151,254,237,0.25)]"
+                    : "inactive-pill bg-[#0e1116] text-white/70 border-white/15 hover:border-lime-400/40 hover:text-white"
+                }`}
+              >
+                <span>{cat.label}</span>
+                <span class="text-[10px] opacity-70">({cat.count})</span>
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Specific Topic / Tag Filter Pills */}
+        <div>
+          <span class="text-[10px] uppercase font-bold tracking-widest text-white/40 block mb-2">
+            Filter by Tech Tag:
+          </span>
+          <div class="flex flex-wrap gap-1.5" id="tag-pills">
+            {allTags.map((tag) => {
+              const count = tagCounts[tag.toLowerCase()] || 0;
+              const normalizedTag = tag.toLowerCase().trim();
+              return (
+                <button
+                  type="button"
+                  data-tag-btn={normalizedTag}
+                  class="tag-filter-btn inactive-pill px-2.5 py-1 rounded text-[11px] font-medium transition-all cursor-pointer border bg-[#0e1116] text-white/70 border-white/15 hover:border-lime-400/40 hover:text-white flex items-center gap-1"
+                >
+                  <span>#{tag}</span>
+                  <span class="text-[9px] opacity-50">({count})</span>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
+      </div>
+
+      {/* ── Articles Grid ─────────────────────────────────────── */}
+      <div class="grid grid-cols-1 gap-6 mb-16" id="articles-list">
+        {sortedArticles.map((article) => {
+          const formattedDate = article.data.publishDate.toLocaleDateString("en-US", {
+            year: "numeric",
+            month: "short",
+            day: "numeric",
+          });
+
+          const cat = getArticleCategory(article.data.tags);
+          const normalizedTags = article.data.tags.map((t) => t.toLowerCase().trim());
+          const tagsStr = normalizedTags.join(",");
+          const searchHaystack = `${article.data.title} ${article.data.description} ${article.data.audience} ${article.data.tags.join(" ")}`.toLowerCase();
+
+          return (
+            <article
+              class="article-item p-6 sm:p-8 rounded-2xl border border-white/15 bg-[#0b0d12] hover:border-lime-400/50 hover:shadow-[0_0_30px_rgba(151,254,237,0.12)] transition-all duration-300 flex flex-col justify-between group relative overflow-hidden"
+              data-tags={tagsStr}
+              data-category={cat.id}
+              data-search={searchHaystack}
+            >
+              <div>
+                <div class="flex flex-wrap items-center gap-3 font-mono-tech text-xs text-white/50 mb-3">
+                  <span class="px-2 py-0.5 rounded bg-lime-400/10 text-lime-400 border border-lime-400/30 font-bold uppercase text-[10px]">
+                    {cat.label}
+                  </span>
+                  <span>&bull;</span>
+                  <span class="text-white/70">{formattedDate}</span>
+                  <span>&bull;</span>
+                  <span>{article.data.readTime}</span>
+                  <span>&bull;</span>
+                  <span class="text-white/40">{article.data.audience}</span>
+                </div>
+
+                <h2 class="text-xl sm:text-2xl md:text-3xl font-extrabold text-white group-hover:text-lime-300 transition-colors tracking-tight mb-3 font-sans leading-snug">
+                  <a href={`/articles/${article.id}`}>
+                    {article.data.title}
+                  </a>
+                </h2>
+
+                <p class="text-sm sm:text-base text-[#8b949e] leading-relaxed mb-6 font-sans">
+                  {article.data.description}
+                </p>
+              </div>
+
+              <div class="flex flex-wrap items-center justify-between gap-4 pt-4 border-t border-white/10 font-mono-tech">
+                {/* Interactive Tags on Card */}
+                <div class="flex flex-wrap gap-1.5">
+                  {article.data.tags.map((tag) => {
+                    const norm = tag.toLowerCase().trim();
+                    return (
+                      <button
+                        type="button"
+                        data-card-tag={norm}
+                        class="card-tag-btn px-2.5 py-0.5 rounded text-[11px] bg-black/60 text-white/70 border border-white/10 hover:border-lime-400/50 hover:text-lime-300 hover:bg-lime-400/10 transition-colors cursor-pointer"
+                        title={`Filter by #${tag}`}
+                      >
+                        #{tag}
+                      </button>
+                    );
+                  })}
+                </div>
+
+                <a
+                  href={`/articles/${article.id}`}
+                  class="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-lime-400 group-hover:translate-x-1 transition-transform"
+                >
+                  <span>Read Blueprint</span>
+                  <span>&rarr;</span>
+                </a>
+              </div>
+            </article>
+          );
+        })}
+      </div>
+
+      {/* ── Empty State (When no articles match a filter or search) ── */}
+      <div
+        id="no-results-state"
+        class="hidden py-16 px-6 text-center rounded-2xl border border-white/15 bg-[#0b0d12] font-mono-tech mb-16 shadow-xl"
+      >
+        <span class="text-3xl mb-3 block text-lime-400">✦</span>
+        <h3 class="text-lg font-bold text-white mb-2">No matching publications found</h3>
+        <p class="text-xs text-[#8b949e] max-w-sm mx-auto mb-6">
+          No articles match your current topic filter or search query. Try resetting your filters.
+        </p>
+        <button
+          id="empty-state-reset-btn"
+          type="button"
+          class="px-5 py-2.5 rounded-xl bg-lime-400 text-black font-bold uppercase text-xs hover:bg-lime-300 transition-all cursor-pointer shadow-md"
+        >
+          View All Publications &rarr;
+        </button>
+      </div>
+
+      {/* ── Bottom Conversion Banner ──────────────────────────── */}
+      <div class="p-8 sm:p-10 rounded-2xl border border-white/15 bg-[#0e1117] flex flex-col md:flex-row items-center justify-between gap-6 font-mono-tech shadow-2xl">
+        <div class="max-w-xl text-center md:text-left">
+          <span class="text-xs text-lime-400 font-bold uppercase tracking-widest block mb-2">
+            Engineering Partnership
+          </span>
+          <h3 class="text-2xl font-bold text-white font-sans mb-2">
+            Need this engineered for your product?
+          </h3>
+          <p class="text-xs sm:text-sm text-[#8b949e] font-sans leading-relaxed">
+            We work directly with founders and teams to build high-performance mobile apps, web systems, and AI workflows. No junior handoffs, no bloated agency retainers.
+          </p>
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-3 w-full md:w-auto shrink-0 text-xs">
+          <a
+            href="/#contact"
+            class="px-6 py-3 rounded-xl bg-lime-400 text-black font-bold uppercase tracking-wider hover:bg-lime-300 transition-all text-center border border-lime-400 shadow-[0_0_20px_rgba(151,254,237,0.3)]"
+          >
+            Start a Project &rarr;
+          </a>
+          <a
+            href="https://wa.me/+6281212996550?text=Hi%20Reno,%20I'm%20interested%20in%20discussing%20a%20project%20after%20reading%20your%20articles"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="px-5 py-3 rounded-xl border border-white/20 text-white hover:border-lime-400 hover:text-lime-400 bg-white/5 font-bold uppercase tracking-wider transition-all text-center"
+          >
+            WhatsApp Reno &nearr;
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</Layout>
+
+<style>
+  .active-pill {
+    background-color: #97feed !important;
+    color: #08090a !important;
+    border-color: #97feed !important;
+    box-shadow: 0 0 15px rgba(151, 254, 237, 0.25);
+  }
+
+  .active-pill span {
+    color: #08090a !important;
+  }
+
+  .inactive-pill {
+    background-color: #0e1116;
+    color: rgba(255, 255, 255, 0.7);
+    border-color: rgba(255, 255, 255, 0.15);
+  }
+
+  .inactive-pill:hover {
+    color: #ffffff;
+    border-color: rgba(151, 254, 237, 0.4);
+    background-color: rgba(255, 255, 255, 0.05);
+  }
+
+  .active-card-tag {
+    background-color: #97feed !important;
+    color: #08090a !important;
+    border-color: #97feed !important;
+    font-weight: 700;
+  }
+</style>
+
+<script>
+  function initArticlesFiltering() {
+    const searchInput = document.getElementById("article-search-input") as HTMLInputElement | null;
+    const searchClearBtn = document.getElementById("search-clear-btn");
+    const clearAllBtn = document.getElementById("clear-all-filters-btn");
+    const emptyResetBtn = document.getElementById("empty-state-reset-btn");
+    const statusText = document.getElementById("filter-status-text");
+    const noResultsState = document.getElementById("no-results-state");
+
+    const categoryButtons = document.querySelectorAll<HTMLButtonElement>("[data-category-btn]");
+    const tagButtons = document.querySelectorAll<HTMLButtonElement>("[data-tag-btn]");
+    const cardTagButtons = document.querySelectorAll<HTMLButtonElement>("[data-card-tag]");
+    const articleCards = document.querySelectorAll<HTMLElement>(".article-item");
+    const totalCount = articleCards.length;
+
+    let activeCategory = "all";
+    let activeTag = "";
+    let searchQuery = "";
+
+    // Helper: Normalize tag strings (handles spaces, hyphens, plus signs, case)
+    function normalize(str: string): string {
+      return (str || "").toLowerCase().replace(/[-+]/g, " ").trim();
+    }
+
+    // Core Filtering Engine
+    function applyFilters(updateHistory = true) {
+      let visibleCount = 0;
+      const normalizedSearch = searchQuery.toLowerCase().trim();
+      const normalizedActiveTag = normalize(activeTag);
+
+      articleCards.forEach((card) => {
+        const cardCategory = card.getAttribute("data-category") || "";
+        const rawTags = (card.getAttribute("data-tags") || "").split(",").map(normalize);
+        const searchHaystack = card.getAttribute("data-search") || "";
+
+        // 1. Category match
+        const matchesCategory = activeCategory === "all" || cardCategory === activeCategory;
+
+        // 2. Tag match
+        const matchesTag = !normalizedActiveTag || rawTags.some((t) => t === normalizedActiveTag || t.includes(normalizedActiveTag));
+
+        // 3. Search query match
+        const matchesSearch = !normalizedSearch || searchHaystack.includes(normalizedSearch);
+
+        const isMatch = matchesCategory && matchesTag && matchesSearch;
+
+        // Bulletproof display toggle (both inline style and class)
+        if (isMatch) {
+          card.style.display = "flex";
+          card.classList.remove("hidden");
+          visibleCount++;
+        } else {
+          card.style.display = "none";
+          card.classList.add("hidden");
+        }
+      });
+
+      // Update Category pills active styles
+      categoryButtons.forEach((btn) => {
+        const catId = btn.getAttribute("data-category-btn") || "all";
+        if (catId === activeCategory && !activeTag) {
+          btn.classList.add("active-pill");
+          btn.classList.remove("inactive-pill");
+        } else {
+          btn.classList.remove("active-pill");
+          btn.classList.add("inactive-pill");
+        }
+      });
+
+      // Update Tag pills active styles
+      tagButtons.forEach((btn) => {
+        const btnTag = normalize(btn.getAttribute("data-tag-btn") || "");
+        if (btnTag && btnTag === normalizedActiveTag) {
+          btn.classList.add("active-pill");
+          btn.classList.remove("inactive-pill");
+        } else {
+          btn.classList.remove("active-pill");
+          btn.classList.add("inactive-pill");
+        }
+      });
+
+      // Update Card tag buttons highlight
+      cardTagButtons.forEach((btn) => {
+        const btnTag = normalize(btn.getAttribute("data-card-tag") || "");
+        if (btnTag && btnTag === normalizedActiveTag) {
+          btn.classList.add("active-card-tag");
+        } else {
+          btn.classList.remove("active-card-tag");
+        }
+      });
+
+      // Update Search Clear Button
+      if (searchClearBtn) {
+        if (searchQuery) {
+          searchClearBtn.classList.remove("hidden");
+        } else {
+          searchClearBtn.classList.add("hidden");
+        }
+      }
+
+      // Update Global Reset Button
+      const isFiltered = activeCategory !== "all" || Boolean(activeTag) || Boolean(searchQuery);
+      if (clearAllBtn) {
+        if (isFiltered) {
+          clearAllBtn.classList.remove("hidden");
+        } else {
+          clearAllBtn.classList.add("hidden");
+        }
+      }
+
+      // Update Status Counter Text
+      if (statusText) {
+        if (!isFiltered) {
+          statusText.textContent = `Showing all ${totalCount} publications`;
+        } else {
+          const filterDetails: string[] = [];
+          if (activeTag) filterDetails.push(`#${activeTag}`);
+          else if (activeCategory !== "all") {
+            const catBtn = document.querySelector(`[data-category-btn="${activeCategory}"]`);
+            filterDetails.push(catBtn?.textContent?.replace(/\(\d+\)/, "").trim() || activeCategory);
+          }
+          if (searchQuery) filterDetails.push(`matching "${searchQuery}"`);
+
+          statusText.textContent = `Showing ${visibleCount} of ${totalCount} ${filterDetails.length > 0 ? "for " + filterDetails.join(" ") : ""}`;
+        }
+      }
+
+      // Empty State Visibility
+      if (noResultsState) {
+        if (visibleCount === 0) {
+          noResultsState.classList.remove("hidden");
+          noResultsState.style.display = "block";
+        } else {
+          noResultsState.classList.add("hidden");
+          noResultsState.style.display = "none";
+        }
+      }
+
+      // Sync URL query params with pushState
+      if (updateHistory) {
+        const url = new URL(window.location.href);
+        if (activeTag) {
+          url.searchParams.set("tag", activeTag);
+        } else {
+          url.searchParams.delete("tag");
+        }
+
+        if (activeCategory !== "all") {
+          url.searchParams.set("category", activeCategory);
+        } else {
+          url.searchParams.delete("category");
+        }
+
+        if (searchQuery) {
+          url.searchParams.set("q", searchQuery);
+        } else {
+          url.searchParams.delete("q");
+        }
+
+        window.history.pushState(null, "", url.toString());
+      }
+    }
+
+    // Reset everything
+    function resetAllFilters() {
+      activeCategory = "all";
+      activeTag = "";
+      searchQuery = "";
+      if (searchInput) searchInput.value = "";
+      applyFilters(true);
+    }
+
+    // Category button clicks
+    categoryButtons.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const catId = btn.getAttribute("data-category-btn") || "all";
+        // If clicking already active category, reset to all
+        if (activeCategory === catId && catId !== "all") {
+          activeCategory = "all";
+        } else {
+          activeCategory = catId;
+        }
+        activeTag = ""; // Category switch clears specific tag
+        applyFilters(true);
+      });
+    });
+
+    // Tag button clicks (with toggle capability)
+    tagButtons.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const tag = btn.getAttribute("data-tag-btn") || "";
+        const normalized = normalize(tag);
+        // Toggle OFF if already active
+        if (normalize(activeTag) === normalized) {
+          activeTag = "";
+        } else {
+          activeTag = tag;
+          activeCategory = "all"; // Tag selection takes precedence
+        }
+        applyFilters(true);
+      });
+    });
+
+    // Card tag button clicks (with toggle capability)
+    cardTagButtons.forEach((btn) => {
+      btn.addEventListener("click", (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        const tag = btn.getAttribute("data-card-tag") || "";
+        const normalized = normalize(tag);
+        // Toggle OFF if already active
+        if (normalize(activeTag) === normalized) {
+          activeTag = "";
+        } else {
+          activeTag = tag;
+          activeCategory = "all";
+        }
+        applyFilters(true);
+      });
+    });
+
+    // Search input changes (instant client search)
+    searchInput?.addEventListener("input", (e) => {
+      searchQuery = (e.target as HTMLInputElement).value;
+      applyFilters(false); // don't push history on every keystroke
+    });
+
+    // Search clear button
+    searchClearBtn?.addEventListener("click", () => {
+      searchQuery = "";
+      if (searchInput) searchInput.value = "";
+      applyFilters(true);
+    });
+
+    // Reset buttons
+    clearAllBtn?.addEventListener("click", resetAllFilters);
+    emptyResetBtn?.addEventListener("click", resetAllFilters);
+
+    // Initial URL sync
+    function syncFromUrl() {
+      const params = new URLSearchParams(window.location.search);
+      const urlTag = params.get("tag");
+      const urlCat = params.get("category");
+      const urlQuery = params.get("q");
+
+      if (urlTag) activeTag = urlTag;
+      if (urlCat) activeCategory = urlCat;
+      if (urlQuery) {
+        searchQuery = urlQuery;
+        if (searchInput) searchInput.value = urlQuery;
+      }
+
+      applyFilters(false);
+    }
+
+    syncFromUrl();
+
+    // Browser back/forward navigation support
+    window.addEventListener("popstate", () => {
+      syncFromUrl();
+    });
+  }
+
+  initArticlesFiltering();
+  document.addEventListener("astro:page-load", initArticlesFiltering);
+</script>

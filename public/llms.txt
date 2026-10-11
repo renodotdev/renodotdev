@@ -1,0 +1,40 @@
+# renodotdev — Software Engineering Studio
+
+> Independent boutique software studio run by Della Reno Rinaldi (Malang, Indonesia / Remote Worldwide). Specializing in high-performance cross-platform mobile apps (React Native), modern multi-tenant web platforms (Next.js & PostgreSQL), and reliable applied AI workflows with 8+ years of production engineering experience.
+
+## Core Capabilities & Services
+
+- [Mobile Product Engineering](https://renodotdev.com/#services): Production-ready cross-platform iOS and Android apps built with React Native and Expo. 60 FPS fluid interactions, offline-first SQLite sync, and hardware integrations (Bluetooth/LAN thermal receipt printers).
+- [Web Platforms & Multi-Tenant SaaS](https://renodotdev.com/#services): Custom dashboards, business portals, edge APIs, and scalable backends built with Next.js, TypeScript, and PostgreSQL with Row-Level Security (RLS).
+- [Applied AI & Workflow Automation](https://renodotdev.com/#services): Pragmatic LLM integrations with deterministic JSON Schema validation (Zod, AI SDK), real-time streaming interfaces, vector retrieval, and strict token cost guardrails.
+- [Senior Technical Advisory & White-Label Partner](https://renodotdev.com/#services): Dedicated senior silent engineering partner for creative design agencies, digital consultancies, and funded startups.
+
+## Current & Developed Products
+
+- [Sobatoko](https://www.sobatoko.com/): Studio-owned flagship retail POS, inventory management, and multi-tenant online storefront platform built for Indonesian merchants and retail owners.
+- [Sobatoko Mobile Cashier Terminal](https://renodotdev.com/#work): Touch-first native retail POS companion built with React Native and local SQLite caching for zero-interruption offline sales.
+- [PrintBridge ESC/POS Engine](https://renodotdev.com/#work): Lightweight hardware driver and byte stream protocol for fast receipt printing over Bluetooth, USB, and LAN.
+
+## Engineering Publications & Articles
+
+Complete technical archive available at [https://renodotdev.com/articles](https://renodotdev.com/articles) with 30+ production blueprints across AI & Prompt Tutorials, Multi-Tenant SaaS, and Mobile POS Systems:
+
+- [Architecting Offline-First Mobile POS with React Native, SQLite & Thermal Receipt Printing](https://renodotdev.com/articles/offline-first-react-native-pos): Eliminating cashier downtime during network dropouts, handling idempotent stock sync, and direct Bluetooth/LAN ESC/POS printing.
+- [Zero-Lag Multi-Tenant Architecture: Lessons from Building Sobatoko for Thousands of Merchants](https://renodotdev.com/articles/zero-lag-multi-tenant-saas-nextjs): Structuring PostgreSQL tenant isolation with Row-Level Security (RLS), edge caching, and real-time inventory updates in Next.js.
+- [Beyond Fragile Prompts: Designing Reliable LLM & Vector Workflows for Business Applications](https://renodotdev.com/articles/reliable-llm-workflows-in-production): Framework for engineering deterministic JSON schema outputs, streaming UI states, and token cost guardrails.
+- [Slashing LLM Latency & Cloud Bills by 80%: The Practical Guide to Prompt Caching](https://renodotdev.com/articles/prompt-caching-cost-and-latency-optimization): Prefix KV caching strategies to optimize multi-turn agent response times.
+- [The Architect's Guide to Production System Prompts: Delimiters, Personas, and Deterministic Control](https://renodotdev.com/articles/mastering-system-prompts-production-guide): Engineering production prompts using XML tags and behavioral boundary constraints.
+- [Model Context Protocol (MCP): The Universal Standard Connecting AI to Development Tools and APIs](https://renodotdev.com/articles/model-context-protocol-mcp-deep-dive): Deconstructing Anthropic's open standard for client-host-server AI tool integrations.
+
+## Founder & Leadership
+
+- **Founder:** Della Reno Rinaldi (Studio Founder & Lead Systems Engineer)
+- **Individual Career Experience:** Full personal employment background, prior senior engineering roles, and courses are documented on [https://renodotdev.com/profile](https://renodotdev.com/profile).
+- **Studio Model:** 1-on-1 direct senior collaboration. Zero account managers, zero junior handoffs. Weekly working builds tested directly on clients' physical devices.
+
+## Contact & Direct Channels
+
+- **WhatsApp:** [+62 812 1299 6550](https://wa.me/+6281212996550)
+- **Email:** [renodotdev@gmail.com](mailto:renodotdev@gmail.com)
+- **GitHub:** [https://github.com/renodotdev](https://github.com/renodotdev)
+- **LinkedIn:** [https://www.linkedin.com/in/della-reno-rinaldi-1b0790a2/](https://www.linkedin.com/in/della-reno-rinaldi-1b0790a2/)

@@ -1,0 +1,70 @@
+{
+  "@context": "https://schema.org",
+  "@type": "ProfessionalService",
+  "name": "renodotdev — Software Engineering Studio",
+  "alternateName": "renodotdev",
+  "url": "https://renodotdev.com",
+  "logo": "https://renodotdev.com/logo/logo.svg",
+  "image": "https://renodotdev.com/photos/profile-1.jpeg",
+  "description": "Independent boutique software studio run by Della Reno Rinaldi, engineering high-performance mobile apps (React Native), scalable web platforms (Next.js, PostgreSQL), and practical AI workflows.",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Malang",
+    "addressRegion": "East Java",
+    "addressCountry": "ID"
+  },
+  "founder": {
+    "@type": "Person",
+    "name": "Della Reno Rinaldi",
+    "jobTitle": "Studio Founder & Senior Software Systems Engineer",
+    "url": "https://renodotdev.com/profile",
+    "sameAs": [
+      "https://github.com/renodotdev",
+      "https://www.linkedin.com/in/della-reno-rinaldi-1b0790a2/"
+    ]
+  },
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "telephone": "+6281212996550",
+    "email": "renodotdev@gmail.com",
+    "contactType": "client inquiries",
+    "availableLanguage": ["English", "Indonesian"]
+  },
+  "knowsAbout": [
+    "React Native",
+    "Expo",
+    "Next.js",
+    "TypeScript",
+    "PostgreSQL",
+    "Mobile POS Systems",
+    "Offline-First Architecture",
+    "Bluetooth Thermal Printing",
+    "Applied AI & LLM Workflows"
+  ],
+  "hasOfferCatalog": {
+    "@type": "OfferCatalog",
+    "name": "Software Engineering Services",
+    "itemListElement": [
+      {
+        "@type": "Offer",
+        "name": "Mobile Product Engineering",
+        "description": "Production-ready cross-platform iOS and Android apps with 60 FPS performance, offline sync, and store publishing."
+      },
+      {
+        "@type": "Offer",
+        "name": "Web Platforms & Multi-Tenant SaaS",
+        "description": "Next.js, PostgreSQL, row-level security, edge API gateways, and automated billing."
+      },
+      {
+        "@type": "Offer",
+        "name": "Applied AI & Automation Engineering",
+        "description": "Reliable LLM integrations with deterministic JSON schema validation, vector search, and token budget guardrails."
+      },
+      {
+        "@type": "Offer",
+        "name": "Senior Technical Advisory & White-Label Partner",
+        "description": "Dedicated senior silent engineering partner for agencies, design studios, and funded startups."
+      }
+    ]
+  }
+}
