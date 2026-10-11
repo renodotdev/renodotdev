@@ -150,6 +150,28 @@ export interface TranslationDictionary {
   footer_link_exp: string;
   footer_link_courses: string;
 
+  // Landing Page Showcase & Founder Spotlight
+  hero_logo_tag: string;
+  hero_showcase_badge: string;
+  hero_showcase_title: string;
+  hero_showcase_sub: string;
+  hero_showcase_stat1_val: string;
+  hero_showcase_stat1_lbl: string;
+  hero_showcase_stat2_val: string;
+  hero_showcase_stat2_lbl: string;
+  hero_showcase_stat3_val: string;
+  hero_showcase_stat3_lbl: string;
+
+  founder_sec_kicker: string;
+  founder_sec_title: string;
+  founder_sec_desc: string;
+  founder_sec_badge: string;
+  founder_sec_quote: string;
+  founder_sec_exp_opaper: string;
+  founder_sec_exp_astro: string;
+  founder_sec_cta_bio: string;
+  founder_sec_cta_wa: string;
+
   // ── Profile Page Specific Keys ──
   p_nav_about: string;
   p_nav_experience: string;
@@ -341,6 +363,28 @@ export const translations: Record<Language, TranslationDictionary> = {
     footer_link_exp: "Career Experience (Opaper, Astro)",
     footer_link_courses: "Video Courses (BuildWithAngga)",
 
+    // Landing Page Showcase & Founder Spotlight
+    hero_logo_tag: "Independent Software Studio",
+    hero_showcase_badge: "Production Architecture Preview",
+    hero_showcase_title: "Engineered for Raw Speed, Stability & Scale",
+    hero_showcase_sub: "Every application is architected directly by Reno — from reactive mobile state to fast edge API gateways.",
+    hero_showcase_stat1_val: "60 FPS",
+    hero_showcase_stat1_lbl: "Smooth Native Performance",
+    hero_showcase_stat2_val: "<50ms",
+    hero_showcase_stat2_lbl: "Fast Edge API Latency",
+    hero_showcase_stat3_val: "100%",
+    hero_showcase_stat3_lbl: "Client Code Ownership",
+
+    founder_sec_kicker: "Meet the Founder",
+    founder_sec_title: "Direct Senior Craftsmanship, Zero Middlemen",
+    founder_sec_desc: "8+ years shipping production mobile & web apps at Opaper and Astro. You work 1-on-1 directly with me — no account managers, zero junior handoffs.",
+    founder_sec_badge: "Studio Founder & Lead Engineer",
+    founder_sec_quote: "With 8+ years building high-demand apps at Opaper and Astro, I ensure every system is engineered solid, responsive, and ready for thousands of real customers.",
+    founder_sec_exp_opaper: "Ex-Opaper — High-Volume Restaurant Point-of-Sale & Hardware Integration",
+    founder_sec_exp_astro: "Ex-Astro — 15-Minute Quick Commerce & Real-Time Driver Tracking",
+    founder_sec_cta_bio: "View Career Track Record →",
+    founder_sec_cta_wa: "Chat Directly on WhatsApp",
+
     // Profile Page Specific
     p_nav_about: "About",
     p_nav_experience: "Experience",
@@ -530,6 +574,28 @@ export const translations: Record<Language, TranslationDictionary> = {
     footer_link_profile: "Tentang Reno",
     footer_link_exp: "Pengalaman Karir (Opaper, Astro)",
     footer_link_courses: "Video Tutorial (BuildWithAngga)",
+
+    // Landing Page Showcase & Founder Spotlight
+    hero_logo_tag: "Studio Software Independen",
+    hero_showcase_badge: "Pratinjau Arsitektur Produksi",
+    hero_showcase_title: "Direkayasa untuk Kecepatan, Stabilitas & Skalabilitas Nyata",
+    hero_showcase_sub: "Setiap baris kode diarsiteki langsung oleh Reno — dari reaktifitas aplikasi mobile hingga performa gateway edge API.",
+    hero_showcase_stat1_val: "60 FPS",
+    hero_showcase_stat1_lbl: "Performa Native Mulus",
+    hero_showcase_stat2_val: "<50ms",
+    hero_showcase_stat2_lbl: "Latensi API Edge Cepat",
+    hero_showcase_stat3_val: "100%",
+    hero_showcase_stat3_lbl: "Hak Cipta Kode Klien",
+
+    founder_sec_kicker: "Tentang Founder",
+    founder_sec_title: "Dikerjakan Langsung Bersama Senior Engineer",
+    founder_sec_desc: "8+ tahun merilis aplikasi mobile & web produksi di Opaper dan Astro. Kamu bekerja 1-on-1 langsung bersama Reno tanpa perantara.",
+    founder_sec_badge: "Founder & Lead Engineer",
+    founder_sec_quote: "Dengan pengalaman 8+ tahun di industri tech fast-paced seperti Opaper dan Astro, saya memastikan setiap sistem dirancang solid, cepat, dan siap dipakai ribuan pengguna.",
+    founder_sec_exp_opaper: "Eks Lead Mobile & Frontend — Sistem POS & Kasir Restoran Skala Besar",
+    founder_sec_exp_astro: "Eks Frontend Engineer — Quick Commerce 15 Menit & Tracking Real-time",
+    founder_sec_cta_bio: "Lihat Rekam Jejak Karier →",
+    founder_sec_cta_wa: "Chat WhatsApp Langsung",
 
     // Profile Page Specific
     p_nav_about: "Tentang",

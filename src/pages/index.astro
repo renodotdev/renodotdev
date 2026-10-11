@@ -53,28 +53,48 @@ const stats = [
     ══════════════════════════════════════════════════════════════════ */}
     <section
       id="home"
-      class="relative min-h-[85vh] flex items-center justify-center pt-24 pb-16 md:pt-32 md:pb-20 px-5 md:px-6 overflow-hidden tech-grid-bg"
+      class="relative min-h-[85vh] flex items-center justify-center pt-20 pb-14 md:pt-32 md:pb-20 px-4 sm:px-6 overflow-hidden tech-grid-bg"
     >
       <div class="w-full max-w-[1240px] mx-auto z-10 flex flex-col items-center">
-        {/* Availability Pill */}
-        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/5 border border-white/15 mb-8 font-mono-tech text-xs tracking-wider shadow-lg select-none">
-          <span class="w-2 h-2 rounded-full bg-lime-400 animate-pulse"></span>
-          <span class="text-white font-semibold" data-i18n="hero_badge_studio">renodotdev studio</span>
-          <span class="text-white/30">&bull;</span>
-          <span class="text-lime-400 font-semibold" data-i18n="hero_badge_avail">Open for new projects</span>
+        {/* Prominent Studio Big Logo & Brand Centerpiece */}
+        <div class="flex flex-col items-center mb-8 sm:mb-10 relative group w-full max-w-sm sm:max-w-none">
+          {/* Ambient Radiant Glow Halo */}
+          <div class="absolute -inset-6 bg-gradient-to-r from-lime-400/20 via-cyan-400/15 to-lime-400/20 rounded-full blur-3xl opacity-75 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"></div>
+
+          <div class="relative flex flex-col sm:flex-row items-center gap-3 sm:gap-4 px-4 sm:px-6 py-3.5 sm:py-4 rounded-2xl bg-[#0d1015]/90 border border-white/15 backdrop-blur-md shadow-2xl hover:border-lime-400/50 transition-all duration-300 max-w-full">
+            {/* Big Studio Logo */}
+            <img
+              src="/logo/logo.svg"
+              alt="renodotdev logo"
+              width="254"
+              height="48"
+              class="h-9 sm:h-12 md:h-14 w-auto max-w-[190px] sm:max-w-none object-contain transition-transform duration-300 group-hover:scale-105"
+              loading="eager"
+            />
+
+            <div class="h-8 w-px bg-white/15 hidden sm:block"></div>
+
+            {/* Studio Availability Badge */}
+            <div class="flex items-center gap-2 sm:gap-2.5 font-mono-tech text-[11px] sm:text-xs tracking-wider select-none">
+              <span class="w-2.5 h-2.5 rounded-full bg-lime-400 animate-pulse shadow-[0_0_12px_#97feed]"></span>
+              <span class="text-white/80 font-bold uppercase tracking-wider" data-i18n="hero_logo_tag">Studio</span>
+              <span class="text-white/30">&bull;</span>
+              <span class="text-lime-400 font-semibold" data-i18n="hero_badge_avail">Open for new projects</span>
+            </div>
+          </div>
         </div>
 
         {/* Clear, Punchy Headline */}
-        <div class="flex flex-col items-center text-center max-w-4xl mb-12">
+        <div class="flex flex-col items-center text-center max-w-4xl mb-8 sm:mb-10">
           <h1
-            class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold uppercase leading-[1.08] tracking-[-0.03em] text-white mb-6"
+            class="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold uppercase leading-[1.12] sm:leading-[1.08] tracking-[-0.03em] text-white mb-5 sm:mb-6"
             data-i18n-html="hero_headline_html"
           >
             We build mobile apps, web systems &amp; <span class="text-gradient">smart AI tools</span>.
           </h1>
 
           <p
-            class="text-base sm:text-lg md:text-xl leading-relaxed max-w-2xl text-[#8b949e] mb-8 font-normal"
+            class="text-sm sm:text-lg md:text-xl leading-relaxed max-w-2xl text-[#8b949e] mb-6 sm:mb-8 font-normal"
             data-i18n-html="hero_subheadline_html"
           >
             An independent software studio run by <strong class="text-white">Della Reno Rinaldi</strong>.
@@ -82,7 +102,7 @@ const stats = [
           </p>
 
           {/* Action CTAs */}
-          <div class="flex flex-col sm:flex-row items-center justify-center gap-3 w-full sm:w-auto font-mono-tech text-xs">
+          <div class="flex flex-col sm:flex-row items-center justify-center gap-2.5 sm:gap-3 w-full sm:w-auto font-mono-tech text-xs">
             <a
               href="#contact"
               class="w-full sm:w-auto px-7 py-3.5 rounded font-bold uppercase tracking-wider transition-all duration-200 hover:bg-lime-300 active:scale-95 shadow-[0_0_25px_rgba(151,254,237,0.3)] flex items-center justify-center gap-2 border border-lime-400 cursor-pointer"
@@ -109,6 +129,110 @@ const stats = [
               <span data-i18n="hero_cta_wa">Chat on WhatsApp</span>
               <span class="text-lime-400">&nearr;</span>
             </a>
+          </div>
+        </div>
+
+        {/* Interactive Studio Engineering Showcase (Visual Centerpiece) */}
+        <div class="w-full mb-10 rounded-2xl border border-white/15 bg-[#0b0d12] overflow-hidden shadow-2xl relative group">
+          {/* Top Terminal Chrome / Status Bar */}
+          <div class="px-3.5 sm:px-4 py-2.5 sm:py-3 bg-[#0f1218] border-b border-white/10 flex items-center justify-between text-xs font-mono-tech">
+            <div class="flex items-center gap-2">
+              <div class="flex items-center gap-1.5">
+                <span class="w-2.5 h-2.5 rounded-full bg-rose-500/80"></span>
+                <span class="w-2.5 h-2.5 rounded-full bg-amber-500/80"></span>
+                <span class="w-2.5 h-2.5 rounded-full bg-emerald-500/80"></span>
+              </div>
+              <span class="text-white/40 ml-2 hidden sm:inline text-[11px]">renodotdev://studio-systems/live-preview</span>
+            </div>
+            <div class="flex items-center gap-3">
+              <span class="flex items-center gap-1.5 text-[11px] text-lime-400 font-semibold">
+                <span class="w-2 h-2 rounded-full bg-lime-400 animate-pulse"></span>
+                <span>PRODUCTION READY</span>
+              </span>
+              <span class="text-white/30 hidden md:inline">&bull;</span>
+              <span class="text-white/50 text-[11px] hidden md:inline">MALANG &bull; REMOTE GLOBAL</span>
+            </div>
+          </div>
+
+          {/* Main Showcase Banner & Illustration Stage */}
+          <div class="relative grid grid-cols-1 lg:grid-cols-12 gap-0 overflow-hidden">
+            {/* Left: 3D Studio Illustration Visual */}
+            <div class="lg:col-span-7 relative min-h-[260px] sm:min-h-[380px] overflow-hidden bg-black/40 flex items-center justify-center">
+              <img
+                src="/images/studio-showcase.jpg"
+                alt="renodotdev Software Engineering Studio - Mobile, Web & AI Architecture"
+                class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                loading="eager"
+              />
+              <div class="absolute inset-0 bg-gradient-to-t from-[#0b0d12] via-transparent to-black/30 lg:bg-gradient-to-r lg:from-transparent lg:to-[#0b0d12]"></div>
+
+              {/* Floating Live Telemetry Badge on Image */}
+              <div class="absolute top-3 sm:top-4 left-3 sm:left-4 p-2 sm:p-2.5 rounded-lg bg-black/80 backdrop-blur-md border border-white/15 font-mono-tech text-[9px] sm:text-[10px] text-white flex items-center gap-1.5 sm:gap-2 shadow-xl">
+                <span class="w-2 h-2 rounded-full bg-lime-400 animate-ping"></span>
+                <span class="text-lime-400 font-bold">CORE DOMAINS:</span>
+                <span class="text-white/80">React Native POS &bull; Web SaaS &bull; AI</span>
+              </div>
+            </div>
+
+            {/* Right: Technical Capabilities & Founder Credit */}
+            <div class="lg:col-span-5 p-5 sm:p-8 flex flex-col justify-between bg-[#0e1117] border-t lg:border-t-0 lg:border-l border-white/10 font-mono-tech">
+              <div>
+                <div class="inline-flex items-center gap-2 px-2.5 py-1 rounded bg-lime-400/10 text-lime-400 border border-lime-400/25 text-[10px] sm:text-[11px] font-bold uppercase tracking-wider mb-3 sm:mb-4">
+                  <span data-i18n="hero_showcase_badge">Production Architecture Preview</span>
+                </div>
+
+                <h3 class="text-lg sm:text-2xl font-bold text-white mb-2 font-sans" data-i18n="hero_showcase_title">
+                  Engineered for Raw Speed, Stability &amp; Scale
+                </h3>
+
+                <p class="text-xs text-[#8b949e] font-sans leading-relaxed mb-5 sm:mb-6" data-i18n="hero_showcase_sub">
+                  Every application is architected directly by Reno — from reactive mobile state to fast edge API gateways.
+                </p>
+
+                {/* 3 Metric Pills */}
+                <div class="grid grid-cols-3 gap-1.5 sm:gap-2.5 mb-5 sm:mb-6 text-center">
+                  <div class="p-2 sm:p-3 rounded-xl bg-black/50 border border-white/10">
+                    <span class="text-sm sm:text-lg font-extrabold text-lime-400 block" data-i18n="hero_showcase_stat1_val">60 FPS</span>
+                    <span class="text-[9px] sm:text-[10px] text-white/50 block font-sans" data-i18n="hero_showcase_stat1_lbl">Smooth Native</span>
+                  </div>
+                  <div class="p-2 sm:p-3 rounded-xl bg-black/50 border border-white/10">
+                    <span class="text-sm sm:text-lg font-extrabold text-lime-400 block" data-i18n="hero_showcase_stat2_val">&lt;50ms</span>
+                    <span class="text-[9px] sm:text-[10px] text-white/50 block font-sans" data-i18n="hero_showcase_stat2_lbl">Edge Latency</span>
+                  </div>
+                  <div class="p-2 sm:p-3 rounded-xl bg-black/50 border border-white/10">
+                    <span class="text-sm sm:text-lg font-extrabold text-lime-400 block" data-i18n="hero_showcase_stat3_val">100%</span>
+                    <span class="text-[9px] sm:text-[10px] text-white/50 block font-sans" data-i18n="hero_showcase_stat3_lbl">Code Ownership</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Founder Verification Strip */}
+              <div class="pt-4 border-t border-white/10 flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                  <div class="w-10 h-10 rounded-full overflow-hidden border border-lime-400 shrink-0 shadow-md">
+                    <img
+                      src="/photos/founder-avatar.jpeg"
+                      alt="Della Reno Rinaldi"
+                      width="40"
+                      height="40"
+                      class="w-full h-full object-cover object-top"
+                      loading="eager"
+                    />
+                  </div>
+                  <div>
+                    <p class="text-xs font-bold text-white font-sans leading-tight">Della Reno Rinaldi</p>
+                    <p class="text-[11px] text-lime-400 font-mono-tech">Studio Founder &bull; Ex-Opaper, Ex-Astro</p>
+                  </div>
+                </div>
+
+                <a
+                  href="/profile"
+                  class="text-xs text-white/70 hover:text-lime-400 transition-colors uppercase font-bold text-[10px]"
+                >
+                  Bio &rarr;
+                </a>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -152,16 +276,31 @@ const stats = [
 
       {/* Case Study Card */}
       <div class="rounded-2xl overflow-hidden border border-white/15 flex flex-col md:flex-row bg-[#0b0d11] hover:border-lime-400/40 transition-all duration-300 mb-10 shadow-2xl">
-        {/* Brand visual panel */}
-        <div class="md:w-1/2 p-8 sm:p-12 flex flex-col items-center justify-center bg-white min-h-[260px] relative overflow-hidden">
+        {/* Brand visual panel & POS Illustration */}
+        <div class="md:w-1/2 relative min-h-[320px] sm:min-h-[380px] overflow-hidden bg-black/60 flex items-center justify-center group">
           <img
-            src={sobatoko.image}
-            alt="Sobatoko logo"
-            class="max-w-[75%] max-h-[130px] object-contain transition-transform duration-500 hover:scale-105"
+            src="/images/pos-showcase.jpg"
+            alt="Sobatoko POS Terminal & Hardware Thermal Printing"
+            class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+            loading="lazy"
           />
-          <div class="absolute bottom-3 left-4 right-4 flex items-center justify-between text-xs font-mono-tech text-black/60 font-bold uppercase tracking-wider">
-            <span data-i18n="work_production_tag">Production Web &amp; Mobile POS</span>
-            <span class="text-emerald-700" data-i18n="work_status_ok">Live Status: OK</span>
+          <div class="absolute inset-0 bg-gradient-to-t from-[#0e1116] via-transparent to-black/40"></div>
+
+          {/* Floating Sobatoko Logo Badge */}
+          <div class="absolute top-4 left-4 p-3 rounded-xl bg-white/95 backdrop-blur-md shadow-2xl border border-white/20 transition-transform duration-300 group-hover:scale-105">
+            <img
+              src={sobatoko.image}
+              alt="Sobatoko logo"
+              class="h-8 sm:h-9 w-auto object-contain"
+            />
+          </div>
+
+          <div class="absolute bottom-3 left-4 right-4 flex items-center justify-between text-xs font-mono-tech text-white/90 font-bold uppercase tracking-wider bg-black/75 backdrop-blur-md px-3.5 py-2 rounded-lg border border-white/10 shadow-lg">
+            <span class="flex items-center gap-1.5" data-i18n="work_production_tag">
+              <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+              <span>Production Web &amp; Mobile POS</span>
+            </span>
+            <span class="text-lime-400" data-i18n="work_status_ok">Live Status: OK</span>
           </div>
         </div>
 
@@ -278,6 +417,7 @@ const stats = [
       </div>
 
       {/* 3 Core Capability Cards */}
+      {/* 3 Core Capability Cards */}
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
         {/* Service 1: Mobile */}
         <div class="tech-card p-6 sm:p-7 rounded-2xl flex flex-col justify-between border border-white/15 hover:border-lime-400/50 hover:shadow-[0_0_30px_rgba(151,254,237,0.15)] transition-all duration-300 bg-[#0c0e12]">
@@ -286,6 +426,27 @@ const stats = [
               <span class="px-2 py-0.5 rounded text-[10px] font-mono-tech font-bold uppercase tracking-wider bg-lime-400/10 text-lime-400 border border-lime-400/30" data-i18n="srv_1_badge">
                 Mobile Apps
               </span>
+            </div>
+
+            {/* Visual Preview Illustration: Mobile POS & Hardware */}
+            <div class="h-28 mb-5 rounded-xl bg-gradient-to-b from-[#141822] to-[#0c0e12] border border-white/10 p-3 flex flex-col justify-between relative overflow-hidden group-hover:border-lime-400/40 transition-colors">
+              <div class="flex items-center justify-between text-[10px] font-mono-tech text-white/50">
+                <span class="flex items-center gap-1.5 text-lime-400 font-semibold">
+                  <span class="w-1.5 h-1.5 rounded-full bg-lime-400 animate-pulse"></span>
+                  <span>React Native &bull; iOS &amp; Android</span>
+                </span>
+                <span class="px-1.5 py-0.5 rounded bg-lime-400/15 text-lime-400 border border-lime-400/30 font-bold">60 FPS</span>
+              </div>
+              <div class="p-2 rounded-lg bg-black/60 border border-white/10 flex items-center justify-between text-xs">
+                <div class="flex items-center gap-2">
+                  <div class="w-5 h-5 rounded bg-lime-400/20 text-lime-400 flex items-center justify-center text-[9px] font-bold">POS</div>
+                  <div>
+                    <p class="text-white text-[10px] font-bold leading-tight font-sans">Cashier Terminal</p>
+                    <p class="text-white/40 text-[8px] font-mono-tech">Hardware BT &bull; Thermal Print OK</p>
+                  </div>
+                </div>
+                <span class="text-lime-400 font-mono-tech font-bold text-xs">Rp 145.000</span>
+              </div>
             </div>
 
             <h3 class="text-xl font-bold text-white mb-2 font-sans" data-i18n="srv_1_title">
@@ -346,6 +507,26 @@ const stats = [
               </span>
             </div>
 
+            {/* Visual Preview Illustration: SaaS Dashboard & Edge API */}
+            <div class="h-28 mb-5 rounded-xl bg-gradient-to-b from-[#141822] to-[#0c0e12] border border-white/10 p-3 flex flex-col justify-between relative overflow-hidden group-hover:border-lime-400/40 transition-colors">
+              <div class="flex items-center justify-between text-[10px] font-mono-tech text-white/50">
+                <span class="flex items-center gap-1.5 text-lime-400 font-semibold">
+                  <span class="w-1.5 h-1.5 rounded-full bg-lime-400 animate-pulse"></span>
+                  <span>Next.js &bull; PostgreSQL Edge</span>
+                </span>
+                <span class="px-1.5 py-0.5 rounded bg-cyan-400/15 text-cyan-300 border border-cyan-400/30 font-bold">18ms</span>
+              </div>
+              {/* Mini Sparkline Bars */}
+              <div class="flex items-end justify-between gap-1.5 h-10 pt-1 px-1">
+                <span class="w-1/6 bg-white/15 h-[35%] rounded-t"></span>
+                <span class="w-1/6 bg-white/25 h-[55%] rounded-t"></span>
+                <span class="w-1/6 bg-white/20 h-[45%] rounded-t"></span>
+                <span class="w-1/6 bg-lime-400/60 h-[75%] rounded-t"></span>
+                <span class="w-1/6 bg-lime-400/80 h-[90%] rounded-t"></span>
+                <span class="w-1/6 bg-lime-400 h-[100%] rounded-t shadow-[0_0_8px_#97feed]"></span>
+              </div>
+            </div>
+
             <h3 class="text-xl font-bold text-white mb-2 font-sans" data-i18n="srv_2_title">
               Web Platforms &amp; SaaS
             </h3>
@@ -402,6 +583,24 @@ const stats = [
               <span class="px-2 py-0.5 rounded text-[10px] font-mono-tech font-bold uppercase tracking-wider bg-lime-400/10 text-lime-400 border border-lime-400/30" data-i18n="srv_3_badge">
                 AI-Powered
               </span>
+            </div>
+
+            {/* Visual Preview Illustration: AI Neural Studio */}
+            <div class="h-28 mb-5 rounded-xl overflow-hidden border border-white/10 relative group-hover:border-lime-400/40 transition-colors bg-black">
+              <img
+                src="/images/ai-showcase.jpg"
+                alt="AI Neural Workflow Preview"
+                class="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
+                loading="lazy"
+              />
+              <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent"></div>
+              <div class="absolute bottom-2 left-2.5 right-2.5 flex items-center justify-between text-[10px] font-mono-tech">
+                <span class="text-lime-400 font-bold flex items-center gap-1.5 text-[9px]">
+                  <span class="w-1.5 h-1.5 rounded-full bg-lime-400 animate-pulse"></span>
+                  <span>LLM Reasoning &bull; Vectors</span>
+                </span>
+                <span class="px-1.5 py-0.5 rounded bg-black/70 text-white/80 border border-white/20 font-bold text-[9px]">JSON Schema ✓</span>
+              </div>
             </div>
 
             <h3 class="text-xl font-bold text-white mb-2 font-sans" data-i18n="srv_3_title">
@@ -533,6 +732,68 @@ const stats = [
               <span class="text-[10px] uppercase text-white/40 block mb-1" data-i18n="prc_3_deliv_lbl">What you get:</span>
               <span class="text-white/80 font-sans font-medium" data-i18n="prc_3_deliv">Live product &amp; 100% code ownership</span>
             </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {/* ══════════════════════════════════════════════════════════════════
+        SECTION 3.5: ABOUT THE FOUNDER (COMPACT SPOTLIGHT)
+    ══════════════════════════════════════════════════════════════════ */}
+    <section
+      id="founder"
+      class="py-12 md:py-16 px-4 sm:px-6 max-w-[1240px] mx-auto border-t border-white/10 font-mono-tech"
+    >
+      <div class="rounded-2xl border border-white/15 bg-[#0b0d12] p-5 sm:p-7 md:p-8 shadow-2xl relative overflow-hidden group hover:border-lime-400/30 transition-all">
+        {/* Subtle Ambient Backlight */}
+        <div class="absolute -right-20 -bottom-20 w-64 h-64 bg-lime-400/5 rounded-full blur-3xl pointer-events-none"></div>
+
+        <div class="flex flex-col md:flex-row items-center justify-between gap-6 relative z-10">
+          {/* Left: Avatar + Quick Bio */}
+          <div class="flex flex-col sm:flex-row items-center sm:items-start text-center sm:text-left gap-4 sm:gap-5 max-w-2xl">
+            <div class="relative w-16 h-16 sm:w-20 sm:h-20 rounded-2xl overflow-hidden border border-lime-400 shrink-0 shadow-lg bg-[#0e1116]">
+              <img
+                src="/photos/founder-avatar.jpeg"
+                alt="Della Reno Rinaldi"
+                width="80"
+                height="80"
+                class="w-full h-full object-cover object-top"
+                loading="lazy"
+              />
+            </div>
+
+            <div>
+              <div class="inline-flex items-center gap-2 px-2.5 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-lime-400/10 text-lime-400 border border-lime-400/25 mb-1.5">
+                <span data-i18n="founder_sec_badge">Studio Founder &bull; Lead Engineer</span>
+              </div>
+              <h3 class="text-lg sm:text-xl font-bold text-white font-sans">
+                Della Reno Rinaldi
+              </h3>
+              <p class="text-xs sm:text-sm text-[#8b949e] font-sans leading-relaxed mt-1" data-i18n="founder_sec_desc">
+                8+ years shipping production mobile &amp; web apps at Opaper and Astro. You work 1-on-1 directly with me — no account managers, zero junior handoffs.
+              </p>
+            </div>
+          </div>
+
+          {/* Right: Direct Profile CTA */}
+          <div class="flex flex-col sm:flex-row md:flex-col lg:flex-row items-center gap-3 w-full md:w-auto shrink-0 text-xs">
+            <a
+              href="/profile"
+              class="w-full sm:w-auto px-5 py-3 rounded-xl border border-white/20 text-white hover:border-lime-400 hover:text-lime-400 font-bold uppercase tracking-wider bg-white/5 transition-all text-center inline-flex items-center justify-center gap-2"
+            >
+              <span data-i18n="founder_sec_cta_bio">View Career Track Record</span>
+              <span>&rarr;</span>
+            </a>
+
+            <a
+              href="https://wa.me/+6281212996550?text=Hi%20Reno,%20I'd%20like%20to%20discuss%20a%20project%20directly"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="w-full sm:w-auto px-4 py-3 rounded-xl bg-lime-400 text-black hover:bg-lime-300 font-bold uppercase tracking-wider transition-all text-center inline-flex items-center justify-center gap-1.5 shadow-[0_0_20px_rgba(151,254,237,0.25)]"
+            >
+              <span>WhatsApp Reno</span>
+              <span>&nearr;</span>
+            </a>
           </div>
         </div>
       </div>

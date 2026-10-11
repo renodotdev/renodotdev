@@ -27,13 +27,13 @@ const navLinks = pageType === "profile" ? profileNavLinks : studioNavLinks;
   class="fixed top-0 w-full z-50 backdrop-blur-xl border-b border-white/10"
   style="background: rgba(8, 9, 10, 0.94);"
 >
-  <div class="max-w-[1240px] mx-auto px-5 md:px-6">
+  <div class="max-w-[1240px] mx-auto px-4 sm:px-6">
     <div class="flex justify-between items-center h-16 md:h-20">
       {/* Brand Logo & Studio Stamp */}
-      <div class="flex items-center gap-3">
+      <div class="flex items-center gap-2.5 sm:gap-3">
         <a
           href={pageType === "profile" ? "/profile#home" : "/#home"}
-          class="flex-shrink-0 cursor-pointer flex items-center gap-2.5 nav-scroll-link group"
+          class="flex-shrink-0 cursor-pointer flex items-center gap-2 sm:gap-2.5 nav-scroll-link group"
           aria-label="renodotdev home"
         >
           <img
@@ -41,7 +41,7 @@ const navLinks = pageType === "profile" ? profileNavLinks : studioNavLinks;
             alt="renodotdev"
             width="254"
             height="48"
-            class="h-9 sm:h-10 md:h-11 w-auto object-contain transition-transform group-hover:scale-105"
+            class="h-8 sm:h-9 md:h-11 w-auto max-w-[145px] sm:max-w-none object-contain transition-transform group-hover:scale-105"
           />
           {pageType === "studio" ? (
             <span class="hidden sm:inline-block px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-lime-400/10 text-lime-400 border border-lime-400/30 font-mono-tech">
@@ -134,10 +134,28 @@ const navLinks = pageType === "profile" ? profileNavLinks : studioNavLinks;
         )}
       </div>
 
-      {/* Mobile / tablet menu toggle + Language Switcher */}
-      <div class="flex items-center gap-2 lg:hidden">
-        {/* Mobile Language Switcher */}
-        <div class="inline-flex items-center p-0.5 rounded border border-white/15 bg-white/5 font-mono-tech text-[10px] select-none">
+      {/* Mobile / tablet controls (< lg) */}
+      <div class="flex items-center gap-2 sm:gap-2.5 lg:hidden">
+        {/* Tablet Quick Switcher (visible on sm..lg, cleanly hidden on small mobile) */}
+        {pageType === "studio" ? (
+          <a
+            href="/profile"
+            class="hidden sm:inline-flex items-center gap-1 text-[11px] font-bold px-2.5 py-1 rounded border border-white/15 text-white/80 hover:text-lime-400 font-mono-tech bg-white/5"
+          >
+            <span data-i18n="nav_founder_bio">About Reno</span>
+            <span class="text-lime-400">&rarr;</span>
+          </a>
+        ) : (
+          <a
+            href="/"
+            class="hidden sm:inline-flex items-center gap-1 text-[11px] font-bold px-2.5 py-1 rounded border border-lime-400/30 text-lime-400 bg-lime-400/10 font-mono-tech"
+          >
+            <span>&larr; Studio</span>
+          </a>
+        )}
+
+        {/* Mobile Language Switcher Pill */}
+        <div class="inline-flex items-center p-0.5 rounded-lg border border-white/15 bg-white/5 font-mono-tech text-[10px] select-none">
           <button
             type="button"
             class="lang-switch-btn px-2 py-0.5 rounded font-bold transition-all cursor-pointer"
@@ -156,26 +174,11 @@ const navLinks = pageType === "profile" ? profileNavLinks : studioNavLinks;
           </button>
         </div>
 
-        {pageType === "studio" ? (
-          <a
-            href="/profile"
-            class="text-[11px] font-bold px-2.5 py-1 rounded border border-white/15 text-white/80 hover:text-lime-400 font-mono-tech"
-          >
-            Reno →
-          </a>
-        ) : (
-          <a
-            href="/"
-            class="text-[11px] font-bold px-2.5 py-1 rounded border border-lime-400/30 text-lime-400 bg-lime-400/10 font-mono-tech"
-          >
-            ← Studio
-          </a>
-        )}
-
+        {/* Mobile Hamburger Toggle Button with Tech Border */}
         <button
           id="menu-toggle-btn"
           type="button"
-          class="inline-flex items-center justify-center p-2 rounded-lg transition-all duration-200 focus:outline-none text-[#8b949e] hover:text-white"
+          class="inline-flex items-center justify-center p-2 rounded-xl border border-white/15 bg-white/5 transition-all duration-200 focus:outline-none text-white hover:border-lime-400/50 hover:bg-white/10 active:scale-95 cursor-pointer shadow-sm"
           aria-label="Toggle navigation menu"
           aria-expanded="false"
         >
@@ -191,7 +194,7 @@ const navLinks = pageType === "profile" ? profileNavLinks : studioNavLinks;
           </svg>
           <svg
             id="menu-icon-close"
-            class="hidden h-5 w-5"
+            class="hidden h-5 w-5 text-lime-400"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
@@ -203,49 +206,96 @@ const navLinks = pageType === "profile" ? profileNavLinks : studioNavLinks;
     </div>
   </div>
 
-  {/* Mobile Navigation Dropdown */}
+  {/* Mobile Navigation Drawer Overlay */}
   <div
     id="mobile-menu"
-    class="hidden lg:hidden border-t border-white/15 bg-[#08090a]"
+    class="hidden lg:hidden border-t border-white/15 bg-[#08090a]/98 backdrop-blur-2xl shadow-2xl max-h-[calc(100vh-4rem)] overflow-y-auto"
   >
-    <div class="px-5 pt-3 pb-6 space-y-1">
-      {
-        navLinks.map((link) => (
+    <div class="px-4 sm:px-6 pt-3.5 pb-8 space-y-3">
+      {/* Top Mobile Context Card (Studio <-> Profile Switcher) */}
+      {pageType === "studio" ? (
+        <a
+          href="/profile"
+          class="flex items-center justify-between p-3.5 rounded-xl bg-gradient-to-r from-white/[0.08] to-white/[0.02] border border-white/15 hover:border-lime-400/50 transition-all group shadow-md"
+        >
+          <div class="flex items-center gap-3">
+            <div class="w-9 h-9 rounded-full overflow-hidden border border-lime-400 shrink-0 shadow-sm">
+              <img
+                src="/photos/founder-avatar.jpeg"
+                alt="Della Reno Rinaldi"
+                width="36"
+                height="36"
+                class="w-full h-full object-cover object-top"
+              />
+            </div>
+            <div>
+              <p class="text-xs font-bold text-white group-hover:text-lime-400 transition-colors">Della Reno Rinaldi</p>
+              <p class="text-[10px] text-white/50 font-mono-tech" data-i18n="nav_founder_bio">About Reno &bull; Career Experience</p>
+            </div>
+          </div>
+          <span class="text-lime-400 font-mono-tech text-xs font-bold px-2 py-1 rounded bg-white/5">&rarr;</span>
+        </a>
+      ) : (
+        <a
+          href="/"
+          class="flex items-center justify-between p-3.5 rounded-xl bg-lime-400/10 border border-lime-400/30 hover:bg-lime-400/15 transition-all group shadow-md"
+        >
+          <div class="flex items-center gap-3">
+            <div class="w-9 h-9 rounded-lg bg-lime-400/20 text-lime-400 border border-lime-400/30 flex items-center justify-center font-bold font-mono-tech text-xs shrink-0">
+              &gt;R
+            </div>
+            <div>
+              <p class="text-xs font-bold text-white group-hover:text-lime-400 transition-colors">renodotdev studio</p>
+              <p class="text-[10px] text-lime-400 font-mono-tech" data-i18n="p_banner_back">&larr; Studio &amp; Case Studies</p>
+            </div>
+          </div>
+          <span class="text-lime-400 font-mono-tech text-xs font-bold px-2 py-1 rounded bg-lime-400/20">&larr;</span>
+        </a>
+      )}
+
+      {/* Navigation Section Links with tactile touch targets */}
+      <div class="space-y-1 py-1">
+        {navLinks.map((link) => (
           <a
             href={link.href}
             data-section={link.href.startsWith("#") ? link.href.slice(1) : ""}
             data-i18n={link.i18nKey || undefined}
-            class="mobile-nav-link block w-full text-left px-3 py-2.5 rounded text-xs font-semibold uppercase tracking-wider transition-colors text-[#8b949e] hover:text-white hover:bg-white/5 font-mono-tech"
+            class="mobile-nav-link flex items-center justify-between px-4 py-3 rounded-xl text-xs font-bold uppercase tracking-wider transition-all text-[#8b949e] hover:text-white hover:bg-white/5 font-mono-tech active:scale-[0.99] border border-transparent hover:border-white/10"
           >
-            {link.name}
+            <span>{link.name}</span>
+            <span class="text-white/20 text-sm font-bold">&rsaquo;</span>
           </a>
-        ))
-      }
+        ))}
+      </div>
 
-      <div class="pt-3 border-t border-white/10 flex flex-col gap-2">
-        {pageType === "studio" ? (
-          <a
-            href="/profile"
-            class="block w-full text-center px-4 py-2.5 rounded text-xs font-semibold uppercase tracking-wider border border-white/15 text-white bg-white/5 font-mono-tech"
-          >
-            <span data-i18n="nav_founder_bio">About Reno</span> →
-          </a>
-        ) : (
-          <a
-            href="/"
-            class="block w-full text-center px-4 py-2.5 rounded text-xs font-semibold uppercase tracking-wider border border-lime-400/30 text-lime-400 bg-lime-400/10 font-mono-tech"
-          >
-            <span data-i18n="p_banner_back">← Studio &amp; Case Studies</span>
-          </a>
-        )}
-
+      {/* Action CTAs in Mobile Menu */}
+      <div class="pt-3 border-t border-white/10 flex flex-col gap-2.5">
         <a
           href="#contact"
           data-i18n={pageType === "studio" ? "nav_start_project" : "p_hero_btn_contact"}
-          class="nav-scroll-link block w-full text-center px-6 py-3 rounded text-xs font-bold uppercase tracking-wider bg-lime-400 text-black shadow-[0_0_20px_rgba(151,254,237,0.3)] font-mono-tech"
+          class="nav-scroll-link block w-full text-center py-3.5 px-6 rounded-xl text-xs font-bold uppercase tracking-wider bg-lime-400 text-black shadow-[0_0_25px_rgba(151,254,237,0.3)] font-mono-tech hover:bg-lime-300 active:scale-95 transition-all border border-lime-400"
         >
           {pageType === "studio" ? "Start a Project" : "Say Hello →"}
         </a>
+
+        <a
+          href="https://wa.me/+6281212996550?text=Hi%20Reno,%20I'd%20like%20to%20discuss%20a%20project%20with%20renodotdev"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="block w-full text-center py-3 px-5 rounded-xl text-xs font-bold uppercase tracking-wider border border-white/15 text-white/80 hover:text-lime-400 hover:border-lime-400/40 bg-white/5 font-mono-tech transition-all flex items-center justify-center gap-1.5"
+        >
+          <span>Chat on WhatsApp</span>
+          <span class="text-lime-400">&nearr;</span>
+        </a>
+      </div>
+
+      {/* Drawer Status Strip */}
+      <div class="pt-3 border-t border-white/10 flex items-center justify-between text-[11px] font-mono-tech text-white/40">
+        <span class="flex items-center gap-1.5">
+          <span class="w-1.5 h-1.5 rounded-full bg-lime-400 animate-pulse"></span>
+          <span class="text-lime-400/90 font-medium">Studio Operational</span>
+        </span>
+        <span>Malang &bull; Remote Global</span>
       </div>
     </div>
   </div>
@@ -369,6 +419,23 @@ const navLinks = pageType === "profile" ? profileNavLinks : studioNavLinks;
 
     menuBtn?.addEventListener("click", () => toggleMenu());
 
+    // Close menu on click outside
+    document.addEventListener("click", (e) => {
+      if (isMenuOpen && mobileMenu && menuBtn) {
+        const target = e.target as Node;
+        if (!mobileMenu.contains(target) && !menuBtn.contains(target)) {
+          toggleMenu(false);
+        }
+      }
+    });
+
+    // Close menu on Escape key
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && isMenuOpen) {
+        toggleMenu(false);
+      }
+    });
+
     allScrollLinks.forEach((link) => {
       link.addEventListener("click", (e) => {
         const href = link.getAttribute("href");
@@ -409,10 +476,12 @@ const navLinks = pageType === "profile" ? profileNavLinks : studioNavLinks;
         const sec = link.getAttribute("data-section");
         if (sec && sec === activeId) {
           link.style.color = "#97feed";
-          link.classList.add("font-bold");
+          link.classList.add("font-bold", "bg-lime-400/10", "border-lime-400/30");
+          link.classList.remove("border-transparent");
         } else if (sec) {
           link.style.color = "#8b949e";
-          link.classList.remove("font-bold");
+          link.classList.remove("font-bold", "bg-lime-400/10", "border-lime-400/30");
+          link.classList.add("border-transparent");
         }
       });
     }
