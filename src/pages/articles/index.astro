@@ -235,6 +235,38 @@ const tagCounts = allTags.reduce((acc, tag) => {
         })}
       </div>
 
+      {/* ── Articles Pagination Controls ───────────────────────── */}
+      <div
+        id="articles-pagination"
+        class="flex flex-col sm:flex-row items-center justify-between gap-4 font-mono-tech text-xs pt-6 pb-2 border-t border-white/10 mb-16"
+      >
+        <div id="pagination-info" class="text-white/60 text-center sm:text-left">
+          Showing <span id="page-start" class="text-lime-400 font-bold">1</span>–<span id="page-end" class="text-lime-400 font-bold">8</span> of <span id="page-total" class="text-white font-bold">{sortedArticles.length}</span> publications
+        </div>
+
+        <div class="flex items-center gap-1.5" id="pagination-controls">
+          <button
+            id="prev-page-btn"
+            type="button"
+            class="px-3 py-1.5 rounded-lg border border-white/15 bg-[#0e1116] text-white/70 hover:border-lime-400/50 hover:text-white disabled:opacity-30 disabled:pointer-events-none transition-colors cursor-pointer flex items-center gap-1"
+          >
+            &larr; <span>Prev</span>
+          </button>
+
+          <div id="page-numbers" class="flex items-center gap-1">
+            {/* Populated dynamically via JavaScript */}
+          </div>
+
+          <button
+            id="next-page-btn"
+            type="button"
+            class="px-3 py-1.5 rounded-lg border border-white/15 bg-[#0e1116] text-white/70 hover:border-lime-400/50 hover:text-white disabled:opacity-30 disabled:pointer-events-none transition-colors cursor-pointer flex items-center gap-1"
+          >
+            <span>Next</span> &rarr;
+          </button>
+        </div>
+      </div>
+
       {/* ── Empty State (When no articles match a filter or search) ── */}
       <div
         id="no-results-state"
@@ -331,6 +363,14 @@ const tagCounts = allTags.reduce((acc, tag) => {
     const statusText = document.getElementById("filter-status-text");
     const noResultsState = document.getElementById("no-results-state");
 
+    const paginationContainer = document.getElementById("articles-pagination");
+    const pageStartElem = document.getElementById("page-start");
+    const pageEndElem = document.getElementById("page-end");
+    const pageTotalElem = document.getElementById("page-total");
+    const pageNumbersContainer = document.getElementById("page-numbers");
+    const prevBtn = document.getElementById("prev-page-btn") as HTMLButtonElement | null;
+    const nextBtn = document.getElementById("next-page-btn") as HTMLButtonElement | null;
+
     const categoryButtons = document.querySelectorAll<HTMLButtonElement>("[data-category-btn]");
     const tagButtons = document.querySelectorAll<HTMLButtonElement>("[data-tag-btn]");
     const cardTagButtons = document.querySelectorAll<HTMLButtonElement>("[data-card-tag]");
@@ -340,46 +380,92 @@ const tagCounts = allTags.reduce((acc, tag) => {
     let activeCategory = "all";
     let activeTag = "";
     let searchQuery = "";
+    let currentPage = 1;
+    const itemsPerPage = 8;
 
     // Helper: Normalize tag strings (handles spaces, hyphens, plus signs, case)
     function normalize(str: string): string {
       return (str || "").toLowerCase().replace(/[-+]/g, " ").trim();
     }
 
-    // Core Filtering Engine
+    // Smart pagination page numbers calculation
+    function getPageRange(current: number, total: number): (number | "...")[] {
+      if (total <= 7) {
+        return Array.from({ length: total }, (_, i) => i + 1);
+      }
+      if (current <= 3) {
+        return [1, 2, 3, 4, "...", total];
+      }
+      if (current >= total - 2) {
+        return [1, "...", total - 3, total - 2, total - 1, total];
+      }
+      return [1, "...", current - 1, current, current + 1, "...", total];
+    }
+
+    // Scroll helper to smoothly reposition viewport to top of articles list
+    function scrollToArticlesTop() {
+      const listElem = document.getElementById("articles-list");
+      if (listElem) {
+        const topOffset = listElem.getBoundingClientRect().top + window.scrollY - 90;
+        window.scrollTo({ top: Math.max(0, topOffset), behavior: "smooth" });
+      }
+    }
+
+    // Page switcher
+    function goToPage(page: number) {
+      currentPage = page;
+      applyFilters(true);
+      scrollToArticlesTop();
+    }
+
+    // Core Filtering & Pagination Engine
     function applyFilters(updateHistory = true) {
-      let visibleCount = 0;
       const normalizedSearch = searchQuery.toLowerCase().trim();
       const normalizedActiveTag = normalize(activeTag);
+
+      // Step 1: Collect matching cards
+      const matchingCards: HTMLElement[] = [];
 
       articleCards.forEach((card) => {
         const cardCategory = card.getAttribute("data-category") || "";
         const rawTags = (card.getAttribute("data-tags") || "").split(",").map(normalize);
         const searchHaystack = card.getAttribute("data-search") || "";
 
-        // 1. Category match
         const matchesCategory = activeCategory === "all" || cardCategory === activeCategory;
-
-        // 2. Tag match
         const matchesTag = !normalizedActiveTag || rawTags.some((t) => t === normalizedActiveTag || t.includes(normalizedActiveTag));
-
-        // 3. Search query match
         const matchesSearch = !normalizedSearch || searchHaystack.includes(normalizedSearch);
 
-        const isMatch = matchesCategory && matchesTag && matchesSearch;
-
-        // Bulletproof display toggle (both inline style and class)
-        if (isMatch) {
-          card.style.display = "flex";
-          card.classList.remove("hidden");
-          visibleCount++;
-        } else {
-          card.style.display = "none";
-          card.classList.add("hidden");
+        if (matchesCategory && matchesTag && matchesSearch) {
+          matchingCards.push(card);
         }
       });
 
-      // Update Category pills active styles
+      const totalMatches = matchingCards.length;
+      const totalPages = Math.max(1, Math.ceil(totalMatches / itemsPerPage));
+
+      // Guard against page overflow
+      if (currentPage > totalPages) {
+        currentPage = 1;
+      }
+      if (currentPage < 1) {
+        currentPage = 1;
+      }
+
+      const startIndex = (currentPage - 1) * itemsPerPage;
+      const endIndex = Math.min(startIndex + itemsPerPage, totalMatches);
+
+      // Step 2: Show only current page slice
+      articleCards.forEach((card) => {
+        card.style.display = "none";
+        card.classList.add("hidden");
+      });
+
+      matchingCards.slice(startIndex, endIndex).forEach((card) => {
+        card.style.display = "flex";
+        card.classList.remove("hidden");
+      });
+
+      // Step 3: Update Category pills active styles
       categoryButtons.forEach((btn) => {
         const catId = btn.getAttribute("data-category-btn") || "all";
         if (catId === activeCategory && !activeTag) {
@@ -391,7 +477,7 @@ const tagCounts = allTags.reduce((acc, tag) => {
         }
       });
 
-      // Update Tag pills active styles
+      // Step 4: Update Tag pills active styles
       tagButtons.forEach((btn) => {
         const btnTag = normalize(btn.getAttribute("data-tag-btn") || "");
         if (btnTag && btnTag === normalizedActiveTag) {
@@ -403,7 +489,7 @@ const tagCounts = allTags.reduce((acc, tag) => {
         }
       });
 
-      // Update Card tag buttons highlight
+      // Step 5: Update Card tag buttons highlight
       cardTagButtons.forEach((btn) => {
         const btnTag = normalize(btn.getAttribute("data-card-tag") || "");
         if (btnTag && btnTag === normalizedActiveTag) {
@@ -413,7 +499,7 @@ const tagCounts = allTags.reduce((acc, tag) => {
         }
       });
 
-      // Update Search Clear Button
+      // Step 6: Update Search Clear Button
       if (searchClearBtn) {
         if (searchQuery) {
           searchClearBtn.classList.remove("hidden");
@@ -422,7 +508,7 @@ const tagCounts = allTags.reduce((acc, tag) => {
         }
       }
 
-      // Update Global Reset Button
+      // Step 7: Update Global Reset Button
       const isFiltered = activeCategory !== "all" || Boolean(activeTag) || Boolean(searchQuery);
       if (clearAllBtn) {
         if (isFiltered) {
@@ -432,10 +518,10 @@ const tagCounts = allTags.reduce((acc, tag) => {
         }
       }
 
-      // Update Status Counter Text
+      // Step 8: Update Status Counter Text
       if (statusText) {
         if (!isFiltered) {
-          statusText.textContent = `Showing all ${totalCount} publications`;
+          statusText.textContent = `Showing all ${totalCount} publications (Page ${currentPage} of ${totalPages})`;
         } else {
           const filterDetails: string[] = [];
           if (activeTag) filterDetails.push(`#${activeTag}`);
@@ -445,22 +531,71 @@ const tagCounts = allTags.reduce((acc, tag) => {
           }
           if (searchQuery) filterDetails.push(`matching "${searchQuery}"`);
 
-          statusText.textContent = `Showing ${visibleCount} of ${totalCount} ${filterDetails.length > 0 ? "for " + filterDetails.join(" ") : ""}`;
+          statusText.textContent = `Showing ${totalMatches > 0 ? `${startIndex + 1}–${endIndex} of ` : ""}${totalMatches} ${filterDetails.length > 0 ? "for " + filterDetails.join(" ") : "publications"} (Page ${currentPage} of ${totalPages})`;
         }
       }
 
-      // Empty State Visibility
-      if (noResultsState) {
-        if (visibleCount === 0) {
+      // Step 9: Update Empty State & Pagination Bar Visibility
+      if (totalMatches === 0) {
+        if (noResultsState) {
           noResultsState.classList.remove("hidden");
           noResultsState.style.display = "block";
-        } else {
+        }
+        if (paginationContainer) {
+          paginationContainer.classList.add("hidden");
+          paginationContainer.style.display = "none";
+        }
+      } else {
+        if (noResultsState) {
           noResultsState.classList.add("hidden");
           noResultsState.style.display = "none";
         }
+        if (paginationContainer) {
+          paginationContainer.classList.remove("hidden");
+          paginationContainer.style.display = "flex";
+
+          if (pageStartElem) pageStartElem.textContent = String(startIndex + 1);
+          if (pageEndElem) pageEndElem.textContent = String(endIndex);
+          if (pageTotalElem) pageTotalElem.textContent = String(totalMatches);
+
+          if (prevBtn) prevBtn.disabled = currentPage <= 1;
+          if (nextBtn) nextBtn.disabled = currentPage >= totalPages;
+
+          // Render dynamic page buttons
+          if (pageNumbersContainer) {
+            pageNumbersContainer.innerHTML = "";
+
+            if (totalPages > 1) {
+              const pages = getPageRange(currentPage, totalPages);
+              pages.forEach((p) => {
+                if (p === "...") {
+                  const ellipsis = document.createElement("span");
+                  ellipsis.className = "px-2 text-white/40 select-none";
+                  ellipsis.textContent = "...";
+                  pageNumbersContainer.appendChild(ellipsis);
+                } else {
+                  const pageNum = p as number;
+                  const btn = document.createElement("button");
+                  btn.type = "button";
+                  btn.textContent = String(pageNum);
+                  btn.setAttribute("data-page-btn", String(pageNum));
+
+                  if (pageNum === currentPage) {
+                    btn.className = "px-3 py-1.5 rounded-lg text-xs font-bold font-mono-tech cursor-pointer transition-all bg-lime-400 text-black border border-lime-400 shadow-[0_0_15px_rgba(151,254,237,0.3)]";
+                  } else {
+                    btn.className = "px-3 py-1.5 rounded-lg text-xs font-mono-tech border border-white/15 bg-[#0e1116] text-white/70 hover:border-lime-400/50 hover:text-white cursor-pointer transition-colors";
+                  }
+
+                  btn.addEventListener("click", () => goToPage(pageNum));
+                  pageNumbersContainer.appendChild(btn);
+                }
+              });
+            }
+          }
+        }
       }
 
-      // Sync URL query params with pushState
+      // Step 10: Sync URL query params with pushState
       if (updateHistory) {
         const url = new URL(window.location.href);
         if (activeTag) {
@@ -481,6 +616,12 @@ const tagCounts = allTags.reduce((acc, tag) => {
           url.searchParams.delete("q");
         }
 
+        if (currentPage > 1) {
+          url.searchParams.set("page", String(currentPage));
+        } else {
+          url.searchParams.delete("page");
+        }
+
         window.history.pushState(null, "", url.toString());
       }
     }
@@ -490,21 +631,46 @@ const tagCounts = allTags.reduce((acc, tag) => {
       activeCategory = "all";
       activeTag = "";
       searchQuery = "";
+      currentPage = 1;
       if (searchInput) searchInput.value = "";
       applyFilters(true);
     }
+
+    // Prev / Next button listeners
+    prevBtn?.addEventListener("click", () => {
+      if (currentPage > 1) {
+        goToPage(currentPage - 1);
+      }
+    });
+
+    nextBtn?.addEventListener("click", () => {
+      // Calculate current total pages
+      const currentMatching = Array.from(articleCards).filter((card) => {
+        const cardCategory = card.getAttribute("data-category") || "";
+        const rawTags = (card.getAttribute("data-tags") || "").split(",").map(normalize);
+        const searchHaystack = card.getAttribute("data-search") || "";
+        const matchesCat = activeCategory === "all" || cardCategory === activeCategory;
+        const matchesTag = !activeTag || rawTags.some((t) => t === normalize(activeTag) || t.includes(normalize(activeTag)));
+        const matchesSearch = !searchQuery || searchHaystack.includes(searchQuery.toLowerCase().trim());
+        return matchesCat && matchesTag && matchesSearch;
+      });
+      const maxPages = Math.max(1, Math.ceil(currentMatching.length / itemsPerPage));
+      if (currentPage < maxPages) {
+        goToPage(currentPage + 1);
+      }
+    });
 
     // Category button clicks
     categoryButtons.forEach((btn) => {
       btn.addEventListener("click", () => {
         const catId = btn.getAttribute("data-category-btn") || "all";
-        // If clicking already active category, reset to all
         if (activeCategory === catId && catId !== "all") {
           activeCategory = "all";
         } else {
           activeCategory = catId;
         }
-        activeTag = ""; // Category switch clears specific tag
+        activeTag = "";
+        currentPage = 1; // Reset to page 1 on category switch
         applyFilters(true);
       });
     });
@@ -514,13 +680,13 @@ const tagCounts = allTags.reduce((acc, tag) => {
       btn.addEventListener("click", () => {
         const tag = btn.getAttribute("data-tag-btn") || "";
         const normalized = normalize(tag);
-        // Toggle OFF if already active
         if (normalize(activeTag) === normalized) {
           activeTag = "";
         } else {
           activeTag = tag;
-          activeCategory = "all"; // Tag selection takes precedence
+          activeCategory = "all";
         }
+        currentPage = 1; // Reset to page 1 on tag switch
         applyFilters(true);
       });
     });
@@ -532,13 +698,13 @@ const tagCounts = allTags.reduce((acc, tag) => {
         e.stopPropagation();
         const tag = btn.getAttribute("data-card-tag") || "";
         const normalized = normalize(tag);
-        // Toggle OFF if already active
         if (normalize(activeTag) === normalized) {
           activeTag = "";
         } else {
           activeTag = tag;
           activeCategory = "all";
         }
+        currentPage = 1; // Reset to page 1 on card tag click
         applyFilters(true);
       });
     });
@@ -546,12 +712,14 @@ const tagCounts = allTags.reduce((acc, tag) => {
     // Search input changes (instant client search)
     searchInput?.addEventListener("input", (e) => {
       searchQuery = (e.target as HTMLInputElement).value;
-      applyFilters(false); // don't push history on every keystroke
+      currentPage = 1; // Reset to page 1 on new search keystroke
+      applyFilters(false);
     });
 
     // Search clear button
     searchClearBtn?.addEventListener("click", () => {
       searchQuery = "";
+      currentPage = 1;
       if (searchInput) searchInput.value = "";
       applyFilters(true);
     });
@@ -566,6 +734,7 @@ const tagCounts = allTags.reduce((acc, tag) => {
       const urlTag = params.get("tag");
       const urlCat = params.get("category");
       const urlQuery = params.get("q");
+      const urlPage = parseInt(params.get("page") || "1", 10);
 
       if (urlTag) activeTag = urlTag;
       if (urlCat) activeCategory = urlCat;
@@ -573,6 +742,7 @@ const tagCounts = allTags.reduce((acc, tag) => {
         searchQuery = urlQuery;
         if (searchInput) searchInput.value = urlQuery;
       }
+      currentPage = isNaN(urlPage) || urlPage < 1 ? 1 : urlPage;
 
       applyFilters(false);
     }

@@ -4,13 +4,20 @@ import { getCollection, render } from "astro:content";
 
 export async function getStaticPaths() {
   const articles = await getCollection("articles");
-  return articles.map((article) => ({
+  const sorted = articles.sort(
+    (a, b) => b.data.publishDate.getTime() - a.data.publishDate.getTime()
+  );
+  return sorted.map((article, index) => ({
     params: { slug: article.id },
-    props: { article },
+    props: {
+      article,
+      prevArticle: index > 0 ? sorted[index - 1] : null,
+      nextArticle: index < sorted.length - 1 ? sorted[index + 1] : null,
+    },
   }));
 }
 
-const { article } = Astro.props;
+const { article, prevArticle, nextArticle } = Astro.props;
 const { Content } = await render(article);
 
 const formattedDate = article.data.publishDate.toLocaleDateString("en-US", {
@@ -174,6 +181,51 @@ const schemaData = {
           </div>
         </div>
       </div>
+
+      {/* ── Previous / Next Publication Navigation ───────────── */}
+      <nav class="mt-12 mb-8 p-4 sm:p-6 rounded-2xl border border-white/10 bg-[#090b0e] flex flex-col sm:flex-row items-stretch justify-between gap-4 font-mono-tech text-xs" aria-label="Article Pagination">
+        {prevArticle ? (
+          <a
+            href={`/articles/${prevArticle.id}`}
+            class="flex-1 p-3.5 rounded-xl border border-white/10 bg-[#0e1116] hover:border-lime-400/50 hover:bg-white/5 transition-all group flex flex-col"
+          >
+            <span class="text-lime-400 uppercase tracking-widest text-[10px] font-bold mb-1 group-hover:translate-x-[-2px] transition-transform inline-flex items-center gap-1">
+              &larr; Newer Publication
+            </span>
+            <span class="text-white font-bold font-sans text-sm line-clamp-1 group-hover:text-lime-300 transition-colors">
+              {prevArticle.data.title}
+            </span>
+          </a>
+        ) : (
+          <div class="hidden sm:block flex-1" />
+        )}
+
+        <div class="flex items-center justify-center shrink-0">
+          <a
+            href="/articles"
+            class="px-4 py-2.5 rounded-xl border border-white/15 bg-[#0e1116] hover:border-lime-400/50 hover:text-lime-300 text-white/70 text-center transition-colors text-xs font-semibold"
+            title="Browse all publications"
+          >
+            All Publications
+          </a>
+        </div>
+
+        {nextArticle ? (
+          <a
+            href={`/articles/${nextArticle.id}`}
+            class="flex-1 p-3.5 rounded-xl border border-white/10 bg-[#0e1116] hover:border-lime-400/50 hover:bg-white/5 transition-all group flex flex-col text-left sm:text-right"
+          >
+            <span class="text-lime-400 uppercase tracking-widest text-[10px] font-bold mb-1 group-hover:translate-x-[2px] transition-transform inline-flex items-center justify-start sm:justify-end gap-1">
+              Older Publication &rarr;
+            </span>
+            <span class="text-white font-bold font-sans text-sm line-clamp-1 group-hover:text-lime-300 transition-colors">
+              {nextArticle.data.title}
+            </span>
+          </a>
+        ) : (
+          <div class="hidden sm:block flex-1" />
+        )}
+      </nav>
 
       {/* Floating / Bottom Studio Conversion Card */}
       <div class="mt-8 p-8 rounded-2xl border border-lime-400/40 bg-gradient-to-b from-[#0e1319] to-[#08090a] font-mono-tech shadow-2xl flex flex-col md:flex-row items-center justify-between gap-6">

@@ -17,7 +17,7 @@
 
 ## Engineering Publications & Articles
 
-Complete technical archive available at [https://renodotdev.com/articles](https://renodotdev.com/articles) with 30+ production blueprints across AI & Prompt Tutorials, Multi-Tenant SaaS, and Mobile POS Systems:
+Complete technical archive available at [https://renodotdev.com/articles](https://renodotdev.com/articles) with 60+ production blueprints across AI & Prompt Tutorials, Multi-Tenant SaaS, and Mobile POS Systems:
 
 - [Architecting Offline-First Mobile POS with React Native, SQLite & Thermal Receipt Printing](https://renodotdev.com/articles/offline-first-react-native-pos): Eliminating cashier downtime during network dropouts, handling idempotent stock sync, and direct Bluetooth/LAN ESC/POS printing.
 - [Zero-Lag Multi-Tenant Architecture: Lessons from Building Sobatoko for Thousands of Merchants](https://renodotdev.com/articles/zero-lag-multi-tenant-saas-nextjs): Structuring PostgreSQL tenant isolation with Row-Level Security (RLS), edge caching, and real-time inventory updates in Next.js.
